@@ -4,7 +4,1169 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>烁翌国际客户搜寻 App</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <style>
+:root {
+  --ink: #f3ecd9;
+  --muted: #a99f8d;
+  --line: #332b1d;
+  --panel: #111317;
+  --soft: #191711;
+  --brand: #d8b96f;
+  --brand-strong: #f3d99a;
+  --accent: #b98a42;
+  --green: #2c9a78;
+  --red: #d0715f;
+  --shadow: 0 20px 56px rgba(0, 0, 0, 0.35);
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #08090b;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+  overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.svg-sprite {
+  display: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(11, 95, 107, 0.08), rgba(184, 135, 70, 0.05) 42%, rgba(244, 246, 248, 0)),
+    #f4f6f8;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(250, 251, 252, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 850;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.top-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.network-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin-left: auto;
+  padding: 0 12px;
+  border: 1px solid #d2c3ad;
+  border-radius: var(--radius);
+  color: #5a3d18;
+  background: #fffaf1;
+  font-size: 13px;
+}
+
+.network-mode span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--green);
+}
+
+.icon-button,
+.close-detail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--brand-strong);
+  background: #fff;
+}
+
+svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 360px;
+  gap: 18px;
+  width: min(1640px, 100%);
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.filter-panel,
+.detail-panel {
+  align-self: start;
+  border: 1px solid rgba(217, 222, 231, 0.86);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.filter-panel {
+  position: sticky;
+  top: 92px;
+  padding: 18px;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.field > span,
+.toggle-row span {
+  color: #2b3445;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.search-input {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.search-input svg {
+  color: var(--muted);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+}
+
+input,
+select {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.search-input input {
+  border: 0;
+  padding: 0;
+  outline: 0;
+}
+
+textarea {
+  min-height: 96px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.segment-button,
+.view-button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.segment-button.active,
+.view-button.active {
+  border-color: var(--brand);
+  color: #fff;
+  background: var(--brand);
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 20px;
+}
+
+.toggle-row input {
+  width: 18px;
+  min-height: 18px;
+  accent-color: var(--brand);
+}
+
+.results-area {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.overview-band,
+.advisor-panel,
+.result-toolbar {
+  border: 1px solid rgba(217, 222, 231, 0.9);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow);
+}
+
+.overview-band {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.metric {
+  padding: 18px 14px;
+  background: #fff;
+}
+
+.metric span {
+  display: block;
+  color: var(--brand-strong);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.metric p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.advisor-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(280px, 1.5fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+}
+
+.query-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.query-pill {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #bfd9dc;
+  border-radius: var(--radius);
+  color: var(--brand-strong);
+  background: #f3faf9;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.query-pill svg {
+  flex: 0 0 auto;
+}
+
+.result-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.result-toolbar p {
+  margin-bottom: 2px;
+  font-weight: 800;
+}
+
+.result-toolbar small {
+  color: var(--muted);
+}
+
+.view-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.view-button {
+  min-width: 64px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.customer-card {
+  display: grid;
+  gap: 12px;
+  min-height: 238px;
+  padding: 16px;
+  border: 1px solid rgba(217, 222, 231, 0.9);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.08);
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.customer-card h3 {
+  margin-bottom: 6px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: #3c4658;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge.brand {
+  color: #fff;
+  background: var(--brand);
+}
+
+.badge.green {
+  color: #fff;
+  background: var(--green);
+}
+
+.badge.gold {
+  color: #513a17;
+  background: #f1dfbf;
+}
+
+.card-meta {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.meta-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px dashed #e6ebf1;
+  padding-bottom: 7px;
+}
+
+.meta-line strong {
+  color: var(--ink);
+  text-align: right;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.card-actions .text-button {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.text-button span {
+  white-space: nowrap;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--brand-strong);
+  background: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.text-button.primary {
+  border-color: var(--brand);
+  color: #fff;
+  background: var(--brand);
+}
+
+.favorite-button.active {
+  border-color: var(--accent);
+  color: #3b2a10;
+  background: #f6d499;
+}
+
+.table-wrap {
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: #2b3445;
+  background: #f8fafc;
+  font-size: 13px;
+}
+
+.detail-panel {
+  position: sticky;
+  top: 92px;
+  overflow: hidden;
+  min-height: 560px;
+}
+
+.close-detail {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+}
+
+.detail-content {
+  padding: 22px;
+}
+
+.detail-empty {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(18, 49, 58, 0.96), rgba(11, 95, 107, 0.9)),
+    #12313a;
+}
+
+.detail-visual::before {
+  content: "";
+  display: block;
+  width: calc(100% - 44px);
+  height: 150px;
+  margin: 30px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px) 0 0 / 36px 36px;
+}
+
+.detail-visual::after {
+  content: "GLOBAL CLIENT INTELLIGENCE";
+  position: absolute;
+  left: 42px;
+  bottom: 34px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.detail-empty-copy {
+  padding: 4px 0 2px;
+}
+
+.detail-empty h3 {
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+
+.detail-empty p,
+.network-note {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.detail-title {
+  margin-right: 44px;
+}
+
+.detail-title h3 {
+  margin-bottom: 8px;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.detail-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.detail-section h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.detail-grid div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.detail-grid strong {
+  color: var(--ink);
+  text-align: right;
+}
+
+.copy-list {
+  display: grid;
+  gap: 8px;
+}
+
+.copy-item {
+  display: grid;
+  grid-template-columns: 1fr 38px;
+  gap: 8px;
+  align-items: center;
+}
+
+.copy-item code {
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f8fafc;
+  color: #2b3445;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.network-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.network-card {
+  display: grid;
+  gap: 5px;
+  min-height: 76px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: #fff;
+  text-decoration: none;
+}
+
+.network-card strong {
+  font-size: 13px;
+}
+
+.network-card span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.network-card:hover,
+.text-button:hover,
+.icon-button:hover {
+  border-color: var(--brand);
+}
+
+.finance-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #bdd5df;
+  border-radius: var(--radius);
+  background: #f3fbfd;
+}
+
+.finance-panel strong {
+  color: var(--brand-strong);
+}
+
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 42px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: var(--radius);
+  background: #fff;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.empty-illustration {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 94px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #f8fafc;
+}
+
+.empty-illustration svg {
+  width: 112px;
+  height: 76px;
+  color: var(--brand-strong);
+}
+
+.empty-illustration rect,
+.empty-illustration path,
+.empty-illustration circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.empty-state h3 {
+  margin-bottom: 0;
+}
+
+.empty-state p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 80;
+  max-width: min(360px, calc(100vw - 40px));
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  color: #fff;
+  background: var(--brand-strong);
+  box-shadow: var(--shadow);
+}
+
+.app-shell {
+  background:
+    linear-gradient(180deg, rgba(216, 185, 111, 0.08), rgba(8, 9, 11, 0) 38%),
+    linear-gradient(135deg, #08090b 0%, #101217 48%, #08090b 100%);
+}
+
+.topbar {
+  border-bottom: 1px solid rgba(216, 185, 111, 0.22);
+  background: rgba(8, 9, 11, 0.9);
+}
+
+.brand-logo {
+  border-color: rgba(216, 185, 111, 0.44);
+  background: #15120d;
+  box-shadow: 0 12px 30px rgba(216, 185, 111, 0.12);
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  color: #090a0c;
+  background: linear-gradient(135deg, #f7e3ad, #c19143 64%, #8a642e);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.eyebrow,
+.panel-title,
+.metric span,
+.finance-panel strong {
+  color: var(--brand-strong);
+}
+
+h1,
+h2,
+h3,
+.result-toolbar p,
+.customer-card h3,
+.detail-section h4 {
+  color: var(--ink);
+}
+
+.network-mode {
+  border-color: rgba(216, 185, 111, 0.36);
+  color: var(--brand-strong);
+  background: rgba(216, 185, 111, 0.08);
+}
+
+.filter-panel,
+.detail-panel,
+.overview-band,
+.advisor-panel,
+.result-toolbar,
+.customer-card,
+.table-wrap,
+.empty-state {
+  border-color: rgba(216, 185, 111, 0.22);
+  background: rgba(17, 19, 23, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.overview-band {
+  background: rgba(216, 185, 111, 0.18);
+}
+
+.metric {
+  background: rgba(17, 19, 23, 0.98);
+}
+
+.metric p,
+.result-toolbar small,
+.field > span,
+.toggle-row span,
+.card-meta,
+.detail-empty p,
+.network-note,
+.network-card span,
+.source-row span {
+  color: var(--muted);
+}
+
+input,
+select,
+textarea,
+.search-input,
+.segment-button,
+.view-button,
+.icon-button,
+.close-detail,
+.text-button,
+.query-pill,
+.copy-item code {
+  border-color: rgba(216, 185, 111, 0.22);
+  color: var(--ink);
+  background: rgba(8, 9, 11, 0.68);
+}
+
+.search-input input {
+  background: transparent;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #756d5f;
+}
+
+.segment-button,
+.view-button {
+  color: var(--muted);
+}
+
+.segment-button.active,
+.view-button.active,
+.text-button.primary {
+  border-color: #e3c37a;
+  color: #090a0c;
+  background: linear-gradient(135deg, #f0d48d, #b98a42);
+}
+
+.text-button,
+.icon-button,
+.close-detail,
+.query-pill {
+  color: var(--brand-strong);
+}
+
+.query-pill {
+  background: rgba(216, 185, 111, 0.09);
+}
+
+.badge {
+  color: #d7cbb7;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.badge.brand {
+  color: #090a0c;
+  background: var(--brand);
+}
+
+.badge.green {
+  color: #06110d;
+  background: #55c89f;
+}
+
+.badge.gold,
+.favorite-button.active {
+  color: #090a0c;
+  background: #dfbd72;
+}
+
+.meta-line {
+  border-bottom-color: rgba(216, 185, 111, 0.16);
+}
+
+.meta-line strong,
+.detail-grid strong,
+.network-card,
+.source-row strong {
+  color: var(--ink);
+}
+
+th,
+.copy-item code,
+.empty-illustration {
+  background: rgba(216, 185, 111, 0.07);
+}
+
+th,
+td {
+  border-bottom-color: rgba(216, 185, 111, 0.15);
+}
+
+th {
+  color: var(--brand-strong);
+}
+
+.detail-visual {
+  border-color: rgba(216, 185, 111, 0.32);
+  background:
+    linear-gradient(135deg, rgba(216, 185, 111, 0.18), rgba(17, 19, 23, 0.98)),
+    #0e1014;
+}
+
+.detail-visual::before {
+  border-color: rgba(216, 185, 111, 0.28);
+  background:
+    linear-gradient(90deg, rgba(216, 185, 111, 0.12) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(0deg, rgba(216, 185, 111, 0.12) 1px, transparent 1px) 0 0 / 36px 36px;
+}
+
+.detail-visual::after {
+  color: rgba(243, 217, 154, 0.8);
+}
+
+.detail-section {
+  border-top-color: rgba(216, 185, 111, 0.16);
+}
+
+.network-card,
+.finance-panel,
+.source-row {
+  border-color: rgba(216, 185, 111, 0.18);
+  background: rgba(8, 9, 11, 0.52);
+}
+
+.source-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.source-row {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid rgba(216, 185, 111, 0.18);
+  border-radius: var(--radius);
+}
+
+.source-row strong {
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+
+.empty-illustration {
+  border-color: rgba(216, 185, 111, 0.22);
+}
+
+.empty-illustration svg {
+  color: var(--brand-strong);
+}
+
+.network-card:hover,
+.text-button:hover,
+.icon-button:hover {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(216, 185, 111, 0.08);
+}
+
+.toast {
+  color: #090a0c;
+  background: var(--brand);
+}
+
+@media (max-width: 1320px) {
+  .workspace {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .detail-panel {
+    position: fixed;
+    top: 78px;
+    right: 18px;
+    bottom: 18px;
+    z-index: 30;
+    display: none;
+    width: min(420px, calc(100vw - 36px));
+    transform: none;
+  }
+
+  .detail-panel.open {
+    display: block;
+  }
+}
+
+@media (max-width: 980px) {
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .network-mode {
+    display: none;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .filter-panel {
+    position: static;
+  }
+
+  .advisor-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .topbar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .brand-lockup {
+    flex: 1 1 230px;
+    gap: 10px;
+  }
+
+  .brand-lockup > div {
+    min-width: 0;
+  }
+
+  .top-actions {
+    flex-shrink: 0;
+    margin-left: auto;
+    padding-top: 3px;
+    gap: 6px;
+  }
+
+  .icon-button,
+  .close-detail {
+    width: 36px;
+    height: 36px;
+  }
+
+  .eyebrow {
+    display: none;
+  }
+
+  h1 {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+
+  .overview-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .topbar {
+    gap: 8px 10px;
+  }
+
+  .top-actions {
+    display: none;
+  }
+}
+
+    </style>
   </head>
   <body>
     <svg class="svg-sprite" aria-hidden="true">
@@ -40,7 +1202,7 @@
     <div class="app-shell">
       <header class="topbar">
         <div class="brand-lockup">
-          <img class="brand-logo" src="./assets/logo.png" alt="烁翌国际咨询" />
+          <div class="brand-logo brand-mark" aria-label="烁翌国际咨询">SY</div>
           <div>
             <p class="eyebrow">Lumiere International Consulting</p>
             <h1>烁翌国际客户搜寻 App</h1>
@@ -169,6 +1331,914 @@
       </main>
     </div>
 
-    <script src="./app.js"></script>
+    <script>
+window.SHUOYI_CARD_FIELDS=["id","company","country","contact","industry","position","contactInfo","web","address","industryGroup","source"];window.SHUOYI_CARD_ROWS=[["card-1","VERDICORE SDN BHD（Seng Liy Holdings 子公司）","马来西亚","Joey（Heng Zhu Er）","建筑建材工程类","Senior Marketing Executive","手机：+60 10-822 8730\n座机：+607 861 2730\n邮箱：joey.heng@sengliy.com.my/hello@gaea.com.my","集团官网：https://sengliy.com.my\n品牌官网：gaea.com.my","No. 28, Jalan Tiram 14, Taman Perindustrian Tiram, 81800 Ulu Tiram, Johor","建筑建材","名片信息行业分类"],["card-2","CLE GLOBAL PACIFIC SALES INC.（GPSI）","菲律宾","MARY JOY M. MASANGKAY","建筑建材工程类","In-House Sales Executive","电话：(02) 7738-0223、(02) 8823 7621；\n手机：+63 997 335 3998；\n邮箱：masangkayjoy.cle.sales@gmail.com","","7743 Serco Bldg. Saint Paul Road cor. Bagtikan St. San Antonio Village, Makati City. 1203","建筑建材","名片信息行业分类"],["card-3","Padi Floors and Decks Inc.","菲律宾","PAUL ANTHONY M. MURALLA","建筑建材工程类","Account Executive","电话：+63 (02) 8475-8796、(02) 8984-3879、(046) 458-1593；\n手机：+63 908 896 4915、+63 953 423 8604；\nViber：+63 916 436 8911；\n邮箱：inquire@padiinc.com、sales@padiwpc.com.ph、pam.padisales@gmail.com","官网：www.padi.com.ph","#56 Molino-Paliparan Road, Salawag, Dasmarinas, Cavite 4114","建筑建材","名片信息行业分类"],["card-4","World Class Laminate","菲律宾","JULIUS OABEL","建筑建材工程类","Territory Sales Manager","手机：09177173238；\n邮箱：julius.oabel@worldclasslaminate.com.ph","","Future Point Plaza I, 112 Panay Ave. South Triangle, Quezon City 1103","建筑建材","名片信息行业分类"],["card-5","KAWARA","菲律宾","Jasmine Allera","建筑建材工程类","Senior Sales Manager","手机：+63 919 067 8659、+63 906 351 0752；\n电话：+632 8288 8384、+632 8288 5677；\n邮箱：jasmineallera@kawara.com.ph","官网：kawara.com.ph","","建筑建材","名片信息行业分类"],["card-6","AS YUSAY APARTMENTS（MICHAELLE JODIE INTERIOR DESIGN）","菲律宾","IDR. MICHAELLE JODIE CARAM YUSAY, PIID","建筑建材工程类","Interior Design","手机：0917 701 6455；\n邮箱：mikeecyusay@yahoo.com","官网：www.michaellejodieinteriordesign.com；\n社媒：Facebook、Instagram（MICHAELLE JODIE INTERIOR DESIGN）","23RD ST. BACOLOD CITY","建筑建材","名片信息行业分类"],["card-7","ECON GLOBAL BUILDERS CORP.（ECOFLEX）","菲律宾","ALLEN TAN（北吕宋区域）","建筑建材工程类","Sales","电话：+63 916 373 4800（Globe）、+63 963 566 4800（Smart）；\n邮箱：ecoflexfcb@yahoo.com","官网：www.ecoflex.com.ph；","","建筑建材","名片信息行业分类"],["card-8","ASIA PACIFIC PROJECT & INDUSTRIAL SALES CORPORATION（APPISC）","菲律宾","JEREMY LIM","建筑建材工程类","Sales & Operation Manager","电话：09178989722（Globe）、09228199990（Sun）、02 70924048（座机）；\n邮箱：proj_jeremylim@yahoo.com、asiapacificproject@yahoo.com.ph","","13A Miller Street Barangay Bungad, Quezon City, Philippines 1105","建筑建材","名片信息行业分类"],["card-9","Polylite","菲律宾","Pia Dujali","建筑建材 / 化工材料","Senior Account Executive","电话：0998 961 7482、0922 830 3361、(02) 8808 7659 loc. 119；\n邮箱：pia.dujali@polylite.com.ph","","KM 18 Polylite House Bldg, Alabang-Zapote Rd, Talon Dos, Las Piñas City, Philippines","建筑建材","名片信息行业分类"],["card-10","SKF PLYZONE 168, INCORPORATED","菲律宾","Vanessa Alano","建筑建材 / 装修材料","Sales Executive","电话：0995-344-1986、0998 202 4205 (Viber)、(8) 420-5672、(8) 255-1435；\n邮箱：skfplyzone168inc@gmail.com","","KM.18 East Service Rd. Canumay East Val., City","建筑建材","名片信息行业分类"],["card-11","FIRSTANK","菲律宾","Mark Quiambao","建筑建材 / 储水设备","Regional Sales Representative (Region 1 & 3)","电话：#0956-381-3254；\n邮箱：mhquiambao@firstank.com","社媒：Facebook @firstank、Instagram @firstankphil","B30 L3&4 Deauteronomy St., BF Martinville, Manuyos Dos, Las Piñas City","建筑建材","名片信息行业分类"],["card-12","ALLGEMEINE BAU-CHEMIE PHIL., INC. (ABC)","菲律宾","Edwin A. Laguitan","建筑建材 / 化工材料","Account Management Officer","电话：+63 2 8842-6891；\n传真：+63 2 8842-7146；\n手机：+63 917 873-4607；\n邮箱：edwin.laguitan@abc.ph","官网：www.abc.ph","10/F Asian Star Bldg., 2404 Asean Drive Filinvest City, Alabang, Muntinlupa City 1781","建筑建材","名片信息行业分类"],["card-13","PARKLANE COMMERCIAL CORPORATION","菲律宾","Mark P Sison","建筑建材 / 管道系统","Area Sales Manager","电话：5-310-2027、5-313-9753、5-311-7585、5-313-5519、5-311-7586、5-313-6567、5-311-7587、5-313-6706、(0917) 3185345、(0995) 1561408、(0915) 268 8417、(02) 7959 2553；\n邮箱：marcpuralan0204@gmail.com、info@parklane.ph","官网：www.parklane.ph；Facebook：facebook.com/parklanecorp","1617 E. Remigio St., corner M. Natividad, Sta. Cruz, Manila, Philippines","建筑建材","名片信息行业分类"],["card-14","WHITE HORSE CERAMIC (PHIL) INC.（白马陶瓷有限公司）","菲律宾","Robert R. Nodo","建材陶瓷 / 卫浴","Assistant Sales Supervisor","电话：0917 5415519、(02) 822-3381；\n传真：(02) 562-0751；\n邮箱：robert_sales@whitehorse.com.ph、enquiry@whitehorse.com.ph","官网：www.whitehorse.com.my、www.whitehorse.com.ph","办公室 / 展厅：346 Sta. Clara Street, corner Syquia Street, Sta. Ana Manila；展厅地址：Unit 15 A Ground Floor, Two Ecom Center, Harbor Drive Mall of Asia Complex, Pasay City","建筑建材","名片信息行业分类"],["card-15","Formaply Industries, Inc.","菲律宾","Ric A. Abainza","建筑工程 / 模板脚手架","Formworks Design Engr.","电话：0995 509 4598、0977-1674341 (Globe)、0919-4624875 (Smart)、(632) 374 7405/06 (马尼拉总机)、(632) 373 0306 (马尼拉传真)、(6332) 344 5418 to 344 5419 (宿务分机)、(6332) 343 6036 (宿务分机)、(6332) 516 4884 (宿务分机)、(6332) 343 6035 (宿务传真)、(082) 227 0511 (达沃分机)、(082) 221 0470 (达沃传真)；\n邮箱：ricabainza@yahoo.com、formaply_industries@yahoo.com","","马尼拉总部：22 Scout Santiago, Bgy. Laging Handa, Quezon City, Philippines；宿务分公司：Sitio Tribo, Subabasbas Road, Marigondon, Lapulapu City 6015, Philippines；达沃分公司：4th Floor, Coop Commercial Bldg., Magallanes St., cor Ilustre Ext.","建筑建材","名片信息行业分类"],["card-16","ECOBLOC","菲律宾","Jeff Junio","建筑建材 / 新型墙体材料","Sales Officer","电话：+(63) 919-072-4208；邮箱：jeffjunio.ecobloc@gmail.com","","485 Asuncion St. Brgy 285, San Nicolas Manila","建筑建材","名片信息行业分类"],["card-17","SGA Sales Glass Alum (A & Aluminum Supply Corporation)","菲律宾","SGA Tess","建筑建材 / 玻璃铝型材","Sales Representative","电话：(632) 8251-1558、(632) 8252-5246、(632) 8256-6739、0919-0732371；邮箱：sgas.srep@yahoo.com.ph","官网：www.salesglassalum.com；Facebook：fb.com/sga tess","2531 Tomas Mapua Ext., Cor. Cavite St., Blumentritt Tondo, Manila, Philippines","建筑建材","名片信息行业分类"],["card-18","LESSO Philippines Trading Inc.","菲律宾","Rodolfo S. Sengco Jr.","建筑建材 / 管道系统","Sales Manager","电话：0917 503 8651、(02) 7002-0336；\n邮箱：rodolfo.s@lesso.com","官网：http://www.lesso.com","#1269 Epifanio Delos Santos Avenue, Brgy. Apolonio Samson Quezon City","建筑建材","名片信息行业分类"],["card-19","u","菲律宾","Max Lee","建筑建材 / 门窗五金系统","Assistant Sales Engineer","手机：00639541582314；电话：00632-79571518；邮箱：sales36-philippine@kinlong.com、philippines@kinlong.com","官网：www.kinlong.com","菲律宾办公室：Unit 2006-2007, Antel Global Corporate Center, Dona Julia Vargas Avenue Ortigas Center, Pasig City 1605, Metro Manila, Philippines；中国总部：No.3, Jian Lang Rd., Tangxia Town, Dongguan City, Guangdong Province, China","建筑建材","名片信息行业分类"],["card-20","DECLAD","菲律宾","无","建筑装饰材料 / 墙板系统","sales","手机：09178361268、09258206330、09176221521；\n电话：82822862/86412953、79570034；\n邮箱：declad@gmail.com、info@deccladph.com","官网：www.decladph.com；\nFacebook/Instagram/TikTok：@deccladofficial、@deccladPhilippines、@decclad","8 Marvex Drive PTFC Compound Balintawak Quezon City；\nMC Home Depot（多分店）","建筑建材","名片信息行业分类"],["card-21","LLumar (LTS Luminex Corp)","菲律宾","Paul Nikko Dizon","建筑膜材 / 汽车窗膜","Customer Relations Associate (Architectural Film Division)","电话：+639478992156、(02) 88732223、(02) 70021779；\n邮箱：archi.cra2@ltsluminex.com.ph","官网：www.LLumarPhil.com；\nFacebook：/LLumarPhilippines","108 kapilihan St. Araneta Subdivision Brgy. Doña Imelda, Quezon City 1100 Philippines","建筑建材","名片信息行业分类"],["card-22","P.I. Hardware (Structural Steel)","菲律宾","Nathaniel Ongchuan","钢材 / 建筑五金","Assistant Manager","电话：+63 977 853 0918、+63 960 236 9411（Office）、8740 0884、8733 9873、8740 0892、8740 0880、8740 2445、8551 0704；\n邮箱：nathan.pihardwaresgmail.com、pi_hardware@yahoo.com","","28 Grenada Avenue Villa Ortigas II, 95 C. Santigo Brgy. Dolandana, Valenzuela City (WAREHOUSE)","建筑建材","名片信息行业分类"],["card-23","CHI-CHAY METAL PRODUCTS, INC.（志再发）","菲律宾","","金属建材、金属制品行业","","座机：(02) 8711-3591、(02) 8711-3550；\n手机：+63 998 988 7649、+63 970 189 1974、+63 917 817 3534；\n邮箱：chichaymetal@yahoo.com","官网：www.chichaymetal.com；\n","1700 Laguna Street, Santa Cruz, Manila, Philippines","建筑建材","名片信息行业分类"],["card-24","HELIX STEEL PRODUCTS CORPORATION","菲律宾","FERDINAND B. SANTIAGO","紧固件、钢结构建材、五金索具行业","Marketing Manager","手机：0927-665-6761；\n邮箱：fsantiago_helixsteel@yahoo.com","官网：www.helixsteel.ph；\n","1.228 Sto. Domingo Ave., Balingasa, Quezon City, Metro Manila","建筑建材","名片信息行业分类"],["card-25","PHILDEX INDUSTRIES & DEV'T CORPORATION","菲律宾","NESSY CAPILI","管道管材、基建建材行业","Sales Representative","手机：0962 973 4738；\n座机：(02) 8559 9996 至 9997；\n邮箱：ness.phildex@gmail.com","脸书：PhildexPipes；\n","RM 2001 World Trade Exchange Building, 215 Juan Luna Street, Binondo Manila","建筑建材","名片信息行业分类"],["card-26","PARKLANE COMMERCIAL CORPORATION","菲律宾","JM C. MUNLEON","塑料管道系统、建筑材料贸易","Project Sales Manager - Nationwide","电话：5-310-2027、5-313-7585、5-313-7586、5-313-6567、5-313-6706；\n手机：(0917) 8986202、(0925) 7122221；\n邮箱：jmc munleon@yahoo.com；\n邮箱：info@parklane.ph","官网：www.parklane.ph；社媒：facebook.com/parklanecorp","1617 E. Remigio St., corner M. Natividad, Sta. Cruz, Manila, Philippines","建筑建材","名片信息行业分类"],["card-27","TECHGLOBAL INCORPORATED","菲律宾","Alfred Galang","管道管材、建材分销（代理 VESBO、VASEN 等品牌）","Sales Consultant","电话：8659-4267、8660-3706、8660-3723、8556-1091；\n手机：+63 994-031-3409；\n邮箱：alfred.galang.techglobal@gmail.com","官网：www.techglobal.com.ph","#22 Tandang Sora Avenue, Sangandaan, Quezon City","建筑建材","名片信息行业分类"],["card-28","Mariwasa Siam Ceramics, Inc.","菲律宾","Romeo Languisan Jr.","瓷砖陶瓷建材行业","Project Sales Officer","座机：+632 7717 6900；\n手机：+63917 630 2170；\n邮箱：rdlanguisan@gmail.com","","Unit 802 Fort Legend Tower, 3rd Ave. cor. 31st St., Bonifacio Global City, Taguig City, Philippines 1634","建筑建材","名片信息行业分类"],["card-29","Davies Paints Philippines, Inc.","菲律宾","Jomel T. Jara","涂料油漆建材行业","Business Development Officer（National Capital Region）","座机：+632 8641 7101、客服热线 + 632 8570 7000；\n手机：+63917 572 1374；\n邮箱：jomel.jara@daviespaints.com.ph","官网：www.daviespaints.com.ph","1415 A. Sandoval Ave., Cor. Mercedes Ave., San Miguel, Pasig City 1600, Philippines","建筑建材","名片信息行业分类"],["card-30","Kingsway Steel Enterprises Inc.（INOX）","菲律宾","Roy Bugayong","不锈钢铝材、镀锌钢材五金钢铁贸易","Sales Executive","座机：8-634-5558、8-634-3571、8-637-6277、8-637-6279；\n手机：+63 943 135 0854；\n邮箱：hstareenterprises2024@gmail.com","官网：http://www.hstar.ph；\n","2nd Flr, No. 88 Shaw Blvd. Brgy. Oranbo, Pasig City 1600 Metro Manila","建筑建材","名片信息行业分类"],["card-31","Unitec Pipe Manufacturing Corporation","菲律宾","JUANITO \"JUN\" R. GALANG JR.","管道管材生产制造行业","Accounts Development Officer","手机：0908 880 5219；\n座机：(632) 8743-3121；\n传真：(632) 8712-4851；\n邮箱：juanito.galang@unitecpipe.com","官网：www.unitecpipe.com","1388-F G. Araneta Ave., Brgy. Talayan, Quezon City 1104 Philippines","建筑建材","名片信息行业分类"],["card-32","Formaply Industries, Inc.","菲律宾","Ric A. Abainza","建筑铝模、脚手架爬架工程建材","Formworks Design Engineer","手机：+63 977 167 4344、09955094598；\n邮箱：rabainza@yahoo.com","官网：www.formaply.com","马尼拉总部：22 Scout Santiago St. Brgy. Laging Handa, Quezon City；\n宿务、达沃多地分支网点","建筑建材","名片信息行业分类"],["card-33","Ben's Windoors","菲律宾","Mark Wilson Vargas","韩式门窗建材、建筑装饰材料供应","Sales Associate","手机：09999931538、09169680523；\n座机：8242-8873；\n邮箱：benswindoorsdivi@yahoo.com","官网：https://benswindoors.net","Divisoria-Binondo：1031 &1033, Roman St, Binondo, Manila, 1001 Metro Manila","建筑建材","名片信息行业分类"],["card-34","TENYO Philippines Corp.","菲律宾","TONY ZHANG","建材五金机电贸易","General Manager","手机：+639 66042 6585；\n邮箱：Tenyoningbo@gmail.com；\n微信：tonyzhang633","","Taytay, Rizal","建筑建材","名片信息行业分类"],["card-35","QuakeSafe","菲律宾","","抗震防震建筑加固工程建材行业","","手机：+63991 335 8381；\n座机：(02) 8291 5175；\n邮箱：inquiry@quakesafe.ph","官网：www.quakesafe.ph","333-A Tullahan Rd., Sta. Quiteria, Caloocan City, Metro Manila, Philippines","建筑建材","名片信息行业分类"],["card-36","KAUFMAN INC（Stone WPC Mosaic）","菲律宾","Ferdie Padilla","石材、WPC 马赛克建筑装饰建材行业","Sales Executive","手机：+63 9458145079、+63 9206448015；\n邮箱：ferdiepadilla13@yahoo.com.ph","官网：www.kaufmanstone.com；\n社媒 FB：Ferdinand Padilla、IG：kaufman.stone","865 A.Mabini St. San Juan City, Metro Manila, Philippines","建筑建材","名片信息行业分类"],["card-37","CIOS","菲律宾","Davie Dawn Lorenzo","建材贸易行业","Sales & Marketing Manager","手机：0968-8631986；\n邮箱：davie.lorenzo@cios.com.ph","官网：www.cios.com.ph","#2565 Tomas Mapua St., Brgy. 209 Zone 19, Tondo, Manila","建筑建材","名片信息行业分类"],["card-38","Queensway Builder and Supply Co., Inc.","菲律宾","Marisol Fernandez","WPC 竹材、装饰墙板地面建材贸易","Product Specialist","座机：(02) 83644928、86680515；\n手机：09209879139；\n邮箱：sales6@queensway.com.ph","官网：www.queensway.com.ph","32 Ernesto Porto St. Brgy. Del Monte, Quezon City 1105；\n多门店网点分布","建筑建材","名片信息行业分类"],["card-39","Asian Coatings","菲律宾","Paul Garcia","涂料油漆建材行业","Senior Business Development Officer","座机：8645 0807、8645 8750、8682 8888、8645 0801、8682 0287；\n手机：+63 998 933 0122；\n邮箱：spgarcia@asiancoatings.com","官网：asiancoatings.com","48 Amang Rodriguez Ave., Santolan Pasig City, Metro Manila 1610","建筑建材","名片信息行业分类"],["card-40","Allied Interiors Trading（Greenlam Laminates）","菲律宾","Anj Sabuero","饰面板板材进口建材贸易","Operation Manager","手机：09959661566、09565809787；\n座机：8633-8623；\n邮箱：anjudiths@gmail.com、info.alliedinteriors@gmail.com","","Unit 2 Home Depot Ortigas, #1 Doña Julia Vargas Avenue, Pasig City","建筑建材","名片信息行业分类"],["card-41","Superfab Incorporated","菲律宾","France Baracena","建筑钢结构工程建材行业","Marketing Business Development Manager","座机：+32 85846868；\n手机：09605605708；\n邮箱：fbaracena1981@gmail.com","官网：www.superfab.com.ph；\n脸书：SuperfabPH","办公地址：5 Ideal cor. McCollough St., Brgy. Addition Hills, Mandaluyong City","建筑建材","名片信息行业分类"],["card-42","Woodcare Tech Marketing Philippines, Inc.（阿克苏诺贝尔多乐士官方授权经销商）","菲律宾","Rolando Garvida","阿克苏诺贝尔油漆涂料、木器防护漆建材行业","Senior Technical Services Engineer","传真：(632) 88310870、88330796、70002255；\n手机：09175220006；\n邮箱：woodcarehq@gmail.com","品牌官网：www.dulux.co.sg、www.sadolin.com、www.woodcaretech.org","561 Old Wack Wack Road, Mandaluyong City 1551","建筑建材","名片信息行业分类"],["card-43","SHERA Corporation","菲律宾","Carl Burton B. Gagarin","饰面板板材建筑建材行业","Trade Developer","座机：(02) 82531111 分机 124；\n手机：09771106579；\n邮箱：carl_g@shera.com","官网：www.SHERA.com","名片暂未标注详细地址","建筑建材","名片信息行业分类"],["card-44","Excel Coil Coating Corporation（Excelroof 屋面彩钢品牌）","菲律宾","Edilly Loreto","屋面彩钢瓦、金属屋面涂装建材行业","Sales Engineer","座机：+63 8524-5555；\n手机：+63 9070907521；\n邮箱：edilly.loreto@excelroof.com.ph","官网：www.excelroof.com.ph","7F Don Pablo Bldg., 114 Amorsolo St., Legazpi Village, Makati 1229","建筑建材","名片信息行业分类"],["card-45","Milano Interiors","菲律宾","Rheizen Gerly Hugo","室内外装饰、建筑建材行业","Architectural Sales Specialist","手机 / WhatsApp：+63 998-817-5757；\n邮箱：marketing.milanointeriors@gmail.com","暂无公开官网","#46 D. Tuazon Street, Quezon City 1113","建筑建材","名片信息行业分类"],["card-46","GT Stone Works","菲律宾","Richard Rocacorba","石材地坪、外墙饰面建材行业","Marketing Assistant","手机：0908 815 7048；\n邮箱：chard.stonepro@gmail.com","官网：www.gtstoneworks.com.ph；\nFB/IG 社媒 @gtstoneworks","","建筑建材","名片信息行业分类"],["card-47","Regan Industrial","菲律宾","Henry Uy Sison","管道工业建材行业","Sales Specialist","手机：09175177272、09688975074；\n座机：(02) 8771-8900；\n邮箱：jennilyn.cleofe@reganindustrial.com.ph","官网：www.reganindustrial.com、www.supremepipe.com；\n社媒 @reganindustrial","5 Harmony St., Brgy. Balingasa, Balintawak, Q.C.","建筑建材","名片信息行业分类"],["card-48","Spiral Group, Inc.","菲律宾","","预制通风空调设备建材分销行业","Sales Department","手机：+63 917-838-3133；\n座机：(632) 8285-4633、8285-3133；\n邮箱：sales@spiralgroup.ph、spiralgroup_inc@gmail.com","官网：www.spiralgroup.ph","Lot 4 Block 6 Phase IV-G, C-4 Road Longos, Malabon City, NCR 1472","建筑建材","名片信息行业分类"],["card-49","Screwtech Bolts and Nuts","菲律宾","Frederick Fenix、Carol-Lyn Fenix","螺丝紧固件五金建材行业","General Manager、E-commerce Head Office","手机：0923-083-5888、0977-804-8087、0945-223-0998；\n邮箱：sales@screwtech.com.ph、ecommercescrewtechoffice@gmail.com","官网：www.screwtech.com.ph；\nFB/IG 社媒","Autovick Bldg. Parian National Rd., Calamba City, Laguna","建筑建材","名片信息行业分类"],["card-50","Steel-Land Metal Products Corporation","菲律宾","Reynold Siy","钢材金属建材贸易行业","Marketing Manager","座机：(02) 8363-3852、8361-8336、8364-8161、8363-3871、8275-3062；\n手机：+63 0922-8999177；\n邮箱：kei.smpc@gmail.com","官网：www.steelandmetal.com","2nd Flr. A & R Bldg. 213 Rizal Ave. Ext. Caloocan City 1400","建筑建材","名片信息行业分类"],["card-51","AGS-Phils Building Materials Inc.","菲律宾","Rhoda G. Beñigo","建筑工程建材贸易行业","Sales Representative","座机：+632 83715364；\n手机：+639176265192、+639911848254；\n邮箱：rhoda002@agsphils.com、inquiry@agsphils.com","","35 Paraluman Street, Parang, Marikina City 1809","建筑建材","名片信息行业分类"],["card-52","Gentle Prince","菲律宾","Jennifer Corrales","工程建材贸易行业","Business Development Officer","手机：+639176237443；\n邮箱：jennifer.corrales@gentleprince.com","","Unit 1116, 11/F Park Triangle Corporate Plaza North Tower, 32nd St cor 11th Ave, Bonifacio Global City, Taguig","建筑建材","名片信息行业分类"],["card-53","JCC Marketing Inc","菲律宾","Henry Loo","建材涂料工程贸易","CE 负责人","座机：+632-8401-1091、8401-1092；\n手机：+639177963199、+639437069133；\n邮箱：jccmktginc@gmail.com","官网：www.mortabond.com.ph；FB 社媒","20 Denver Street, Cubao, Quezon City","建筑建材","名片信息行业分类"],["card-54","Polilite","菲律宾","Maxine L.Sanchez","板材建材装饰行业","Materials Engineer","手机：+63998956835；\n邮箱：maya.sanchez@polilite.com.ph","","KM 18 Polilite House Bldg., Alabang-Zapote Rd, Talon Dos, Las Piñas City","建筑建材","名片信息行业分类"],["card-55","Miraga Builders and Trading Inc","菲律宾","Alvin G. Bersamin","建筑工程建材贸易行业","Product Consultant","座机：7917-2530、8426-2842、8740-1484；\n手机：09544681299；\n邮箱：filchemtech01@yahoo.com、alvin.bersamin@yahoo.com","","24 P. Tescson St., Brgy. VMC, Project 4, Quezon City","建筑建材","名片信息行业分类"],["card-56","Woodcare Tech Marketing Philippines, Inc.（AkzoNobel 授权分销商）","菲律宾","Rolando Garvida","涂料、胶粘剂、木器防护涂料建材行业","Senior Technical Services Engineer","电话 / 传真：632 88310870、88330796、70002255；\n手机：09175220006；\n邮箱：woodcarehq@gmail.com","官网：www.dulux.co.sg、www.sadolin.com、www.woodcaretech.org","561 Old Wack Wack Road, Mandaluyong City 1551","建筑建材","名片信息行业分类"],["card-57","Acersteel Industrial Sales, Inc.","菲律宾","Arnold Ian Roca","钢材金属建材进口批发行业","","手机：09275641932、0927-3232788；\n传真：(02) 8657-3855、8657-3877；\n电话：(02) 8657-3888；\n邮箱：sales@acersteel.net","官网：www.acersteel.net","#5 Mauban Street corner A. Bonifacio Avenue, Brgy. San Jose, Quezon City 1115","建筑建材","名片信息行业分类"],["card-58","Woodmark Enterprises（GLM Lumber）","菲律宾","Niño Roxas","木材板材门窗建材行业","Sales Representative","座机：(044) 766-2280；\n手机：09338153992、09223302310、09190790767、0975-021-8238；\n邮箱：mvlumber808@yahoo.com.ph","FB 社媒：GLM Lumber","282 DRT Highway, Bagong Nayon, Baliwag, Bulacan 3006","建筑建材","名片信息行业分类"],["card-59","Linton Incorporated","菲律宾","Joavan Florencio","钢材金属板材加工建材行业","Sales Engineer","座机：(8) 733-8800 to 10 loc.137；\n手机：09272300783；\n传真：(8) 733-0493、733-0615；\n邮箱：j.florencio@lintonincorporated.com.ph","官网：www.lintonincorporated.com.ph","G/F Park Tower, 628-630 Tomas Mapua St., Sta. Cruz, Manila 1003","建筑建材","名片信息行业分类"],["card-60","Dewoo Joint Stock Company","越南","Emma Tran","建筑板材（ACC panel、XPLAS）建材行业","Export Sales Manager","手机：(+84) 905 963 055；\n邮箱：sales@dewoogroup.com","官网：www.dewoogroup.com","Lot 8, Street No. 7, Dien Nam - Dien Ngoc Industrial Park, Dien Ban Dong, Da Nang, Vietnam","建筑建材","名片信息行业分类"],["card-61","Dwightsteel","菲律宾","Garry I. Caringal","钢材金属建材行业","Sales Executive（NCR 区域）","手机：+63 906-291-8475；\n座机：(02) 8724-4424；\n邮箱：ncr@dwightsteel.com","官网：www.dwightsteel.com","总部：7F Annapolis Wilshire Plaza, 11 Annapolis St., Greenhills, San Juan City, Metro Manila","建筑建材","名片信息行业分类"],["card-62","Aluminum Power Marketing Corporation (APMC)","菲律宾","Jennifer Caones","铝材建材行业","Sales","座机：8733-5316、8733-5322、5310-6289；\n邮箱：hello@apmc.ph","官网：www.apmc.ph","673 T. Alonzo St., Sta. Cruz, Manila","建筑建材","名片信息行业分类"],["card-63","S.E.A Olympus Marketing Inc.","菲律宾","Patricia Kate M. Alcaraz","建筑板材、表面涂层材料行业","Sales Executive","手机：0998-590-7188；\n邮箱：pkmalcaraz@olympus.com.ph","官网：www.olympus.com.ph","Taguig 总部：17A, 1st Avenue Sta. Maria Industrial Subdivision, Bagumbayan Taguig；宿务 / 达沃另有分点","建筑建材","名片信息行业分类"],["card-64","Sakrete Enterprises Inc. (SAKURA)","菲律宾","James Ercilla","建筑材料、水泥制品行业","业务对接","手机：+63 920-963-3879、+63 966-441-8664；\n座机：+63 (2) 8650-7710；\n传真：+63 (2) 8638-4792；\n邮箱：sakreteinc@yahoo.com.ph","无公开官网","Unit B-214b CW Home Depot Ortigas, #1 Julia Vargas Ave., Brgy. Ugong, Pasig City","建筑建材","名片信息行业分类"],["card-65","Fortem","菲律宾","Mary Joy C. Maderazo","工业 / 建筑材料行业","Account Executive","手机：+63 945-390-1015；\n邮箱：mjcmaderazo@fortem.ph","官网：www.fortem.ph","Room 908 China Plaza Condominium, 1017 Tambacan St, Sta. Cruz, Manila 1003","建筑建材","名片信息行业分类"],["card-66","Chichay Metal Product,Inc","菲律宾","","金属 / 建材贸易行业","","座机：(02) 8711-3591、(02) 8711-3550；\n手机：+63 998-988-7649、+63 970-189-1974、+63 917-817-3534；\n邮箱：chichaymetal@yahoo.com","无公开官网","1700 Laguna Street, Santa Cruz, Manila","建筑建材","名片信息行业分类"],["card-67","Prime Panels Corporation","菲律宾","Chona D. Macasero","建筑板材 / 装饰面板建材行业","Marketing Manager / Importation Officer","手机：0998-889-0256；\n客服：0919-0882443、0919-0882441；\n邮箱：sales.primepanelscorp@gmail.com","官网：www.primepanelscorporation.net；FB/IG：@primepanelscorporation","2351 La Mesa St, Ugong, Valenzuela City；6080-B Sto. Rosario St, Ugong, Valenzuela City","建筑建材","名片信息行业分类"],["card-68","Kawara Roofing Solutions","菲律宾","Ren Gutierrez","屋面建材行业","Senior Sales Manager","手机：+63 919-067-8642、+63 906-469-7144；\n座机：+632 8288-8384、+632 8288-5677；\n邮箱：rengutierrez@kawara.com.ph","官网：kawara.com.ph","","建筑建材","名片信息行业分类"],["card-69","Cement Plus","菲律宾","Chris Gonzales","水泥、建材行业","","座机：8825-1819、8825-4593；\n手机：0915-734-2279、0922-825-5524、0927-663-2497、0927-831-8598、0917-817-9207、0999-990-5209","无公开官网","8182 Dr. A. Santos Avenue, Barangay San Dionisio, Sucat, Parañaque City","建筑建材","名片信息行业分类"],["card-70","Iwence Incorporated（代理 Silande 品牌）","菲律宾","Jaja Borja","工业设备 / 建材代理行业","Sales Representative","手机：0968-882-6079；\n座机：(02) 8564-2249；\n邮箱：iwenceinc@gmail.com","","9418 Felipe St, Guadalupe Nuevo, Makati City","建筑建材","名片信息行业分类"],["card-71","INGCO Philippines (INGCO Tools)","菲律宾","Justine Semilla","五金电动工具工业设备","Area Sales Representative","电话：(02) 8652-51-61；\n手机：0947-159-4259；\n邮箱：jsemilla.ingcoph@gmail.com","官网：www.ingco.com.ph；\n社媒：ingcophilippines（FB/IG/YT/TikTok）","130-A 6TH ST. 7TH AVENUE, EAST GRACE PARK CALOOCAN CITY","五金工具","名片信息行业分类"],["card-72","CLK SUPERTOOLS DEPOT INC.","菲律宾","Ryan M. Guevarra","五金电动工具工业设备","Demo Representative","手机：+63 992 215 1684；\n座机：(+632) 8243-1159~1164；\n邮箱：technical.demo@clksupertools.com.ph","官网：www.clkmakita.ph","315 Dasmarinas St., Brgy 290, Zone 27 Binondo, Manila 1006 Philippines","五金工具","名片信息行业分类"],["card-73","MP8 INDUSTRIAL CORP. (MPT Tools)","菲律宾","Romar Aguilar","五金电动工具工业设备","Marketing Head","手机：0968 720 0117；\n邮箱：marketinghead@mp8industrialcorp.com","官网：www.mpt-tools.com；\n社媒：mpt_ph /mpt_philippines（FB/IG/TikTok）","Brgy, 3 M. Francisco Ext, Valenzuela, Metro Manila","五金工具","名片信息行业分类"],["card-74","Globe International Distributor Center, Inc. (GIDCI)","菲律宾","Concon L. Celis","五金电动工具工业设备","Modern Trade Operations Sales Manager","座机：(02) 8372-9466 to 67 / (02) 3410-9158 to 59\n传真：(02) 8372-583\n手机：+639175803193\n邮箱：concongidci228@gmail.com","官网：www.gldcl.com.ph","228 Fernando Poe Jr. Ave., Del Monte, Quezon City, Philippines","五金工具","名片信息行业分类"],["card-75","工具经销商（代理 TOPTUL 等品牌）","菲律宾","Glixchard C. Tan","五金电动工具工业设备","Account Manager","电话：0966 583 3379、0915 799 7503、8532-3232、8534-3434；\n邮箱：glixchardtan@gmail.com","","1529 E. Rodriguez Sr. Ave., Brgy. Kristong Hari, Quezon City","五金工具","名片信息行业分类"],["card-76","BLUESHARK-7 (BLUESHARK ABRASIVES TECHNOLOGY)","菲律宾","Ednalyn Artillaga","工业设备 / 磨具五金","Sales Manager","电话：0905-4835929、0960-5260174、0917-1039223；\n邮箱：ednaartillaga@gmail.com","","KM31 National Highway, Tunasan, Muntinlupa City","五金工具","名片信息行业分类"],["card-77","CO BAN KIAT HARDWARE, INC. (CBK)","菲律宾","Deney Sanny Lumagui","五金建材 / 零售","Web and Digital Sales","电话：8243-1931 to 34 loc. 1258、(+63) 956-063-6228；\n邮箱：deney.lumagui@cobankiat.com.ph","官网：www.cbkhardware.com","Co Ban Kiat Building II, 231 Juan Luna Street, Binondo Manila, 1006, Philippines","五金工具","名片信息行业分类"],["card-78","BPT BEST POWER TOOLS CORP. (2B)","菲律宾","","工业工具 / 五金机电","进口商 / 批发商","电话：0905 353 7098 (Globe)、0922 829 9287 (Sun)、(02) 8252-3125；\n邮箱：bpt.bestpowertools06@yahoo.com","官网：www.2b-ph.com；社媒：Facebook/YouTube/Instagram/TikTok @2Bbestbuilt、@2Bpowertools","107 J.P. Ramoy Street, Talipapa BRGY. 164, Caloocan City ZIP Code 1400","五金工具","名片信息行业分类"],["card-79","JUSTINO CORPORATION","菲律宾","John Michael Rafer","工业工具 / 五金机电","Field Sales Representative","电话：(+63) 977 853 2821 (Viber)、(02) 8831-4752、(02) 8851-5937\n邮箱：john.justino@yahoo.com","","9422 Urma Drive, Airport Village, Brgy. Vitalez, Paranaque City, Metro Manila, Philippines 1700","五金工具","名片信息行业分类"],["card-80","UNITED FAR EAST COMPANY INC (UFE)","菲律宾","Sheryll R. Bautista","工业工具 / 五金建材","Product Sales Specialist","手机：09228370563、09222818802、86661242；\n电话 / 传真：+63282417485、87089645、82417475、82412029；\n邮箱：ufei61@yahoo.com、sales@unitedfareast.com.ph","官网：www.UNITEDFAREAST.com.ph","1573 V. Fugoso Corner Anacleto St. Brgy 335 Sta Cruz Manila Philippines 1014","五金工具","名片信息行业分类"],["card-81","Grind Tech Abrasives Corporation","菲律宾","Lene Zerrudo","磨料磨具 / 五金工具","Sales Representative","电话：+63975 014 2396；\n邮箱：sales2@grindtechcorp.com","官网：www.grindtechcorp.com","多分店：Quezon City（51 Don A. Roces Ave.）、Manila（539 Tomas Pinpin St.）、Caloocan（102-B Rizal Ave. Ext.）、Cavite（259-B Gen. Emilio Aguinaldo Hwy, Bacoor）","五金工具","名片信息行业分类"],["card-82","DENKATECH MARKETING","菲律宾","Dennis Allan Y. Chua","工业轴承 / 机械配件","General Manager","电话：(63) 917 1899329 (calls only)、(632) 8 693 8702；\n邮箱：denkatech@gmail.com","","Unit 102, Tk Maxx Building, 51 Don A Roces Ave. corner Scout Reyes St., Quezon City","五金工具","名片信息行业分类"],["card-83","GHI GENIUS HARDWARE INC. (天才五金行)","菲律宾","Arvin Sy (王聖惠)","五金工具 / 建材零售","Distributor/Importer/Wholesaler/Retailer","电话 / 传真：(+632) 733 6071、(+632) 733 0360、(+632) 254 4847、(+632) 341 4323；\n手机：(+63 917) 899 9619、(+63 922) 899 3454；\n邮箱：genius_hardware@yahoo.com.ph","","657 Florentino Torres St., Sta. Cruz, Manila, Philippines 1006","五金工具","名片信息行业分类"],["card-84","HE-MAX Industrial Corporation","菲律宾","Geraldine See","工业设备 / 五金机电","Sales Representative","电话：+63 (2) 8275-3888、8376-4670、8376-9941、8376-1950、8376-2391；\n手机：+63 (917) 555-9569；\n传真：+63 (2) 8376-5853；\n邮箱：hemaxsales@gmail.com","官网：www.hemaxindustrial.com","428 9th Street cor. 10th Ave., East Grace Park, Caloocan City","五金工具","名片信息行业分类"],["card-85","ALITHA INDUSTRIAL CORPORATION","菲律宾","Charlie Lacson","家具五金 / 建筑配件","Sales Representative","手机：(63) 977.183.3064；\n座机：(02) 8404.7104、8404.7086；\n邮箱：charlielacson@alithaind.com","官网：www.alithaind.com；\n社媒：Facebook @alithaindcorp、Instagram @alithaindustrial、TikTok @alithaindustrial","","五金工具","名片信息行业分类"],["card-86","SUPERSONIC MANUFACTURING INC.","菲律宾","Lyn Alcorroque","工业制造、五金汽配生产行业","Junior Sales Coordinator","座机：(02) 8531-7310、(02) 8531-8442；\n手机：0922-800-9022、0917-826-6154；\n邮箱：lyn@supersonic.ph","","248 Romualdez St , Brgy. Daang Bakal, Mandaluyong City, Philippines","五金工具","名片信息行业分类"],["card-87","WADFOW","菲律宾","JAMEELOU SAZON","电动工具、五金手工具建材行业","Area Sales Representative","座机：(02) 8652-51-61；\n手机：0962 350 2028；\n邮箱：jsazon.wadfow@gmail.com","社媒账号：wadfowphilippines（脸书、INS、YT、TikTok 全平台统一账号）","111-C 6TH AVE, 6TH STREET BRGY 121, Caloocan City","五金工具","名片信息行业分类"],["card-88","PRO BUILD","菲律宾","","工业工具、五金、电气设备供应","Sales Representative","邮箱：probuildindustrial@gmail.com；\n手机：+63927660-3888；\n座机：+632 7000-8424","社媒：www.facebook.com/probuildindustrial","Unit 1-B 432 Quirino Highway, Novaliches, Quezon City","五金工具","名片信息行业分类"],["card-89","JEA-MAXX LIGHT STEEL FRAMES ON SOLUTIONS, INC.","菲律宾","CARMEN Z. REYES","轻钢框架、轻型钢结构建材","Sales Engineer - DIV. 2","邮箱：czreyesjeamaxx@yahoo.com；\n手机：0927-902-2419、0981-398-8848；\n座机：(02) 8847-8335、(02) 8277-5525 loc.103、(02) 8714-0893、(02) 8713-8724","官网：www.jeamaxx.com","Main Office：533 Commonwealth Ave, Matandang Balara 1119 Quezon City；Samonte Office/Warehouse：Lot 99 Kaligtasan ext. cor. P Samonte St. Brgy. Holy Spirit, Quezon City","五金工具","名片信息行业分类"],["card-90","HAN'S INFINITE TOOLS","菲律宾","Jeferson Reyes","电动工具、五金机具代理（Johnson/SATA/Bosch 等品牌）","Sales Representative - END USER","手机 / Viber：+63 926 058 0443；\n邮箱：jeff.enduser@hansinfinitetools.net；\n官网 / 社媒：www.hansinfinitetools.com、@hansinfinitetools","官网：www.hansinfinitetools.com；社媒：@hansinfinitetools","Showroom: 8007 Poneel St. Cromagen Bldg. Brgy. Kapitolyo, Pasig City","五金工具","名片信息行业分类"],["card-91","CRESTON HARDWARE OPTIONS","菲律宾","SKYLENE MAE TEOGAN","五金建材、家居装饰材料供应","Sales Coordinator","邮箱：crestonhardwareoptions@ymail.com、crestonshowroom@gmail.com；\nBGC 座机：(02) 8-541-3156、(0917) 136-6978；\nSantolan 座机：(02) 8-656-9710、(0917) 174-5769；\nOrtigas 座机：(02) 8-631-7458、(0917) 329-8477","官网：www.crestonhardware.com","BGC BRANCH：Commercenter Bldg., 31st Street cor. 4th Avenue, BGC, Fort Bonifacio, Taguig；SANTOLAN [MAIN]：10-G Evangelista Ave., Santolan, Pasig City；ORTIGAS [MC HOME DEPOT]：168 Meralco Ave., Ugong, Pasig City","五金工具","名片信息行业分类"],["card-92","FV POWER DCA Philippines Corporation","菲律宾","Jose Que Jr.","电动工具、五金机电设备行业","Manager","座机：(+632) 7001-0472、(+632) 998 983 8322；\n手机：(+63) 917 315 9198；\n邮箱：Fvpowercorp168@gmail.com","社媒：Facebook/TikTok/ins：dcapowertoolsphilippines","357 Rose St. Unit 2, Caloocan City","五金工具","名片信息行业分类"],["card-93","Solidwork Trading OPC","菲律宾","Kim Panteriori","五金建材贸易行业","Sales Representative","手机：0956-5268194、0961-7690461；\n微信：kk09565268194；\n座机：(02) 8244 3315；\n邮箱：solidworktrading@gmail.com；","","892-F J. Aguilar Ave. Brgy. Pamplona Tres, Las Piñas City Metro Manila 1740","五金工具","名片信息行业分类"],["card-94","KINMO PW Corporation","菲律宾","Edward Bollosa","五金机电、工具建材全国分销贸易","Sales Account Specialist","手机：+639224353306、+639778407799；\n座机：8703-5284、8362-5820、8251-0507、8251-0508；\n邮箱：edwardbollosa.kinmosales@gmail.com","官网：www.kinmo.com","总部：1732 Jose Abad Santos St. Manila","五金工具","名片信息行业分类"],["card-95","Artu Philippines","菲律宾","","德国钻头钻孔五金工具进口分销行业","","手机：0917 185-2443、0933 810-9297；\n邮箱：inquirekami@gmail.com","FB/YT 社媒账号","","五金工具","名片信息行业分类"],["card-96","CO BAN KIAT HARDWARE, INC.（CBK）","菲律宾","Christian Cernechez","五金建材贸易行业","Sales Executive","座机：(+632) 8243-1931；\n手机：(+63) 917-628-7702；\n邮箱：christian.cernechez@cobankiat.com.ph","官网：www.cbkhardware.com","A.CBK Building, 495 Quintin Paredes, Binondo, Manila 1006 Philippines","五金工具","名片信息行业分类"],["card-97","Jimco Trading","菲律宾","Johan Archibald Chua","电工工具五金进口批发贸易","President","座机：8255-0611、8255-0676；\nViber：+639173206906；\n邮箱：chuajohan1296@gmail.com","","Jade Garden Manila，674 Honorio Lopez Blvd, Tondo, Manila","五金工具","名片信息行业分类"],["card-98","Crown Tools（Finemates International）","菲律宾","Bryan Cabilis","五金工具进口贸易行业","业务对接","座机：02-8661-5421、02-8664-8905；\n手机：+639935873694；\n邮箱：crowntools.araneta@gmail.com、cabilisbryan@gmail.com","官网：www.finematesinternational.com；FB/IG 社媒 @crowntoolsph","2548 Gregorio Araneta Ave. Brgy. Masambong Quezon City","五金工具","名片信息行业分类"],["card-99","Knick Knacks Trading Corporation","菲律宾","Don Coeli","五金建材贸易行业","","座机：(02) 8007-3152、872151448；\n手机：09175288423、09237231229；\nViber：09175288423；\n邮箱：dcoeli@knickknackscorp.com","官网：www.kalephilippines.com","2105B West Tower, Philippine Stock Exchange Centre, Ortigas Pasig","五金工具","名片信息行业分类"],["card-100","Han's Infinite Tools","菲律宾","Arman Dadula","五金工具、工业设备行业","Sales Coordinator","手机 / Viber：+63 931-901-3773；\n邮箱：adadula.hansinfinitetools@gmail.com","官网：www.hansinfinitetools.com；FB/IG/TikTok：@hansinfinitetools","Showroom：8007 Pioneer St., Cromagen Bldg, Brgy Kapitolyo, Pasig City","五金工具","名片信息行业分类"],["card-101","PhilFasten Industries Inc. (Phasten PRO)","菲律宾","Rolando De Leon - CPP","紧固件 / 工业五金","General Manager","电话：+63 956 883 5917；\n邮箱：www.philfasten.com（官网邮箱）","官网：www.philfasten.com；\nFacebook：PhilFasten","209 Mariveles St., Laloma, Quezon City, Philippines 1114","五金工具","名片信息行业分类"],["card-102","ORTIGAS HOME DEPOT SHOWROOM（关联 BESTANK）","菲律宾","","五金建材、水泵、卫浴设备代理（代理 BESTANK、GRUNDFOS 等品牌）","","电话：(02) 8637-0208；\n手机：(+63) 2-8637-0208、(+63) 998-968-7420；","官网：www.bestank.com","#1 Dona Julia Vargas Ave. Cor. Meralco Ave., Brgy. Ugong, Pasig City","五金工具","名片信息行业分类"],["card-103","GRAND PHILIPPINES","菲律宾","JOVILYN NAPUTO","家电","Account Manager","电话：0906 558 2939、(02) 727 52212；\n邮箱：grandphilippines@gmail.com","官网：www.grandphilippines.com","157 C Benitez St., Cubao Quezon City Plaridel By-Pass Bulacan, Brgy. Bulihan","机电设备","名片信息行业分类"],["card-104","FELCO (Firefly Electric and Lighting Corporation)","菲律宾","Mari Mar Pensica","电气照明 / 电工建材","Project Accounts Officer","电话：+63 2 87891000 (总机)、+63 2 87891001 (直线)、+63 2 87891010 (传真)、+63 927 423 2329 (Viber)；\n邮箱：mari.pensica@fireflyelectric.com、project.accounts@fireflyelectric.com","官网：www.fireflyelectric.com；","7/F Zen Offices Bldg. 1111 Natividad Lopez St., Ermita Manila, Philippines","机电设备","名片信息行业分类"],["card-105","FLPC (Filipino Lighting & Power Corporation)","菲律宾","Glenda Abuyot、Karen Y. Molina","电气照明 / 电力工程","Sales Account Executive、Account Executive Officer","Glenda：\n手机：+639458530208；邮箱：glendaabuyot@flpc.com.ph；\nKaren：\n手机：09163837727；邮箱：karenmolina@flpc.com.ph","官网：www.flpc.com.ph","7 Ocean Park St., Novaliches Quezon City, Philippines 1116","机电设备","名片信息行业分类"],["card-106","OPPLE Lighting Philippines (欧普照明)","菲律宾","Willy Panganiban","照明电器 / 灯饰","Assistant Sales Manager","电话：84428288；\n手机：09985629178；\n邮箱：sales@opple.com.ph","官网：OPPLE.COM.PH","6F #1310 EDSA Balintawak Quezon City","机电设备","名片信息行业分类"],["card-107","LINHO (联浩)","菲律宾","Lisa","照明 / 线性灯饰","sales","电话：09810997777、09543653298；\nFacebook：Linho Linear lighting","","218 Rizal Avenue Extension, Sta Cruz Manila；\nUgic tower 684 Tomas","机电设备","名片信息行业分类"],["card-108","DPMI (DP Microelectronics, Inc.)","菲律宾","Zenaida Balena","家电 / 厨卫电器","Domestic Sales Supervisor","电话：(+63) 933-867-2952、(+63) 975-870-9705；\n邮箱：naidabalena@gmail.com","官网：www.dpmi.com.ph","778-B Mahogany St., Octagon Vill., Brgy. Dela Paz, Pasig City","机电设备","名片信息行业分类"],["card-109","IODHOME INC","菲律宾","RICHELLE CABIGAN","高端家电（厨电 / 制冷 / 咖啡设备）代理","Sales Executive","手机：0908-312-3841；\n座机：+632 8967-7127、+632 8356-6106；\n邮箱：richelle@lodhome.com","社媒：gorenjePH、liebherrPH、greatestPH","G/F PNB Bldg. 165 Legazpi Street Legazpi Village, Makati City, PH","机电设备","名片信息行业分类"],["card-110","BIGLITE","菲律宾","Jendel Francisco","照明灯具灯饰行业","Sales and Marketing Executive","座机：(02) 8277-0777、(02) 8277-0999；\n手机：0922-830-5587、0922-830-5587；\n多城市分支门店电话齐全","官网：www.biglite.com；\n","主展厅：3026 Gen T. De Leon Road Brgy. Gen T. De Leon Valenzuela City；\n马卡蒂、欧朗阿波多地门店","机电设备","名片信息行业分类"],["card-111","Lukeson Lighting and Electrical Services Company","菲律宾","JL Soriano","照明灯具、电气工程服务行业","Technical Manager","手机：+63 906 231 9659；\n邮箱：technical@lukesonlighting.com.ph","官网：www.lukesonlighting.com.ph","#20 Genova St., Brgy. Gulod Novaliches, Quezon City","机电设备","名片信息行业分类"],["card-112","DSL GAM Enterprises Inc.","菲律宾","Lynda Orillo","LED 照明灯饰灯具行业","","座机：5313-8745、5313-9876、8242-5156、5313-9861；\nVIBER / 手机：09199915866；\n邮箱：dsl.ent@gmail.com","官网：www.dsl-led.com","409 Juan Luna St. Binondo, Manila, Philippines","机电设备","名片信息行业分类"],["card-113","Lukeson Lighting and Electrical Services Company","菲律宾","JL Soriano","照明灯具、电气工程服务行业","Technical Manager","手机：+63 906 231 9659；\n邮箱：technical@lukesonlighting.com.ph","官网：www.lukesonlighting.com.ph；\n名片附带二维码","#20 Geneva St, Brgy. Gulod Novaliches, Quezon City","机电设备","名片信息行业分类"],["card-114","Fujiaire Philippines Ventures Inc","菲律宾","Angelica Grace Gaza","暖通空调制冷设备建材行业","Sales Director","手机：09399323569；\n邮箱：agaza.fujiaire@gmail.com","","总部：Unit 12-0,12 层 Southwoods Office Tower, City of Biñan；\n另有吕宋、宿务等多处分仓","机电设备","名片信息行业分类"],["card-115","Eurolux Commercial Corporation","菲律宾","Edmond M. Rodriguez","照明灯具电气建材行业","Project Sales","手机：(0906) 525-8933；\n邮箱：edmond@eurolux.com、edmondrodriguez21@gmail.com；\n座机：(632) 8716-8888；\n传真：(632) 8716-2222","","640-642 Manga Avenue Sta Mesa, Manila 1016","机电设备","名片信息行业分类"],["card-116","Silver Horizon","菲律宾","Kristoffer Ray A. Abella","蒸汽设备与润滑工业服务行业","President","手机：+63 917-897-0673、+63 954-341-8532；\n座机：8633-8005、8633-8006、8633-9917、8632-0312；\n邮箱：kaabella@silverhorizon.com、inquiry@silverhorizon.com","官网：www.silverhorizon.com","6 San Isidro St., Brgy. Pineda, Pasig City, PH 1603","机电设备","名片信息行业分类"],["card-117","Twin Mark Airconditioning Refrigeration & Electrical Supply Inc.","菲律宾","","空调制冷 / 电气设备供应行业","","手机：0917-878-1818、0917-327-2999；\n邮箱：twinmarkph@gmail.com、sales@twinmarkph.com","FB 社媒：facebook.com/twinmark121","121 P. Cruz St., Brgy. New Zaniga, Mandaluyong City, Metro Manila","机电设备","名片信息行业分类"],["card-118","Federation of Electrical & Electronics Suppliers & Manufacturers of the Philippines, Inc. (PESA)","菲律宾","Johan Chua (郭祝汉)","菲律宾电气电子行业协会","President","电话：02-8404-3385、02-8404-3829；\nViber：0917-148-7226；\n邮箱：office@pesa.association.ph","官网：pesa.association.ph","PESA Bldg., 3001 Ramon Magsaysay Blvd. cor. M. Dela Fuente St., Sta. Mesa Manila 1008","机电设备","名片信息行业分类"],["card-119","ECOSOLARPHIL","菲律宾","FRANCIS GOO","新能源","","手机：+63917-1122496；\n邮箱：francis.ecosolarphil@gmail.com","官网：www.ecosolarphil.com","30 San Diego St. Canumay West Valenzuela City","新能源","名片信息行业分类"],["card-120","SOLANDA ENTERPRISES, INC.","菲律宾","CHARIE MORENO-GANGGAY","太阳能设备（Solar Water Heater、Solar PV）销售","Sales Executive（Solar Power Department）","电话：+632 8706-6204、8706-6189 Loc. 259、+632 8527-8261；\n手机：0909 159-8572；\n邮箱：morenocharlesmarie8@gmail.com、solarpower@solanda.com、solanda@solanda.com","官网：www.solanda.com","730 Anda cor. Solana & Magallanes Sts., Intramuros, Manila","新能源","名片信息行业分类"],["card-121","GRAND PHILIPPINES","菲律宾","Devie T. Eliab","太阳能灯具、户外照明灯饰贸易","Account Manager","手机：0906 558 2939、0961 981 8908；\n邮箱：grandphilippines@gmail.com","官网：www.grandphilippines.com；\n","门店：157 R. Benitez St. Cubao, Quezon City；\n仓库：825 R. Hidalgo Street, Quiapo, Manila；\n仓库地址：Plaridel By-Pass Road Bulacan City Brgy. Bulihan","新能源","名片信息行业分类"],["card-122","FSL（EVLA 照明）","菲律宾","Benjie Peñaflor","太阳能路灯、LED 户外室内照明灯具","Territory Sales Officer","手机：0927-292-2116；\n邮箱：bbp.cogentrix@gmail.com","","444 San Fernando St Barangay 282 Zone 26 1010 San Nicolas, Manila City","新能源","名片信息行业分类"],["card-123","Royal Suntech Corp.","菲律宾","","光伏太阳能新能源行业","","手机：0915-165-7888、0945-558-5516、0995-161-6168；\n座机：(044) 761-0039；\n邮箱：royalsuntechcorp@gmail.com","脸书：Royal Suntech Corporation","A9 Jolly Industrial Park, Bypass Access Road, Brgy. Parulan, Plaridel, Bulacan","新能源","名片信息行业分类"],["card-124","Home Depot Online","菲律宾","Megan Millena","家居建材 / 装修零售","Account Specialist","电话：0998 534 2896；\n邮箱：marketing@homedepotonline.ph","官网：m.homedepotonline.ph","Unit 1 393-B T. Santiago St., Viente Reales, Valenzuela City","家居装饰","名片信息行业分类"],["card-125","Boson Home","菲律宾","Catherine Apas","家居软装 / 家具零售","Sales Representative","电话：0935-6661655、09171435523、8255-3955；\n邮箱：bosonhomefurnishing@gmail.com、bosonhomestore@gmail.com","官网：www.boson.ph","Penthouse RBL Place, 549 Banawe St. Santa Mesa Heights, Quezon City, 1114 Metro Manila","家居装饰","名片信息行业分类"],["card-126","KUYSEN ENTERPRISES INC.","菲律宾","Amy I. Ginoy","进口高端家居建材、卫浴软装设计代理","Project Sales Officer","手机：+63 966 194 6726；\n座机：+632 8740 7509 Loc.8212；\n邮箱：amy.ginoy@kuysen.com","官网：www.kuysen.com","总部地址：236 E. Rodriguez Senior Avenue, Barangay Don Manuel, Quezon City；\n门店 1：2 Jupiter, corner Zodiac Street Bel-Air Village, Makati City；\n门店 2：4/F Mega Fashion Hall SM Megamall, Mandaluyong City","家居装饰","名片信息行业分类"],["card-127","FUTURE FLOORING, INC.（关联 GENTRIX）","菲律宾","Mark Paul Nava","地板地材、铺装建材贸易","Sales Associate","手机：+63 945 6810788；\n座机：+632 8637-4885、8637-3923；\n邮箱：sales@futureflooring.com.ph","","U436-441 Level 4 Shangri-La Plaza, Main Wing EDSA corner Shaw Boulevard, Barangay Wack-Wack, Mandaluyong City, Philippines 1550","家居装饰","名片信息行业分类"],["card-128","Viro Homes","菲律宾","Lara R. Villafuerte","家居建材室内装修行业","Founder & CEO","手机：+63 9175845272；\n邮箱：laravillafuerte@virohomes.com","官网：virohomes.com","Unit 1803/1804, Capital House, Tower 1, 9th Ave Cor 34th St, BGC Taguig","家居装饰","名片信息行业分类"],["card-129","Tisa Home","菲律宾","Luigi Estepa","家居软装室内装修建材行业","Showroom & Sales Consultant","手机：09959278870；\n邮箱：luigi@tisahome.co","官网：tisahome.co、社媒 @tisahome","","家居装饰","名片信息行业分类"],["card-130","Montaj Interior Supply Trading Inc","菲律宾","Jean L. Abalos","室内装饰装修建材行业","Account Executive","座机：8374-2448、7903-4824；\n手机：09763832181；\n邮箱：jla.montaj@gmail.com","官网：www.montajtech.com","1st Floor, PBD Building, 27 A. Roces Ave., Quezon City 1103","家居装饰","名片信息行业分类"],["card-131","Flamingo","菲律宾","Ellery Go（吴国烽）","家居装饰建材行业","","手机：+639178255597；\n邮箱：ellerybryce@gmail.com","","Blk 26 Lot 5 Unit 8 Katipunan Extension, Quezon City, PH","家居装饰","名片信息行业分类"],["card-132","Blanc Ventures Inc.","菲律宾","Mimi Francisco","室内设计与装修行业","Chief Operating Officer","手机：0908-887-8900；\n邮箱：mfrancisco@blancventuresinc.com","官网：www.blancinstantrenovations.com","Ortigas：3201C Tektite Tower West, Ortigas Center Pasig；Bulacan：Warehouse #12 Eldan Industrial Park, Brgy. Patubig, Marilao；Quezon City：102 Kalayaan Avenue, Diliman；Cebu：Warehouse #23 Zuellig Avenue, Mandaue North","家居装饰","名片信息行业分类"],["card-133","TDR INTERNATIONAL LOGISTICS","菲律宾","Jennylyn Berboso","国际物流 / 货运代理","Coordinate Manager","电话：+639175662333；\n邮箱：Jennylyn@tdrworldlogistic.com；\n支持 WeChat、Viber","","","物流贸易","名片信息行业分类"],["card-134","DAIVIET GROUP（DAI VIET PLASTIC COMMERCIAL PRODUCTION COMPANY LIMITED）","越南","RINA NGUYEN","塑胶塑料板材制品生产出口","International Sales Representative","手机：(+84) 966 341 575；\n邮箱：rina.nguyen@nhuadaiviet.com","官网：www.daivietplastic.com；\n","代表处：98A Nguyen Nhu Kon Tum St, Thanh Xuan Ward, Hanoi City；\n河内、和平省多座工厂地址齐全","物流贸易","名片信息行业分类"],["card-135","KERATILES CERAMIC CO., LTD.（旗下 Kernold/Kerano Stone 泳池瓷砖品牌）","泰国","Tanat Thongphakdee(NAT)","泳池砖、建筑陶瓷石材进出口行业","Sales Representative","手机：+66 6 4957 9956、+66 6 4957 9956；\nWhatsapp / 微信：KeraExportTiles；\n座机：(66) 2692-9201-5 Ext.502；\n传真：(66) 2692-7552；\n邮箱：tanat@keratiles.co.th","官网：https://www.keratiles.com；\n多平台品牌社媒账号","238/25 SOI RACHADAPISAKE 18, RACHADAPISAKE RD., HUAYKWANG, BANGKOK 10310 THAILAND","物流贸易","名片信息行业分类"],["card-136","Caltrade Industries","菲律宾","Paul John Velasco","建材进出口贸易行业","Sales Representative","座机：(02) 83619442；\n手机：+6391186131；\n邮箱：pauljohnvelasco.caltrade@gmail.com、info@calid.com.ph","","Lot 2-W, Blk No.2 Phase-1 Parkhomes Commercial St., Tunasan, Muntinlupa City 1770","物流贸易","名片信息行业分类"],["card-137","Airspeed International Corporation","菲律宾","Maluh V. Bernardo","国际物流货运行业","Business Development Manager","座机：(02) 8664-5410；\n手机：+639616354947；\n邮箱：mbernardo@airspeed.com.ph","官网：www.airspeed.ph","CGB Building, Pascor Drive, Brgy. Sto. Niño, Parañaque City 1704 Metro Manila","物流贸易","名片信息行业分类"],["card-138","CO BAN KIAT HARDWARE, INC.（CBK）","菲律宾","Deney Sanny Lumagui","五金建材进出口贸易","Web and Digital Sales","座机：8243-1931 分机 1258；\n手机：(+63) 956-063-6228；\n邮箱：deney.lumagui@cobankiat.com.ph","官网：www.cbkhardware.com","Co Ban Kiat Building II, 231 Juan Luna Street, Binondo Manila, 1006 Philippines","物流贸易","名片信息行业分类"],["card-139","GOLDENHOME TRADING CORP","菲律宾","Joy Esteban","家居门窗建材贸易行业","Sales Executive","手机：09812407853；\n邮箱：goldenhome888999@gmail.com","官网：www.goldenhomeglobal.com；\n脸书：www.GoldenHome.facebook.com；\nViber 二维码","2nd floor BLDG 4 PARQAL Mall, Parañaque city","物流贸易","名片信息行业分类"],["card-140","Globe International Distributor Center, Inc.（GIDCI）","菲律宾","Mary Lyca M. Hisarza","多品牌五金锁具工具进口分销行业","Brand Manager","座机：(02) 83729466、(02) 34109158、(02) 83725836；\n手机：+639178337875；\n邮箱：lhisarza@gidci.com.ph","官网：www.gidci.com.ph","228 Fernando Poe Jr. Ave., Del Monte, Quezon City, Philippines","物流贸易","名片信息行业分类"],["card-141","Globe International Distributor Center, Inc.（GIDCI）","菲律宾","Michel Feliciano","多品牌五金锁具工具进口分销行业","Key Account Manager","座机：(02) 83729466、(02) 34109158；\n手机：09350818554；\n邮箱：feliciano.mitch14@gmail.com","官网：www.gidci.com.ph","228 Fernando Poe Jr. Ave., SFDM, Quezon City","物流贸易","名片信息行业分类"],["card-142","JUSTIC CORPORATION","菲律宾","Ludy Talao","仓储物流设备 / 工业搬运","Sales","电话：(632) 82422048、82415237、53100836；\n传真：(632) 82426942；\n邮箱：justiccorp@gmail.com","官网：www.justicorp.com；\nFacebook：/Justic Corporation","Don Paquito Bldg. 99 Dasmariñas St., Binondo, Manila, Philippines","运维服务业","名片信息行业分类"],["card-143","Powersteel","菲律宾","Fabe Grace Macaraeg","钢材建材工程供应链行业","Sales Representative","座机：(02) 8731-0000 loc.133；\n手机：+639985419410、+639985419410；\n邮箱：fabarilles@powersteel.asia","社媒：FB/INS：powersteelinc","1714 Maria Clara St. Sampaloc Manila","运维服务业","名片信息行业分类"],["card-144","SAM Integrated Solutions Inc.","菲律宾","ZAVIER ABella","综合项目解决方案、工程材料供应链","Business Development Manager","手机：+63 927 830 1700；\n邮箱：zavier.abella@samintegratedsolutions.com","官网：www.samintegratedsolutions.com","","运维服务业","名片信息行业分类"],["card-145","TMAX Corporation Co.,Ltd.","泰国","Montri Itthichalkui","建材五金工程供应链贸易","Managing Director","手机：086-999-8090；\n热线：0-2731-4788；\n邮箱：ml@t-maxcorp.com","官网：www.tmaxcorp.co.th","Klong Chaokhunsing, Wangthonglang, Bangkok 10310 Thailand","运维服务业","名片信息行业分类"],["card-146","One Source Facility Services","菲律宾","Rogelio C. Sambrano Jr.","厂房物业工程运维维保行业","Sales and Marketing Manager","手机：09176215617；\n邮箱：rogelio.sambranojr@onesourcefacility.ph","官网：onesourcefacility.ph","17 Felix Manalo St., Brgy. Pinagkaisahan Cubao, Quezon City","运维服务业","名片信息行业分类"],["card-147","Smart House Prefab","菲律宾","Edcel Panaligan","预制房屋、模块化建筑行业","Sales Engineer","座机：(02) 8423-5817；\n手机：0916-320-8499；\n邮箱：edcel.panaligan@smarthouseprefab.com.ph","官网：www.smarthouseprefab.com.ph","128 Kamuning Rd. Diliman, Quezon City","运维服务业","名片信息行业分类"],["card-148","SSIS Shelves and Storage Equipment","菲律宾","Edward Roldan","仓储货架、物流设备行业","Sales & Marketing Manager","手机：+63 917-708-0098、+63 932-129-8421；\n座机：8-772-1017、8-869-3276、8-887-5361；\n传真：8-826-9196；\n热线：+63 925-552-6409、917-852-6409、925-720-9418；\n邮箱：edward@ssis.com.ph","官网：www.ssis.com.ph","Jy and Son's Realty Compd. Km 23, Warehouse D1, West Service Road, Brgy. Cupang Muntinlupa City","运维服务业","名片信息行业分类"],["card-149","PERFECT CIRCLE INDUSTRIAL SUPPLY CORP.（SOLEX 安防）","菲律宾","GALE BUSTARGA","安防安保器材工业供应","","座机：(02) 8711-32-99、(02) 8636-16-19；\n手机 / Viber：0997-1848472；\n邮箱：perfectpcisc@gmail.com","","#90 Banawe St., Brgy. Tatalon Quezon City","劳保安全","名片信息行业分类"],["card-150","SENZO SDN BHD","马来西亚","Jonathan Tan","安防物联网、智能家居、绿色照明系统","Marketing & Business Development Specialist","手机：+6012-260 6932；\n座机：+604-644 1678；\n邮箱：jonathan.tan@senzo.com.my","官网：www.senzo.com.my；社媒账号","39-G Persiaran Bayan Indah, Bayan Bay, 11900 Penang, Malaysia","劳保安全","名片信息行业分类"],["card-151","Wyler Enterprises, Inc.","菲律宾","Marissa L. Abcede","劳保消防安全防护设备行业","Account Executive","座机：8703-3807；\n传真：(02) 8735-0581~84；\n手机：0999-5226595、0933-6096064；\n邮箱：sales@wyler.com.ph","官网：www.wyler.com.ph","1300 Rizal Avenue, Sta Cruz, Manila","劳保安全","名片信息行业分类"],["card-152","Hi-Safety Industrial Supplies, Inc.","菲律宾","Nica Habana","劳保安全防护用品行业","Product Specialist","座机：8563-9554、8561-2110 Loc.103；\n手机：+63 995-055-5144；\n邮箱：nica@hisafetywear.com","官网：www.hisafetywear.com","SH-17 Bldg., Otis 888, P.M. Guazon St., Paco, Manila 1007","劳保安全","名片信息行业分类"],["card-153","Bangco Marketing（BM）","菲律宾","","3M 汽车 / 工业安全产品分销行业","","电话：8930-8321、8786-9860 to 64；\n传真：8930-8321 loc.104；\n电话：7966-0118；\n邮箱：bminquiries@yahoo.com","官网：www.bangcomarketing.com / simplegreen.ph","29 St. Mary Street Cubao, Quezon City, Metro Manila 1102","劳保安全","名片信息行业分类"],["card-154","Bangco Marketing（BM）","菲律宾","","3M 汽车 / 工业安全产品分销行业","","电话：8930-8321、7966-0118；\n传真：8930-8321 loc.104；\n邮箱：bminquiries@yahoo.com","官网：www.bangcomarketing.com","29 St. Mary Street Cubao, Quezon City, Metro Manila 1102","劳保安全","名片信息行业分类"],["card-155","FERROTECH PAINTS AND COATINGS INCORPORATED","菲律宾","Slensy M. Corcino","化工涂料涂装","Account Executive","座机：+63 (2) 8334-1789 / +63 (2) 8361-6074\n传真：+63 (2) 8643-7595\n手机：+63 917-8539-311\n邮箱：smcorcino@ferrotechsteel.com","","71 Mendez Road, Baesa Quezon City, Philippines","其他行业","名片信息行业分类"],["card-156","CONCEPT SPECIALIST INC.","菲律宾","Nona Giliberte","商用餐饮设备 / 咖啡器具","Brand Manager","电话：+63 917 657 0503；\n邮箱：nona@conceptspecialist.com；\n宿务分机：(+6332) 412 0086；\n宿务手机：+63 917 771 2570；\n达沃分机：(+6382) 225 2903；\n达沃手机：+63 917 167 0732","官网：www.conceptspecialist.com；代理品牌：De'Longhi、SANREMO、DF.coffee、VERSYS、PUQ PRESS、Lumar、LOVERAMICS、SHOTT、good mate、GOLD BARISTA、COFF","主展厅：78 Malakas St. Brgy. Pinyahan, Diliman, Quezon City；宿务展厅：Unit 1 & 2, The Greenery, Pope John II Ave., Cebu City, Cebu；达沃展厅：Lot 2, 778 Mt. Mayon Street, Brgy. 7-A, Poblacion District, Davao City","其他行业","名片信息行业分类"],["card-157","OLYMPUS PIPING MANUFACTURING CORP. (HERCULINE)","菲律宾","Angelo C. Cruz","管道建材 / 给排水工程","Business Development Executive","电话：0932-219-4593；\nViber：0932-219-4593；\n邮箱：gelocruz2095@gmail.com","","Quezon Rd, Brgy. Laug, Mexico, Pampanga","其他行业","名片信息行业分类"],["card-158","Multi-Line Building Systems, Inc.","菲律宾","Jason Pascual","建筑智能化 / 安防弱电","Sales Manager","电话：+63 927 744 0554、+63 2 7220 1155、+63 2 8929 9911；\n邮箱：jc Pascual@multi-linegroup.com","官网：www.multi-line.com.ph/mbi、www.multi-line.com.ph；","Calderon Bldg., 827 EDSA, South Triangle 1103 Quezon City, Philippines（马尼拉总部）；宿务分机：268-8012；达沃分机：296-3046","其他行业","名片信息行业分类"],["card-159","WACOCORP PHILIPPINES INC.","菲律宾","Aiza Valenciana","给排水 / 水处理设备","sales","电话：(+632) 8 8900040；\n手机：(+63) 967 452 5185、(+63) 933 933 0123；\n邮箱：htsmsales@gmail.com","品牌：Hyundai Waco (S. Korea)、Pi Water System (Japan)、LabPua Water System (USA & Korea)","2580 ML Quezon Brgy. Poblacion Makati City 1210","其他行业","名片信息行业分类"],["card-160","ELEMENTIS INC (jimiiot)","菲律宾","Michaela F. Laure、Jude M. Cordova","物联网 / 智能设施 / 工业风机","Sales Director、Technical Sales Executive","Michaela：电话：+639285078856、+639176255503；邮箱：sales2@elementisinc.com、info@elementisinc.com；\nJude：电话：+639176218539、+639985967321；邮箱：sales1@hurricanebigfan.com、info@hurricanebigfan.com","社媒：/jimiiotph、/elementisph、@hurricanebigfans","218 Rizal Avenue Extension (Between 2nd & 3rd Avenue), 1400 Grace Park, Caloocan City","其他行业","名片信息行业分类"],["card-161","Elementis Inc.","菲律宾","Jude M. Cordova","工业设备 / 通风系统","Technical Sales Executive","电话：+63 917 6218539、+63 998 5967321、+63 917 6255503、+63 998 5967319；\n邮箱：sales1@hurricanebigfan.com、info@hurricanebigfan.com","社媒：Facebook @hurricanebigfans、Instagram @hurricanebigfans","218 Rizal Avenue Extension, Between 2nd & 3rd Avenue, 1400 Grace Park, Caloocan City, Metro Manila, Philippines","其他行业","名片信息行业分类"],["card-162","THE BRAIN COMPUTER CORPORATION","菲律宾","FLOR MASANGCAY","视听设备销售、租赁、系统集成","Account Executive","手机：(+63998) 8560479、(+63917) 594-8630、(+63918) 934-5369、(+63918) 930-2517；\n电话：(+632) 8722-8843、8722-4431、8724-7839、8721-2451、8725-0437、8724-7864、8727-0637、8725-9359；\n传真：(+632) 8725-0608；\n邮箱：avsales@brain.com.ph、inquiry@brain.com.ph","官网：www.brain.com.ph","Main Office: 150 F. Blumentritt cor. R. Pascual St., San Juan City 1500, Philippines","其他行业","名片信息行业分类"],["card-163","MAXLOGIC CORPORATION","菲律宾","Cathleen Elaine Tan","工业建材贸易","Sales Executive","座机：+63 (02) 70008429、+63 (02) 82522989、+63 (02) 82477215；\n手机：+63927-9935392；\n邮箱：maxilogic.cath@gmail.com","","281-D San Fernando St., Brgy. 284 San Nicolas, Manila","其他行业","名片信息行业分类"],["card-164","JCC MARKETING INC（关联 MORTABOND）","菲律宾","HENRY LOO","建材混凝土工程材料贸易","C.E.","座机：+632-8401-1091、+632-8401-1092；\n手机：+639177963199、+639437069133；\n邮箱：jccmktginc@gmail.com","官网：www.mortabond.com.ph；\n社媒：Facebook、Instagram","20 Denver Street, Cubao, Quezon City","其他行业","名片信息行业分类"],["card-165","FIRSTANK","菲律宾","MARK QUIAMBAO","储水罐水处理设备制造","Regional Sales Representative (Region 1 & 3)","手机：0956-381-3254；\n邮箱：mhquiambao@firstank.com","官网：www.firstank.com；\n社媒：Facebook、Instagram：firstankphil","B30 L3&4 Deauteronomy St., BF Martinville, Manyuyos Dos, Las Piñas City","其他行业","名片信息行业分类"],["card-166","STEINAR MANUFACTURING INDUSTRIAL CORP.（旗下 MORTABOND 混凝土建材品牌）","菲律宾","JANET C. PADRIQUE","混凝土建材、涂料工程材料生产贸易","Area Sales Manager Pampanga","座机：(044) 8150150；\n手机：0965 308 1082；\n邮箱：ja.steinarmortabond19@gmail.com","官网：www.mortabond.com.ph；\n社媒：mortabondofficial","KM 37 Pulong Buhangin, Sta. Maria, Bulacan","其他行业","名片信息行业分类"],["card-167","MULTI-RICH HOME DECORS INCORPORATED","菲律宾","Jeffrey O. Utayde","石材板材、装饰建材、墙地面材料贸易","Senior Account Executive","手机：0995 960 8766；\n座机：+632 8531 5044、+632 8531 6350、+632 8531 6374、+632 8531 6396、+632 8532 1333、+632 8533 6988、+632 8534 1335、+632 8534 3613、+632 8532 1147、+632 8533 2026；\n邮箱：multirich_inc@yahoo.com","","488 Boni Avenue, Corner San Joaquin Street, Mandaluyong City, 1550 Metro Manila","其他行业","名片信息行业分类"],["card-168","KRAH PIPES MANILA INC（KPMI）","菲律宾","Kimberly Adman-Lasco","大口径 HDPE 给排水管道制造","Marketing Manager","座机：(046) 404-9410、+63 (916) 467-9000；\n手机：+63 (999) 997-1297；\n邮箱：marketing@krah-pipes.com.ph","官网：www.kpmi.ph；\n","Main Drive FCIE Compound, Langkaan 2, City of Dasmariñas Cavite 4114, Philippines","其他行业","名片信息行业分类"],["card-169","LEADS ENVIRONMENTAL HEALTH PRODUCTS CORP.（GET RID OF PESTS）","菲律宾","Bernard Noel M. Pascasio、Christian John G. Bonza","虫害消杀、环保植保药械供应链","Key Accounts Lead、Sales Executive/SLuzon","Bernard 手机：+63917 862 1170，邮箱：bmpascasio@leads-eh.com；\nChristian 手机：+63917 313 0879，邮箱：sluzonsales01@leads-eh.com；\n通用座机：+6349 501 8125，通用邮箱：info@leads-eh.com","官网：www.leads-eh.com；\n脸书：fb.com/leadseh；\n","Lot 14-A, Block 83 Rodeo Drive, Laguna BelAir 2, Brgy. Don Jose, Sta. Rosa City, Laguna, Philippines 4026","其他行业","名片信息行业分类"],["card-170","OTHMANN INCORPORATED","菲律宾","Augusto Roy D. Mico","管道管材、给排水工程建材（Wexan/Flameblock 等品牌）","Potable Waterline Specialist","座机：741-9151、711-5844、731-5590；\n手机：(0922) 826-0059、(0921) 473-9299；\n邮箱：roy.mico@othmann-pipes.com.ph","官网：www.othmann-pipes.com.ph","#37 Sta. Catalina, Quezon City","其他行业","名片信息行业分类"],["card-171","LE GARDIEN (ECOGY)","新加坡","Kenneth Yeo","玻璃建材、建筑材料供应链管理（玻璃面板 / 智能玻璃等）","Executive Director","手机 / WhatsApp/Viber：+65 9455 6728；\n座机：+65 6863 3633；\n邮箱：kenneth@legardien.com","官网：www.legardien.com；","1 Bukit Batok Crescent, #09-80 WCEGA Plaza, Singapore 658064；办事处覆盖中国 / 柬埔寨 / 菲律宾 / 泰国 / 中东","其他行业","名片信息行业分类"],["card-172","LEXUS Industrial Enterprise Corporation","菲律宾","Jennifer Reyes","工业建材、五金机电设备供应链","Sales Executive","手机：+63 923 390 0271、+63 905 572 7282、+63 626 64 2723、+63 470 9711；\n邮箱：jen.reyes@lexusindustrial.com.ph","官网：www.lexusindustrial.com.ph","19 San Ignacio St., Brgy. Kapitolyo, Pasig City, Metro Manila, Philippines","其他行业","名片信息行业分类"],["card-173","Stärken Philippines, Inc.","菲律宾","Nhellia Mae Bibal","建筑工程建材、土建建材供应链","Marketing Assistant","手机：0916-210-4623、0963-884-0946；\n座机：(02) 8371-6648、8647-5052；\n邮箱：marketing@starkenph.com","官网：www.starkenph.com","Unit 2601 26th floor AIC Burgundy Empire Tower, ADB Ave, San Antonio Ortigas Center, Pasig City","其他行业","名片信息行业分类"],["card-174","Superfab Incorporated","菲律宾","Shane Suarez","建筑工程建材、土建钢结构建材行业","Senior Account Executive","座机：8584 0000 local 1197；\n手机：09067197116；\n邮箱：suarez@ati.com.ph、shanesuarez03eggerfrits@gmail.com","官网：www.superfab.ph","办公地址：5 Ideal cor. Mccollough St, Brgy. Addition Hills, Mandaluyong City","其他行业","名片信息行业分类"],["card-175","GLOBALPANELS INC","菲律宾","Elmer E. Bautista","建筑装饰板材幕墙建材行业","Marketing Executive","座机：8570-6342、8727-5673、8725-7627、8726-4924；\n传真：(632) 8725-5487；\n手机：0968887495、09175820128；\n邮箱：globalpanels005@yahoo.com","","62-J Villa Ortigas II, Santolan Rd. cor. Gilmore Ave., Brgy. Valencia, Quezon City","其他行业","名片信息行业分类"],["card-176","JOOUN HOLY INDUSTRIES CORPORATION（TOPSEAL 菲律宾总代理）","菲律宾","Cho Inbae","密封胶、建筑工程建材进口分销行业","General Manager","手机：+639276830723、+639491470949；\n邮箱：joounholy@gmail.com","","#193 Friendship Hi-way, Anunas, Angeles city, Pampanga, Philippines, 2009","其他行业","名片信息行业分类"],["card-177","E. RIVERSIDE INDUSTRIES, INC.","菲律宾","John Patrick M. Gomez","建筑工程建材供应链行业","Project Executive","座机：+632 8376 0824；\n传真：+632 8372 1575；\n手机：+639174532487、+639989519046；\n邮箱：p.gomez@eriverside.ph","官网：www.eriverside.ph","72A East Riverside St. SFDM, Quezon City Metro Manila, Philippines","其他行业","名片信息行业分类"],["card-178","Timbermate-HMT INDUSTRIES CORP","菲律宾","Rachel P. Piad","木材板材环保建材贸易行业","Sales & Promotions Assistant","座机：(02) 8354-5535、(02) 8967-1968；\n手机：0998-5616355；\n邮箱：rachelphmt@gmail.com、hmt_mnl@pldtdsl.net","官网：www.timbermateasia.com.ph、www.hmtradingphil.com；\nFB/IG 社媒账号","#6A Carlo Drive, Bagumbayan, Taguig, Metro Manila","其他行业","名片信息行业分类"],["card-179","Lexus Industrial Enterprise Corporation","菲律宾","Jennifer Reyes","工业建材、五金机电设备供应链","Sales Executive","手机：+639233900271、+639055727282、+6326622723、+632470971；\n邮箱：jen.reyes@lexus-industrial.com","官网：www.lexus-industrial.com.ph；\n名片二维码","19 San Ignacio St. Brgy. Kapitolyo, Pasig City, Metro Manila","其他行业","名片信息行业分类"],["card-180","Multi-Rich Home Decors Incorporated","菲律宾","Jhamiya Pineda","家居装饰软装建材行业","Account Executive","手机：09567607894；\n座机：+632 5315044、5316350、5316374、5316396、531521147、532521333、532536988、5345341335、5345343613；\n传真：+632 5332026；\n邮箱：mhd.jham.pineda@gmail.com、multirich_inc@yahoo.com、info.multirich@gmail.com","","488 Boni Avenue, Corner San Joaquin Street, Mandaluyong City, 1550 Metro Manila","其他行业","名片信息行业分类"],["card-181","TACO Laminates Philippines（Diamond Concept）","菲律宾","Kiarra Esteban","三聚氰胺饰面板、装修板材建材行业","Product Specialist","手机：+639178383794；\n邮箱：kmesteban@taco.com.ph","社媒 IG/FB：@tacolaminates_ph","KM17 Paramount Plaza Compound, Ortigas Avenue Extension, Sto. Domingo, Cainta, Rizal","其他行业","名片信息行业分类"],["card-182","One Global Development Inc.","菲律宾","Crislie Key M. Playda","游乐设施工程建材行业","Sales Officer","手机：+63 9651509826；\n座机：8571-6050、8584-6830；\n邮箱：crislie.oneglobalsales@gmail.com","官网：https://oneglobal.ph","Oneglobal Development Inc. Bldg. 6527 C.Lewis Ext., Brgy San Luis, Antipolo City","其他行业","名片信息行业分类"],["card-183","Limson Marketing Inc.","菲律宾","Emmy Osorio","Yale/Stanley/ 得伟五金锁具工具品牌分销行业","Sales Supervisor - Outlight","手机：+63 917 112 6697；\n座机：(02) 8831-9339、8831-8659、8831-5461、8831-1877、8551-1746、8834-7327、8834-7043、8831-6847；\n邮箱：limsonsalesdepartment@gmail.com；\n官网：www.limsonmarketing.com","Yale/Stanley/ 得伟品牌官方渠道","No. 235 Libertad Street, Brgy.40, Pasay City, Phils 1300","其他行业","名片信息行业分类"],["card-184","Surie Polex Industries LLP","印度","Nitin Gera","石材打磨抛光耗材、地坪化工建材行业","Sales Manager(Technical)","手机：+91-9310320405；\n座机：+91-11-40776777；\n邮箱：sales@suriepolex.com","官网：www.suriepolex.com","D9, 2nd Floor, LSC, Naraina, Ring Road, New Delhi-110028, India","其他行业","名片信息行业分类"],["card-185","Gica Grinding Wheel Corporation","菲律宾","Bong Paringit","砂轮磨具五金工业耗材行业","","手机：+63 925-802-1168；\n座机：(632) 8939-1435、8939-1404、8930-8220；\n传真：(632) 8939-1435；\n邮箱：gicagrinding@gmail.com","官网：http://www.gica.com.ph","5 Star Industrial Complex, 20 P. Dela Cruz St., Sitio Gitna, Barangay Nagkaisang Nayon, Novaliches, Quezon City 1125","其他行业","名片信息行业分类"],["card-186","All Certified Equipment Trading Corporation（ACETC）","菲律宾","MA. Eden V. Falic","农机工程设备、发电机组农业机械建材贸易行业","Sales Engineer","手机：0917-627-4801；\n邮箱：eden.falic@allcertifiedequipment.com","官网：www.allcertifiedequipment.com；\n社媒 FB/IG：@acetcphilippines","Brgy. Concepcion, Lubao, Pampanga","其他行业","名片信息行业分类"],["card-187","Sealbond Chemical Industries Inc.","菲律宾","Bernadeth Gabad","防水防腐涂料、环氧地坪工程化工建材行业","Technical Sales","座机：(02) 88450205、88434498、884501337；\n手机：0927-727-8579；\n邮箱：bernagabad.sealbondchemicals@gmail.com、info@sealbondchemicals.com","官网：www.sealbondchemicals.com","#17 Ledesma St AFP Officers Village Phase1 Western Bicutan, Taguig City","其他行业","名片信息行业分类"],["card-188","Larx Trading","菲律宾","Joan Malicsi","室内装饰板材家居建材贸易行业","Sales Assistant","手机：0938-790-8996、09273542530；\n座机：(02) 8256-7682、(02) 8370-5587；\n邮箱：joanmalicsi18@gmail.com","官网：www.larxtrading.com.ph","No.91 Don Jose Street, Sta. Mesa Heights, Quezon City, 1114","其他行业","名片信息行业分类"],["card-189","Sernta Elevator Philippines Inc","菲律宾","John Alfred R.Sansano","电梯停车设备扶梯工程行业","Supervisor","座机：02-83980817；\n台湾 + 886-6-3026633、马来西亚 + 60-3-8082563、中国 + 86-21-60642451；\n手机：0966-554-2810；\n邮箱：ph@sernta.com、j.sernta06@gmail.com","官网：www.sernta.com","Unit 6B, Marc 2000 Tower,1973 Taft Avenue, Malate, Manila 1004","其他行业","名片信息行业分类"],["card-190","Alumpro","菲律宾","Arianne Rey","铝型材铝合金建材行业","Senior Sales Associate","手机：+63 9189853586；\n座机：+632 89832732；\n邮箱：sales@alumpro.com.ph","www.alumpro.com.ph","39-A lbaba St.,Bignay,Valenzuela City ,1447","其他行业","名片信息行业分类"],["card-191","ACH OPC（Hilario's Enterprises）","菲律宾","","五金磨具建材贸易行业","业务对接","手机：0933-814-4852","","","其他行业","名片信息行业分类"],["card-192","Doka Philippines, Inc.","菲律宾","Roque(Boyet) Ilio Jr","建筑模板基坑工程建材行业","Senior Sales Manager","手机：+63 9088903356；\n邮箱：roque.ilio@doka.com、philippines@doka.com","www.doka.com","Km.21 West Service Road, Brgy. \nSucat, Muntinlupa City 1770","其他行业","名片信息行业分类"],["card-193","IFE Elevator Escalator Philippines, Inc.","菲律宾","Ambherin T.Himaya","电梯扶梯机电工程行业","Service Head","手机：+63 9176282713；\n邮箱：ambherin@ife.com.ph、ahimaya.ife@gmail.com","ife.com.ph、ife-elevator.com","","其他行业","名片信息行业分类"],["card-194","Uni Cabwire Industries Inc.（UNI CAB）","菲律宾","Gina Sabadlan","施耐德、罗格朗等电气五金电线电缆建材行业","Account Executive","手机：09057755821；\n座机：83328739、83642985；\n邮箱：unicab.ginasabadlan@gmail.com","www.unicab.com.ph","11-A Dagot St, Brgy. Manresa, \nQuezon City, Philippines","其他行业","名片信息行业分类"],["card-195","Accutech Steel & Service Center Inc.（MSH）","菲律宾","Chelsea Anne Permejo","钢材建材钢结构行业","Sales Engineer","座机：(632) 8838-9192~95；\n手机：(63) 976-142-4744；\nViber：(63) 991-520-2868；\n邮箱：accutechsteel@pldtdsl.net、accutech.engineeringdept@gmail.com","官网：https://mystronghome.com.ph/、https://accutechsteel.com.ph；\nFB/IG：My Strong Home、Accutech Steel and Service Center","Arturo Drive, Bagumbayan, Taguig City","其他行业","名片信息行业分类"],["card-196","Pure Metal Inc.（Pureflex Wires&Cables）","菲律宾","Charlene Ong","电线电缆五金建材行业","Sales and Marketing Staff","手机 / Viber：0960-454-5400、0975-917-9415；\n座机：8984-3259、8287-1799；\n邮箱：sales@pureflexwires.com","官网：pureflexwires.com","17 LBICA Cmpd. Lawang Bato, Valenzuela City","其他行业","名片信息行业分类"],["card-197","YFC-BonEagle International Inc.","菲律宾","Jemilyn Sumagang","建材工程培训行业","Sales Specialist","手机：+63 993-435-5905；\n邮箱：jemilyn.sumagang@yfc.com.ph、jenalynsumagang07@gmail.com；\n领英 / FB","官网：www.yfcboneagle.com","","其他行业","名片信息行业分类"],["card-198","IFE Elevator Escalator Philippines Inc.","菲律宾","Glivette D. Tampis","电梯扶梯机电工程行业","Account Executive","手机：+63 917-701-4001；\n邮箱：gdequina.ife@gmail.com、glivette@ife.com.ph","官网：ife.com.ph、ifeliftbd.com","","其他行业","名片信息行业分类"],["card-199","Lucky PVC（Tanay Industries）","菲律宾","Mary Joyce Vitug","PVC 管道塑胶建材行业","In-house Sales Representative","手机：0917-187-0151；\n座机：8372-6018、7117-2190、7121-715E、7273-2452；\n邮箱：lucky.pvc@gmail.com、tanay.lucky@gmail.com","官网：www.luckypvc.com","187 Fernand Poe Jr. Ave, Brgy. Del Monte, Quezon City","其他行业","名片信息行业分类"],["card-200","Powerfab Metal","菲律宾","暂无公开对接人","金属钢材钢结构建材行业","","座机：(02) 83679867；\n手机：09267470910、09317829866；\n邮箱：powerfab888@gmail.com","","18F De Zafra St., Malabo Maysan Valenzuela City","其他行业","名片信息行业分类"],["card-201","Streamline Blinds Corp.","菲律宾","Roselyn Fortes","窗帘软装装饰建材行业","Sales Representative","手机：0967-312-4656；\n邮箱：streamlineblinds379@gmail.com","官网：www.streamlineblinds.com.ph；FB：Streamline Blinds Corp.、IG：@officialstreamlineblinds","369 Dasmarinas St. Binondo, Manila","其他行业","名片信息行业分类"],["card-202","SGA Sales Glass & Aluminum Supply Corporation","菲律宾","Edalyn Goma","建筑玻璃铝合金门窗幕墙建材行业","","座机：(632) 731-5262、495-0885、711-7447、711-5767、732-2209；\n传真：(632) 310-2822；\n手机：+639097311819、+639228872537；\n邮箱：sglass100@yahoo.com","","1311-1313 C.M. Recto Avenue, Manila","其他行业","名片信息行业分类"],["card-203","Future Flooring, Inc.","菲律宾","Micaella B. Caliwag","地板地坪铺装装饰建材行业","Sales Associate","手机：+63 9295936331；\n座机：(632) 8637-4885、8637-3923；\n邮箱：micaella@futureflooring.com.ph","","U436-441 Level 4 Shangri-La Plaza, EDSA corner Shaw Boulevard, Mandaluyong City","其他行业","名片信息行业分类"],["card-204","Philmetal（Philsteel）","菲律宾","Cenjamir C. Manuel","钢材金属板材建筑建材行业","Sales Engineer","手机：+63 9062184741；\n邮箱：ccmanuel@philmetal.com","官网：www.philmetal.com.ph","Philsteel Tower, 140 Amorsolo St. Legazpi Village, Makati City","其他行业","名片信息行业分类"],["card-205","Kent Floors & Decor","菲律宾","Crisia Jane Dapula","地板地坪装饰建材行业","Marketing Consultant","座机：(02) 8813-8943；\n传真：(02) 8812-0082；\n手机：09178138944、Viber：09177046450；\n邮箱：sales@kentfloorsph.com","官网：www.kentfloorsph.com；FB/IG：@kentfloorsphofficial","5/F JTKC Centre, 2155 Pasong Tamo, Makati City 1231","其他行业","名片信息行业分类"],["card-206","Emerald Vinyl Corporation","菲律宾","Johnson Ngo","PVC 管材管件门窗塑胶建材行业","Project Sales Officer","手机：0917-8590011；\n座机：8361-6101~04、8362-8021~24；\n传真：8361-6740；\n邮箱：sales@emeraldvinyl.com","","20 Oliveros Drive Balintawak, Quezon City","其他行业","名片信息行业分类"],["card-207","Avesco","菲律宾","Jasmin Silva Dimain","测试测量仪器 / 工业设备行业","Sales Representative","手机：+63 917-8579957；\n邮箱：tmi@avesco.com.ph；\n座机：Main 8912-8881、8575-9501；Frisco 8372-3594；Manila 8733-8161","","Cubao Office：810 Aurora Blvd. cor. Yale St., Cubao, Quezon City","其他行业","名片信息行业分类"],["card-208","Mayhome Philippines","菲律宾","Cassandra Generoso","室内装饰 / 新型材料（仿木不锈钢）行业","Interior Designer","手机：0945 198 7495；\n邮箱：sandramayhomeph@gmail.com；\nFB/IG：@mayhomeph","社媒：@mayhomeph","4th Floor, Uptown Palazzo, 8th Avenue corner 36th St, Taguig City, Metro Manila","其他行业","名片信息行业分类"],["card-209","Mayer Steel Pipe Corporation（Eagle Pipes / Mayer Spiral）","菲律宾","Christian Joe Cangas","钢管、螺旋管给排水建材行业","Project Account Executive","手机：+63 939-930-3138、+63 997-157-4800；\n座机：(02) 8294-0273；\n邮箱：cj.cangas@mayersteelpipe.com","官网：www.mayersteelpipe.com","名片未标注详细地址","其他行业","名片信息行业分类"],["card-210","Neltex","菲律宾","Jayson S. Soguilon","给排水管材、水处理建材行业","Water Solutions Sales Manager","座机：(63 2) 8879-7777；\n手机：+63 917-834-2220；\n邮箱：JSSoguilon@neltex.com、soguilonjason14@gmail.com","官网：www.neltex.com","","其他行业","名片信息行业分类"],["card-211","Grand Philippines","菲律宾","Clarito Manalastas Jr.","工业设备 / 电器建材行业","Sales Agent","手机：0915-445-8183；\n座机：0906-558-2939；\n邮箱：grandphilippines@gmail.com","官网：www.grandphilippines.com","门店：157 Benitez St, Cubao, Quezon City；马尼拉：825 R. Hidalgo St, Quiapo；仓库：Plaridel By-Pass Road, Bulacan City","其他行业","名片信息行业分类"],["card-212","United Laminates Industrial Corp.","菲律宾","Jennifer Carpio","板材 / 装饰层压材料建材行业","Sales Executive","手机：+63 917-567-8129；\n邮箱：jenn.unitedlaminates@gmail.com","官网：www.unitedlaminates.com；FB：UnitedLaminates.Jenn","Unit 9 Metro Sotanghon Compound, P. Lanozo St, Maysan Valenzuela City","其他行业","名片信息行业分类"],["card-213","Chuan Hing Metal Fabricator Corp.","菲律宾","Enrique Sancha","脚手架 / 模板建材行业","Sales Representative","手机：0977-7579-152；\n邮箱：enriquesancha69@gmail.com","","Blk. 1 Lot 12 Global Aseana Business Park 1, San Simon, Pampanga","其他行业","名片信息行业分类"],["card-214","S.E.A Olympus Marketing Inc.","菲律宾","Jha Diamante","表面涂层、板材建材行业","Sales Executive","手机：0998-590-7204；\n邮箱：emmdiamante@olympus.com.ph","官网：www.olympus.com.ph","Taguig：17A, 1st Avenue Sta. Maria Industrial Subdivision, Bagumbayan Taguig；宿务 / 达沃另有分点","其他行业","名片信息行业分类"],["card-215","Hi-Top Merchandising, Inc.","菲律宾","","商品分销 / 贸易行业","","座机：(02) 8424-0420；\n手机：+63 915-6922383、+63 919-0845009、+63 919-0845006；\n邮箱：sales@htmi.com.ph","","227 Biak na Bato Street corner Sgt. Rivera Street, Brgy. Manresa, Quezon City","其他行业","名片信息行业分类"],["card-216","Eastern Wire Manufacturing Inc.","菲律宾","","金属丝网 / 线材制造行业","","座机：(632) 8705-1540、8705-1643；\n传真：(632) 8705-1643；\n手机：0925-8529487、0939-9047049、0908-3421531、0917-6332904、0926-6433530；\n邮箱：sales@easternwire.ph","官网：www.easternwire.ph","ITC Comp. Bagbaguin, Valenzuela City, Manila","其他行业","名片信息行业分类"],["card-217","Lexton Commercial Marketing Corp.","菲律宾","","商业营销 / 建材行业","","座机：(632) 5318-5215；\n邮箱：sales@lexton.com.ph","官网：www.lexton.com.ph","No. 280 9th Street corner 8th Avenue, Grace Park, Caloocan City","其他行业","名片信息行业分类"],["card-218","Architecks Metals（Tecks）","菲律宾","","金属 / 建筑材料行业","","电话：8351-6988、8367-8335 Loc.508；\n传真：8351-7138；\n邮箱：architecks@gmail.com","官网：www.architecks.com.ph；FB：facebook.com/architecksmetalsy","Unit 5A 5th flr. DN Corporate Center, 1388 Quezon Avenue, Brgy. South Triangle, Quezon City","其他行业","名片信息行业分类"],["card-219","All Range Trucks（by Sobida）","菲律宾","Russell Andrew Garcia","商用车、卡车配件及服务行业","Field Sales Associate","手机：0926-671-5933、0932-688-4582；\n座机：(02) 8361-9012、(02) 8463-0715、(02) 8929-5927；\n邮箱：russellgarcia25.rg@gmail.com","","1070 EDSA cor. Fema Road, Muñoz, Quezon City","其他行业","名片信息行业分类"]];
+
+    </script>
+    <script>
+const rawLeads = [
+  ["3AK Chemie Pvt Ltd", "India", 1],
+  ["3DIEMME S.r.l.", "Italy", 1],
+  ["A. Schweickhardt GmbH & Co. KG", "Germany", 1],
+  ["ABIMO", "Brazil", 1],
+  ["ACH Medical Co., Ltd.", "Korea", 1],
+  ["Acodent Pte Ltd", "Singapore", 1],
+  ["ACRO Biomedical Co., Ltd.", "Taiwan", 1],
+  ["A-dec International", "United States of America", 1],
+  ["Aditek do Brasil SA", "Brazil", 1],
+  ["Aditya Dispomed Products Pvt Ltd.", "India", 1],
+  ["ADM Asia Pacific Pte Ltd", "Singapore", 1],
+  ["Admetec", "Israel", 1],
+  ["Advanced Healthcare Ltd", "United Kingdom", 1],
+  ["Advanced Medical Solutions Group plc.", "United Kingdom", 1],
+  ["AI Dental Technology Pte Ltd", "Singapore", 1],
+  ["Aidite (Qinhuangdao) Technology Co., Ltd.", "China", 1],
+  ["Alfred Becht", "Germany", 1],
+  ["Alliedstar Medical Equipment Co., Ltd.", "China", 1],
+  ["Amedcon Healthcare Manufacturing Ltd.", "Hong Kong SAR", 1],
+  ["Angel Aligner", "Singapore", 1],
+  ["Anhui Monique Medical Materials Co.,Ltd.", "China", 1],
+  ["Anyang Meijinsheng Dental Material sales Co., Ltd", "China", 1],
+  ["Aseptico", "United States of America", 1],
+  ["Associated Dental Products Ltd", "United Kingdom", 2],
+  ["Association for Oral Health Therapists, SG", "Singapore", 2],
+  ["Astar Orthodontics Inc.", "China", 2],
+  ["Audental Bio-material Co., Ltd", "China", 2],
+  ["Authorised Service Pte Ltd", "Singapore", 2],
+  ["B&B Dental Srl", "Italy", 2],
+  ["B.J.M. Laboratories Ltd", "Israel", 2],
+  ["BEGO Bremer Goldschlagerei", "Germany", 2],
+  ["Beijing Nobel Asia-Pacific Education Technology Co., Ltd.", "China", 2],
+  ["Besmile", "China", 2],
+  ["Beyes Dental Inc.", "Canada", 2],
+  ["BiLumix", "Korea", 2],
+  ["Bio-Art Equipamentos Odontologicos Ltda", "Brazil", 2],
+  ["Biomate Medical Devices Technology Co., Ltd", "Taiwan", 2],
+  ["Bisco Inc.", "United States of America", 2],
+  ["BKMEIYA Pte Ltd", "Singapore", 2],
+  ["Blossom/Mexpo International Inc.", "United States of America", 2],
+  ["Bluem Europe", "Netherlands", 2],
+  ["Bluesail Medical Co.,Ltd", "China", 2],
+  ["BLZ Technology (Wuhan) Co., Ltd.", "China", 2],
+  ["Bomei Co., Ltd.", "Taiwan", 2],
+  ["Borea", "France", 2],
+  ["Boz Tibbi Malzeme Sanayi ve Ticaret A.S.", "Turkey", 2],
+  ["BrightArk Pte Ltd", "Singapore", 2],
+  ["Bryant Dental", "United Kingdom", 2],
+  ["BTK Dental", "Italy", 2],
+  ["Buletedan International Trade (Guangzhou) Co.Ltd", "China", 2],
+  ["Calgin Enterprises Pte Ltd", "Singapore", 2],
+  ["Carestream Dental Singapore Pte Ltd", "Singapore", 2],
+  ["Carl Martin GmbH", "Germany", 2],
+  ["Carl Zeiss Meditec AG", "Germany", 2],
+  ["Cavex Holland BV", "Netherlands", 3],
+  ["Centrix Dental", "United States of America", 3],
+  ["Changsha Contec Yixin Biotechnology Co.,Ltd.", "China", 3],
+  ["Changshou Shengkang Medical Instrument Co., Ltd.", "China", 3],
+  ["Changzhou Sifary Medical Technology Co., Ltd.", "China", 3],
+  ["Chaoyang Siwei Medical Technology", "China", 3],
+  ["Chee Sang Dental Supply Pte Ltd", "Singapore", 3],
+  ["Chuanheng (Henan) Medical Treatment Cheng Co., Ltd.", "China", 3],
+  ["Ci Medical Co., Ltd.", "Japan", 3],
+  ["CIMsystem HK LTD", "Hong Kong SAR", 3],
+  ["CJ-Optik GmbH & Co. KG", "Germany", 3],
+  ["Coherz Technologies Co., Ltd.", "China", 3],
+  ["Colgate-Palmolive (Eastern) Pte. Ltd", "Singapore", 3],
+  ["Coltene Whaledent AG", "Switzerland", 3],
+  ["Contoral Pte Ltd", "Singapore", 3],
+  ["Coswell S.p.A.", "Italy", 3],
+  ["Curaden AG", "Switzerland", 3],
+  ["Curasept S.p.A.", "Italy", 3],
+  ["DaeKwang I.D.M", "Korea", 3],
+  ["Davis, Schottlander & Davis Ltd", "United Kingdom", 3],
+  ["Dendia GmbH", "Austria", 3],
+  ["DENTAG SRL", "Italy", 3],
+  ["Dental Asia (Pablo)", "Singapore", 3],
+  ["Dental South China 2026", "China", 3],
+  ["Dental Technologies Inc.", "United States of America", 3],
+  ["Dental Tribune International", "Germany", 3],
+  ["Dentalead Corporation", "Japan", 3],
+  ["Dentalead Corporation", "Japan", 3],
+  ["Dentalife", "Australia", 3],
+  ["Dentamerica Asia Inc.", "Taiwan", 3],
+  ["DenTech China 2026", "China", 3]
+];
+
+const importedCardLeads = Array.isArray(window.SHUOYI_CARD_LEADS) ? window.SHUOYI_CARD_LEADS : decodeCardRows();
+
+const networkProviders = [
+  { key: "official", name: "官网搜索", hint: "定位官网、联系人和产品页" },
+  { key: "linkedin", name: "LinkedIn", hint: "查看公司主页和员工线索" },
+  { key: "finance", name: "股票搜索", hint: "搜索上市公司与行情代码" },
+  { key: "reports", name: "公司财报", hint: "查年报、财报和投资者关系" },
+  { key: "news", name: "新闻动态", hint: "查看近期市场、展会和产品消息" },
+  { key: "import", name: "进口商线索", hint: "拓展采购商和分销商关键词" }
+];
+
+const tickerHints = {
+  "Advanced Medical Solutions Group plc.": "AMS.L",
+  "Carl Zeiss Meditec AG": "AFX.DE",
+  "Colgate-Palmolive (Eastern) Pte. Ltd": "CL"
+};
+
+const regionByCountry = {
+  "Australia": "大洋洲",
+  "Austria": "欧洲",
+  "Brazil": "拉美",
+  "Canada": "北美",
+  "China": "大中华区",
+  "France": "欧洲",
+  "Germany": "欧洲",
+  "Hong Kong SAR": "大中华区",
+  "India": "南亚",
+  "Israel": "中东",
+  "Italy": "欧洲",
+  "Japan": "东亚",
+  "Korea": "东亚",
+  "Netherlands": "欧洲",
+  "Singapore": "东南亚",
+  "Switzerland": "欧洲",
+  "Taiwan": "大中华区",
+  "Turkey": "中东",
+  "United Kingdom": "欧洲",
+  "United States of America": "北美",
+  "菲律宾": "东南亚",
+  "马来西亚": "东南亚",
+  "越南": "东南亚",
+  "泰国": "东南亚",
+  "新加坡": "东南亚",
+  "印度": "南亚"
+};
+
+const marketByRegion = {
+  "北美": "北美高价值采购市场",
+  "欧洲": "欧洲品牌与分销市场",
+  "东南亚": "东南亚增长市场",
+  "东亚": "东亚渠道市场",
+  "南亚": "南亚价格敏感市场",
+  "中东": "中东项目采购市场",
+  "拉美": "拉美进口分销市场",
+  "大中华区": "中国及港澳台产业链市场",
+  "大洋洲": "大洋洲稳定采购市场"
+};
+
+const typeOptions = ["全部", "名片客户", "品牌/制造商", "经销/贸易商", "行业协会/媒体", "教育/展会", "服务/技术"];
+const storageKeys = {
+  favorites: "shuoyi.client.finder.favorites",
+  records: "shuoyi.client.finder.records"
+};
+
+const state = {
+  keyword: "",
+  country: "全部",
+  region: "全部",
+  market: "全部",
+  product: "全部",
+  type: "全部",
+  favoritesOnly: false,
+  view: "cards",
+  selectedId: null
+};
+
+const favorites = new Set(readJSON(storageKeys.favorites, []));
+const records = readJSON(storageKeys.records, {});
+
+const customers = [
+  ...rawLeads.map((item, index) => enrichLead(item, index)),
+  ...importedCardLeads.map((item, index) => enrichCardLead(item, index))
+];
+
+const els = {
+  keyword: document.getElementById("keywordInput"),
+  country: document.getElementById("countrySelect"),
+  region: document.getElementById("regionSelect"),
+  market: document.getElementById("marketSelect"),
+  product: document.getElementById("productSelect"),
+  typeTabs: document.getElementById("typeTabs"),
+  favoritesOnly: document.getElementById("favoritesOnly"),
+  results: document.getElementById("results"),
+  emptyState: document.getElementById("emptyState"),
+  resultCount: document.getElementById("resultCount"),
+  countryCount: document.getElementById("countryCount"),
+  favoriteCount: document.getElementById("favoriteCount"),
+  networkCount: document.getElementById("networkCount"),
+  resultSummary: document.getElementById("resultSummary"),
+  activeFilters: document.getElementById("activeFilters"),
+  queryPills: document.getElementById("queryPills"),
+  detailPanel: document.getElementById("detailPanel"),
+  detailContent: document.getElementById("detailContent"),
+  closeDetail: document.getElementById("closeDetailBtn"),
+  exportBtn: document.getElementById("exportBtn"),
+  resetBtn: document.getElementById("resetBtn")
+};
+
+init();
+
+function init() {
+  setOptions(els.country, unique(customers.map((customer) => customer.country)));
+  setOptions(els.region, unique(customers.map((customer) => customer.region)));
+  setOptions(els.market, unique(customers.map((customer) => customer.market)));
+  setOptions(els.product, unique(customers.map((customer) => customer.product)));
+  renderTypeTabs();
+  bindEvents();
+  render();
+  renderDetail();
+}
+
+function enrichLead([name, country, source], index) {
+  const region = regionByCountry[country] || "其他地区";
+  const product = inferProduct(name);
+  const type = inferType(name);
+  const intent = inferIntent(type, product);
+  const score = scoreLead(country, product, type, index);
+
+  const lead = {
+    id: `lead-${index + 1}`,
+    name,
+    country,
+    region,
+    market: marketByRegion[region] || `${region}目标市场`,
+    product,
+    type,
+    intent,
+    score,
+    source,
+    ticker: tickerHints[name] || ""
+  };
+  lead.links = buildNetworkLinks(lead);
+  return lead;
+}
+
+function enrichCardLead(item, index) {
+  const country = item.country || "未知国家";
+  const region = regionByCountry[country] || "其他地区";
+  const product = item.industryGroup || item.industry || "名片客户";
+  const type = inferCardType(item);
+  const score = scoreCardLead(item, index);
+  const contactName = item.contact || "";
+  const industryGroup = item.industryGroup || "名片信息";
+
+  const lead = {
+    id: item.id || `card-${index + 1}`,
+    name: item.company || "未命名公司",
+    country,
+    region,
+    market: marketByRegion[region] || `${region}目标市场`,
+    product,
+    type,
+    intent: inferCardIntent(item, type),
+    score,
+    source: item.source || "名片信息",
+    ticker: tickerHints[item.company] || "",
+    contactName,
+    position: item.position || "",
+    contactInfo: item.contactInfo || "",
+    website: item.web || "",
+    address: item.address || "",
+    industryGroup,
+    cardIndustry: item.industry || ""
+  };
+  lead.links = buildNetworkLinks(lead);
+  return lead;
+}
+
+function buildNetworkLinks(customer) {
+  const company = encodeURIComponent(customer.name);
+  const country = encodeURIComponent(customer.country);
+  const product = encodeURIComponent(customer.product);
+  const ticker = encodeURIComponent(customer.ticker || customer.name);
+  const directWebsite = extractFirstUrl(customer.website);
+
+  return {
+    official: directWebsite || `https://www.google.com/search?q=${company}+official+website+contact`,
+    linkedin: `https://www.linkedin.com/search/results/companies/?keywords=${company}`,
+    finance: customer.ticker
+      ? `https://finance.yahoo.com/quote/${ticker}`
+      : `https://finance.yahoo.com/lookup?s=${company}`,
+    reports: `https://www.annualreports.com/SearchResults?query=${company}`,
+    sec: `https://www.sec.gov/edgar/search/#/q=${company}`,
+    news: `https://www.google.com/search?tbm=nws&q=${company}+${country}+${product}`,
+    import: `https://www.google.com/search?q=${country}+${product}+importer+distributor+buyer+email`,
+    investor: `https://www.google.com/search?q=${company}+investor+relations+annual+report+financial+statements`,
+    websiteContact: `https://www.google.com/search?q=${company}+contact+email+sales+${country}`
+  };
+}
+
+function inferCardType(item) {
+  const text = `${item.company || ""} ${item.industry || ""} ${item.position || ""}`.toLowerCase();
+  if (/贸易|物流|供应|经销|代理|分销|depot|supply|trading|sales|marketing|distributor/.test(text)) return "经销/贸易商";
+  if (/工程|建筑|机电|系统|运维|服务|技术|engineer|project|service|solution/.test(text)) return "服务/技术";
+  return "名片客户";
+}
+
+function inferCardIntent(item, type) {
+  const contact = item.contact ? `联系 ${item.contact}` : "联系名片联系人";
+  if (type === "经销/贸易商") return `${contact}，确认代理、分销、进口采购和本地渠道合作机会`;
+  if (type === "服务/技术") return `${contact}，确认项目采购、工程配套、技术服务和设备合作机会`;
+  return `${contact}，核实采购角色、品类需求和后续开发邮件`;
+}
+
+function scoreCardLead(item, index) {
+  let score = 70 + ((index * 5) % 22);
+  if (item.contactInfo) score += 5;
+  if (item.web) score += 4;
+  if (item.address) score += 2;
+  return Math.min(score, 98);
+}
+
+function extractFirstUrl(value) {
+  const text = String(value || "");
+  const match = text.match(/https?:\/\/[^\s,，；;]+|(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+[^\s,，；;]*/i);
+  if (!match) return "";
+  const url = match[0].replace(/[)）.]$/, "");
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
+function decodeCardRows() {
+  const fields = window.SHUOYI_CARD_FIELDS;
+  const rows = window.SHUOYI_CARD_ROWS;
+  if (!Array.isArray(fields) || !Array.isArray(rows)) return [];
+  return rows.map((row) => Object.fromEntries(fields.map((field, index) => [field, row[index] || ""])));
+}
+
+function inferProduct(name) {
+  const text = name.toLowerCase();
+  if (text.includes("orthodont") || text.includes("aligner")) return "正畸与矫治";
+  if (text.includes("dental") || text.includes("denta") || text.includes("oral") || text.includes("odonto")) return "牙科耗材与设备";
+  if (text.includes("medical") || text.includes("healthcare") || text.includes("biomed") || text.includes("laborator")) return "医疗器械与耗材";
+  if (text.includes("technology") || text.includes("sifary") || text.includes("zeiss") || text.includes("optik")) return "技术设备与软件";
+  if (text.includes("trade") || text.includes("supply") || text.includes("asia pacific")) return "渠道贸易与分销";
+  if (text.includes("education") || text.includes("tribune") || text.includes("2026")) return "展会教育与媒体";
+  return "综合口腔医疗";
+}
+
+function inferType(name) {
+  const text = name.toLowerCase();
+  if (text.includes("association") || text.includes("tribune")) return "行业协会/媒体";
+  if (text.includes("education") || text.includes("2026")) return "教育/展会";
+  if (text.includes("trade") || text.includes("supply") || text.includes("service") || text.includes("enterprises")) return "经销/贸易商";
+  if (text.includes("technology") || text.includes("system") || text.includes("software") || text.includes("solutions")) return "服务/技术";
+  return "品牌/制造商";
+}
+
+function inferIntent(type, product) {
+  if (type === "经销/贸易商") return "优先询问代理、库存和当地渠道";
+  if (type === "行业协会/媒体") return "适合获取行业名单和展会曝光";
+  if (type === "教育/展会") return "适合报名参展、查找参展商目录";
+  if (type === "服务/技术") return "适合找技术合作、系统或设备方案";
+  if (product === "正畸与矫治") return "适合正畸产品、耗材和方案合作";
+  return "适合建立品牌供应或采购关系";
+}
+
+function scoreLead(country, product, type, index) {
+  let score = 62 + ((index * 7) % 24);
+  if (["United States of America", "Germany", "United Kingdom", "Singapore"].includes(country)) score += 8;
+  if (["牙科耗材与设备", "医疗器械与耗材"].includes(product)) score += 5;
+  if (type === "经销/贸易商") score += 4;
+  return Math.min(score, 98);
+}
+
+function bindEvents() {
+  els.keyword.addEventListener("input", () => {
+    state.keyword = els.keyword.value.trim();
+    render();
+  });
+
+  [
+    [els.country, "country"],
+    [els.region, "region"],
+    [els.market, "market"],
+    [els.product, "product"]
+  ].forEach(([element, key]) => {
+    element.addEventListener("change", () => {
+      state[key] = element.value;
+      render();
+    });
+  });
+
+  els.favoritesOnly.addEventListener("change", () => {
+    state.favoritesOnly = els.favoritesOnly.checked;
+    render();
+  });
+
+  els.typeTabs.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-type]");
+    if (!button) return;
+    state.type = button.dataset.type;
+    renderTypeTabs();
+    render();
+  });
+
+  document.querySelectorAll(".view-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.view = button.dataset.view;
+      document.querySelectorAll(".view-button").forEach((item) => item.classList.toggle("active", item === button));
+      render();
+    });
+  });
+
+  els.results.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-action]");
+    if (!action) return;
+    const customer = customers.find((item) => item.id === action.dataset.id);
+    if (!customer) return;
+
+    if (action.dataset.action === "detail") selectCustomer(customer.id);
+    if (action.dataset.action === "favorite") toggleFavorite(customer.id);
+  });
+
+  els.detailContent.addEventListener("click", (event) => {
+    const copyButton = event.target.closest("[data-copy]");
+    if (copyButton) copyText(copyButton.dataset.copy);
+  });
+
+  els.queryPills.addEventListener("click", (event) => {
+    const copyButton = event.target.closest("[data-copy]");
+    if (copyButton) copyText(copyButton.dataset.copy);
+  });
+
+  els.detailContent.addEventListener("input", persistDetailRecord);
+  els.detailContent.addEventListener("change", persistDetailRecord);
+
+  els.closeDetail.addEventListener("click", () => {
+    state.selectedId = null;
+    els.detailPanel.classList.remove("open");
+    renderDetail();
+  });
+
+  els.exportBtn.addEventListener("click", () => exportCSV(getFilteredCustomers()));
+  els.resetBtn.addEventListener("click", resetFilters);
+
+}
+
+function render() {
+  const filtered = getFilteredCustomers();
+  renderMetrics(filtered);
+  renderQueryPills(filtered);
+  renderActiveFilters(filtered);
+
+  els.emptyState.hidden = filtered.length > 0;
+  els.results.innerHTML = state.view === "table" ? renderTable(filtered) : filtered.map(renderCard).join("");
+  els.results.className = state.view === "table" ? "table-wrap" : "results-grid";
+}
+
+function getFilteredCustomers() {
+  const words = state.keyword.toLowerCase().split(/\s+/).filter(Boolean);
+  return customers.filter((customer) => {
+    const record = records[customer.id] || {};
+    const haystack = [
+      customer.name,
+      customer.country,
+      customer.region,
+      customer.market,
+      customer.product,
+      customer.type,
+      customer.intent,
+      customer.industryGroup,
+      customer.cardIndustry,
+      customer.contactName,
+      customer.position,
+      customer.contactInfo,
+      customer.website,
+      customer.address,
+      record.status,
+      record.note
+    ].join(" ").toLowerCase();
+
+    return (
+      words.every((word) => haystack.includes(word)) &&
+      matchAll(state.country, customer.country) &&
+      matchAll(state.region, customer.region) &&
+      matchAll(state.market, customer.market) &&
+      matchAll(state.product, customer.product) &&
+      matchAll(state.type, customer.type) &&
+      (!state.favoritesOnly || favorites.has(customer.id))
+    );
+  });
+}
+
+function renderMetrics(filtered) {
+  els.resultCount.textContent = filtered.length;
+  els.countryCount.textContent = unique(filtered.map((customer) => customer.country)).length;
+  els.favoriteCount.textContent = favorites.size;
+  els.networkCount.textContent = networkProviders.length;
+}
+
+function renderQueryPills(filtered) {
+  const top = filtered[0] || customers[0];
+  const country = state.country !== "全部" ? state.country : top.country;
+  const product = state.product !== "全部" ? state.product : top.product;
+  const market = state.market !== "全部" ? state.market : top.market;
+  const queries = [
+    `${country} ${product} distributor email`,
+    `${market} importer ${product}`,
+    `"${top.name}" contact email`,
+    `site:linkedin.com/company ${country} ${product}`
+  ];
+
+  els.queryPills.innerHTML = queries.map((query) => `
+    <button class="query-pill" type="button" data-copy="${escapeAttr(query)}" title="复制搜索词">
+      <svg><use href="#icon-copy"></use></svg>
+      <span>${escapeHTML(query)}</span>
+    </button>
+  `).join("");
+}
+
+function renderActiveFilters(filtered) {
+  const active = [
+    state.keyword && `关键词: ${state.keyword}`,
+    state.country !== "全部" && `国家: ${state.country}`,
+    state.region !== "全部" && `地区: ${state.region}`,
+    state.market !== "全部" && `目的地: ${state.market}`,
+    state.product !== "全部" && `产品: ${state.product}`,
+    state.type !== "全部" && `类型: ${state.type}`,
+    state.favoritesOnly && "只看收藏"
+  ].filter(Boolean);
+
+  els.resultSummary.textContent = `当前显示 ${filtered.length} 条客户线索`;
+  els.activeFilters.textContent = active.length ? active.join(" / ") : "未启用筛选，展示全部第一版客户池";
+}
+
+function renderCard(customer) {
+  const record = records[customer.id] || {};
+  const isFavorite = favorites.has(customer.id);
+  return `
+    <article class="customer-card">
+      <div class="card-head">
+        <div>
+          <h3>${escapeHTML(customer.name)}</h3>
+          <div class="badge-row">
+            <span class="badge brand">${escapeHTML(customer.country)}</span>
+            <span class="badge">${escapeHTML(customer.region)}</span>
+          </div>
+        </div>
+        <button class="icon-button favorite-button ${isFavorite ? "active" : ""}" type="button" title="收藏客户" data-action="favorite" data-id="${customer.id}">
+          <svg><use href="#icon-star"></use></svg>
+        </button>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge green">${escapeHTML(customer.product)}</span>
+        <span class="badge gold">${escapeHTML(customer.type)}</span>
+      </div>
+
+      <div class="card-meta">
+        ${customer.contactName ? `<div class="meta-line"><span>名片联系人</span><strong>${escapeHTML(customer.contactName)}</strong></div>` : ""}
+        <div class="meta-line"><span>外贸目的地</span><strong>${escapeHTML(customer.market)}</strong></div>
+        <div class="meta-line"><span>匹配度</span><strong>${customer.score}%</strong></div>
+        <div class="meta-line"><span>跟进状态</span><strong>${escapeHTML(record.status || "待开发")}</strong></div>
+        <div class="meta-line"><span>联网入口</span><strong>${networkProviders.length} 个</strong></div>
+      </div>
+
+      <div class="card-actions">
+        <button class="text-button primary" type="button" data-action="detail" data-id="${customer.id}">
+          <svg><use href="#icon-eye"></use></svg>
+          <span>详情</span>
+        </button>
+        <a class="text-button" href="${customer.links.official}" target="_blank" rel="noopener">
+          <svg><use href="#icon-search"></use></svg>
+          <span>联网查找</span>
+        </a>
+      </div>
+    </article>
+  `;
+}
+
+function renderTable(customersToRender) {
+  const rows = customersToRender.map((customer) => {
+    const record = records[customer.id] || {};
+    return `
+      <tr>
+        <td><strong>${escapeHTML(customer.name)}</strong></td>
+        <td>${escapeHTML(customer.country)}</td>
+        <td>${escapeHTML(customer.region)}</td>
+        <td>${escapeHTML(customer.market)}</td>
+        <td>${escapeHTML(customer.product)}</td>
+        <td>${escapeHTML(customer.type)}</td>
+        <td>${customer.score}%</td>
+        <td>${escapeHTML(record.status || "待开发")}</td>
+        <td>
+          <button class="text-button" type="button" data-action="detail" data-id="${customer.id}">
+            <svg><use href="#icon-eye"></use></svg>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>客户名称</th>
+          <th>国家</th>
+          <th>地区</th>
+          <th>目的地</th>
+          <th>产品方向</th>
+          <th>客户类型</th>
+          <th>匹配度</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderDetail() {
+  const customer = customers.find((item) => item.id === state.selectedId);
+  if (!customer) {
+    els.detailContent.innerHTML = `
+      <div class="detail-empty">
+        <div class="detail-visual"></div>
+        <div class="detail-empty-copy">
+          <p class="eyebrow">Network Intelligence</p>
+          <h3>选择一个客户查看网络情报</h3>
+          <p>这里会显示官网搜索、股票行情、公司财报、新闻、LinkedIn 和进口商拓展入口。</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const record = records[customer.id] || {};
+  const providerCards = networkProviders.map((provider) => {
+    const href = customer.links[provider.key] || customer.links.official;
+    return `
+      <a class="network-card" href="${href}" target="_blank" rel="noopener">
+        <strong>${provider.name}</strong>
+        <span>${provider.hint}</span>
+      </a>
+    `;
+  }).join("");
+
+  const searchQueries = [
+    `${customer.name} official website`,
+    `${customer.name} email contact`,
+    customer.contactName ? `${customer.name} ${customer.contactName} email phone` : `${customer.name} key contact`,
+    `${customer.name} investor relations annual report`,
+    `${customer.name} stock ticker financial statements`,
+    `${customer.country} ${customer.product} distributor`,
+    `${customer.country} trade fair ${customer.product}`
+  ];
+  const cardSourceSection = renderCardSourceSection(customer);
+
+  els.detailContent.innerHTML = `
+    <div class="detail-title">
+      <p class="eyebrow">Customer Profile</p>
+      <h3>${escapeHTML(customer.name)}</h3>
+      <div class="badge-row">
+        <span class="badge brand">${escapeHTML(customer.country)}</span>
+        <span class="badge">${escapeHTML(customer.region)}</span>
+        <span class="badge green">${escapeHTML(customer.product)}</span>
+        ${customer.ticker ? `<span class="badge gold">股票线索 ${escapeHTML(customer.ticker)}</span>` : ""}
+      </div>
+    </div>
+
+    <section class="detail-section">
+      <h4>客户判断</h4>
+      <div class="detail-grid">
+        <div><span>客户类型</span><strong>${escapeHTML(customer.type)}</strong></div>
+        <div><span>外贸目的地</span><strong>${escapeHTML(customer.market)}</strong></div>
+        <div><span>开发建议</span><strong>${escapeHTML(customer.intent)}</strong></div>
+        <div><span>匹配度</span><strong>${customer.score}%</strong></div>
+      </div>
+    </section>
+
+    ${cardSourceSection}
+
+    <section class="detail-section">
+      <h4>联网数据入口</h4>
+      <div class="network-grid">${providerCards}</div>
+      <p class="network-note">这些入口会打开外部实时网页，用于查官网、公司联系方式、新闻、股票和财报。后续接 API 后，可以把结果直接写回客户库。</p>
+    </section>
+
+    <section class="detail-section">
+      <h4>股票与财报</h4>
+      <div class="finance-panel">
+        <strong>${customer.ticker ? `疑似上市代码：${escapeHTML(customer.ticker)}` : "未确认上市代码"}</strong>
+        <span class="network-note">不是所有客户都是上市公司；私营公司通常需要通过官网、年报搜索、当地工商信息或新闻交叉验证。</span>
+        <div class="link-row">
+          <a class="text-button" href="${customer.links.finance}" target="_blank" rel="noopener">股票搜索</a>
+          <a class="text-button" href="${customer.links.reports}" target="_blank" rel="noopener">年报搜索</a>
+          <a class="text-button" href="${customer.links.sec}" target="_blank" rel="noopener">SEC/EDGAR</a>
+          <a class="text-button" href="${customer.links.investor}" target="_blank" rel="noopener">投资者关系</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h4>跟进管理</h4>
+      <label class="field">
+        <span>状态</span>
+        <select data-record-field="status" data-id="${customer.id}">
+          ${["待开发", "已收藏", "已查官网", "已找到邮箱", "已发开发信", "暂不匹配"].map((status) => `
+            <option value="${status}" ${status === (record.status || "待开发") ? "selected" : ""}>${status}</option>
+          `).join("")}
+        </select>
+      </label>
+      <label class="field">
+        <span>备注</span>
+        <textarea data-record-field="note" data-id="${customer.id}" placeholder="记录官网、联系人、邮箱、开发信反馈">${escapeHTML(record.note || "")}</textarea>
+      </label>
+    </section>
+
+    <section class="detail-section">
+      <h4>搜索词</h4>
+      <div class="copy-list">
+        ${searchQueries.map((query) => `
+          <div class="copy-item">
+            <code>${escapeHTML(query)}</code>
+            <button class="icon-button" type="button" data-copy="${escapeAttr(query)}" title="复制搜索词">
+              <svg><use href="#icon-copy"></use></svg>
+            </button>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderCardSourceSection(customer) {
+  const rows = [
+    ["联系人", customer.contactName],
+    ["职位", customer.position],
+    ["联系方式", customer.contactInfo],
+    ["官网 / 社媒", customer.website],
+    ["公司地址", customer.address],
+    ["行业分组", customer.industryGroup],
+    ["细分行业", customer.cardIndustry],
+    ["资源来源", customer.source]
+  ].filter(([, value]) => value);
+
+  if (!rows.length) return "";
+
+  return `
+    <section class="detail-section card-source-section">
+      <h4>名片资源信息</h4>
+      <div class="source-grid">
+        ${rows.map(([label, value]) => `
+          <div class="source-row">
+            <span>${escapeHTML(label)}</span>
+            <strong>${renderMultiline(value)}</strong>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderMultiline(value) {
+  return escapeHTML(value).replace(/\n/g, "<br>");
+}
+
+function renderTypeTabs() {
+  els.typeTabs.innerHTML = typeOptions.map((type) => `
+    <button class="segment-button ${state.type === type ? "active" : ""}" type="button" data-type="${type}" role="tab" aria-selected="${state.type === type}">
+      ${type}
+    </button>
+  `).join("");
+}
+
+function selectCustomer(id) {
+  state.selectedId = id;
+  els.detailPanel.classList.add("open");
+  renderDetail();
+}
+
+function toggleFavorite(id) {
+  if (favorites.has(id)) favorites.delete(id);
+  else favorites.add(id);
+  localStorage.setItem(storageKeys.favorites, JSON.stringify([...favorites]));
+  render();
+  if (state.selectedId === id) renderDetail();
+}
+
+function persistDetailRecord(event) {
+  const field = event.target.dataset.recordField;
+  const id = event.target.dataset.id;
+  if (!field || !id) return;
+  records[id] = { ...(records[id] || {}), [field]: event.target.value };
+  localStorage.setItem(storageKeys.records, JSON.stringify(records));
+  render();
+}
+
+function resetFilters() {
+  state.keyword = "";
+  state.country = "全部";
+  state.region = "全部";
+  state.market = "全部";
+  state.product = "全部";
+  state.type = "全部";
+  state.favoritesOnly = false;
+  els.keyword.value = "";
+  els.country.value = "全部";
+  els.region.value = "全部";
+  els.market.value = "全部";
+  els.product.value = "全部";
+  els.favoritesOnly.checked = false;
+  renderTypeTabs();
+  render();
+}
+
+function setOptions(select, values) {
+  select.innerHTML = ["全部", ...values].map((value) => `<option value="${escapeAttr(value)}">${escapeHTML(value)}</option>`).join("");
+}
+
+function matchAll(filterValue, actualValue) {
+  return filterValue === "全部" || filterValue === actualValue;
+}
+
+function unique(values) {
+  return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "zh-CN"));
+}
+
+function readJSON(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function exportCSV(rows) {
+  const header = ["客户名称", "国家", "地区", "外贸目的地", "产品方向", "客户类型", "匹配度", "联系人", "职位", "联系方式", "官网/社媒", "公司地址", "行业分组", "细分行业", "官网搜索", "股票/财报入口", "状态", "备注"];
+  const body = rows.map((customer) => {
+    const record = records[customer.id] || {};
+    return [
+      customer.name,
+      customer.country,
+      customer.region,
+      customer.market,
+      customer.product,
+      customer.type,
+      `${customer.score}%`,
+      customer.contactName || "",
+      customer.position || "",
+      customer.contactInfo || "",
+      customer.website || "",
+      customer.address || "",
+      customer.industryGroup || "",
+      customer.cardIndustry || "",
+      customer.links.official,
+      customer.links.investor,
+      record.status || "待开发",
+      record.note || ""
+    ];
+  });
+  const csv = [header, ...body].map((row) => row.map(csvEscape).join(",")).join("\n");
+  const blob = new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `shuoyi-customers-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function csvEscape(value) {
+  const text = String(value ?? "");
+  if (/[",\n]/.test(text)) return `"${text.replace(/"/g, '""')}"`;
+  return text;
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast("搜索词已复制");
+  } catch {
+    const input = document.createElement("textarea");
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    input.remove();
+    showToast("搜索词已复制");
+  }
+}
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  window.setTimeout(() => toast.remove(), 1800);
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttr(value) {
+  return escapeHTML(value);
+}
+
+    </script>
   </body>
 </html>
