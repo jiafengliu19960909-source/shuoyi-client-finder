@@ -3865,7 +3865,8 @@ async function completePasswordReset() {
 
 async function registerWithInvite() {
   clearAuthMessage();
-  const code = els.inviteCode.value.trim();
+  const code = normalizeInviteInput(els.inviteCode.value);
+  els.inviteCode.value = code;
   const email = els.registerEmail.value.trim();
   const password = els.registerPassword.value;
   const invite = await validateInviteCode(code);
@@ -3895,27 +3896,33 @@ async function registerWithInvite() {
 }
 
 async function validateInviteCode(code) {
-  if (!code) {
+  const normalizedCode = normalizeInviteInput(code);
+  if (!normalizedCode) {
     showAuthMessage("请输入邀请码。", true);
     return null;
   }
-  const { data, error } = await authState.client.rpc("validate_invite_code", { invite_text: code });
+  const { data, error } = await authState.client.rpc("validate_invite_code", { invite_text: normalizedCode });
   if (error || data !== true) {
     showAuthMessage("邀请码无效、已过期或已被用完。", true);
     return null;
   }
-  return code;
+  return normalizedCode;
 }
 
 async function claimInviteCode(code) {
-  if (!code || !authState.user) return false;
-  const { data, error } = await authState.client.rpc("claim_invite_code", { invite_text: code });
+  const normalizedCode = normalizeInviteInput(code);
+  if (!normalizedCode || !authState.user) return false;
+  const { data, error } = await authState.client.rpc("claim_invite_code", { invite_text: normalizedCode });
   if (error || data !== true) {
     showAuthMessage("邀请码领取失败，请联系管理员确认邀请码是否仍然有效。", true);
     return false;
   }
   localStorage.removeItem(storageKeys.pendingInvite);
   return true;
+}
+
+function normalizeInviteInput(value) {
+  return String(value || "").trim().toUpperCase();
 }
 
 async function loadUserWorkspace() {
