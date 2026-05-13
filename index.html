@@ -339,10 +339,26 @@ svg {
   grid-template-columns: minmax(0, 1fr) 368px;
 }
 
+.workspace:not(.has-detail) {
+  grid-template-columns: 292px minmax(0, 1fr);
+}
+
+.workspace.dashboard-mode:not(.has-detail),
+.workspace.knowledge-mode:not(.has-detail),
+.workspace.followup-mode:not(.has-detail),
+.workspace.admin-mode:not(.has-detail),
+.workspace.customerDetail-mode:not(.has-detail) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .workspace.dashboard-mode .filter-panel,
 .workspace.knowledge-mode .filter-panel,
 .workspace.followup-mode .filter-panel,
 .workspace.admin-mode .filter-panel {
+  display: none;
+}
+
+.workspace:not(.has-detail) .detail-panel {
   display: none;
 }
 
@@ -498,6 +514,15 @@ textarea {
 }
 
 .tab-view[hidden] {
+  display: none;
+}
+
+.customerDetail-mode {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.customerDetail-mode .filter-panel,
+.customerDetail-mode .detail-panel {
   display: none;
 }
 
@@ -757,7 +782,12 @@ textarea {
   gap: 12px;
   min-height: 194px;
   padding: 16px;
+  cursor: pointer;
   transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+tr[data-customer-id] {
+  cursor: pointer;
 }
 
 .customer-card:hover {
@@ -1163,6 +1193,49 @@ th {
   line-height: 1.3;
 }
 
+.customer-detail-page {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-page-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 88% 16%, rgba(0, 113, 227, 0.14), transparent 34%),
+    rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow-soft);
+}
+
+.detail-page-hero h2 {
+  max-width: 900px;
+  margin: 0 0 10px;
+}
+
+.detail-page-hero p {
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.detail-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.customer-detail-page .detail-section {
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
 .detail-section {
   margin-top: 18px;
   padding-top: 18px;
@@ -1172,6 +1245,14 @@ th {
 .detail-section h4 {
   margin: 0 0 10px;
   font-size: 14px;
+}
+
+.customer-detail-page .detail-section {
+  margin-top: 0;
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
 }
 
 .detail-grid,
@@ -1455,6 +1536,31 @@ th {
   font-size: 13px;
 }
 
+.published-customer-list {
+  display: grid;
+  gap: 14px;
+}
+
+.published-customer-item {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.published-customer-item h4 {
+  margin: 8px 0 4px;
+  overflow-wrap: anywhere;
+}
+
+.published-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .admin-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1505,7 +1611,8 @@ th {
 }
 
 .status-pill.disabled,
-.status-pill.rejected {
+.status-pill.rejected,
+.status-pill.revoked {
   color: #b42318;
   background: rgba(180, 35, 24, 0.1);
 }
@@ -2064,6 +2171,16 @@ th {
   .mapping-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .published-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-page-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 22px 18px;
+  }
 }
 
 /* Apple-like product polish */
@@ -2432,11 +2549,11 @@ th {
           <p class="admin-login-hint" id="adminLoginHint" hidden>管理员使用邮箱密码登录后，还需要输入后台权限码才能进入管理员后台。</p>
           <label class="field">
             <span>邮箱</span>
-            <input id="loginEmail" type="email" autocomplete="email" required />
+              <input id="loginEmail" type="email" autocomplete="off" autocapitalize="none" spellcheck="false" name="shuoyi_email_blank" required />
           </label>
           <label class="field">
             <span>密码</span>
-            <input id="loginPassword" type="password" autocomplete="current-password" required />
+              <input id="loginPassword" type="password" autocomplete="new-password" name="shuoyi_password_blank" required />
           </label>
           <button class="text-button primary" type="submit">登录</button>
           <button class="link-button" type="button" data-auth-mode="register">没有账号，使用邀请码注册</button>
@@ -2722,6 +2839,10 @@ th {
           <section class="tab-view admin-view" id="adminView" hidden>
             <div id="adminContent"></div>
           </section>
+
+          <section class="tab-view customer-detail-view" id="customerDetailView" hidden>
+            <div id="fullDetailContent"></div>
+          </section>
         </section>
 
         <aside class="detail-panel" id="detailPanel" aria-label="客户详情">
@@ -2990,6 +3111,7 @@ const tabOptions = [
   { key: "followup", label: "跟进记录" },
   { key: "admin", label: "管理员后台", adminOnly: true }
 ];
+const viewKeys = [...tabOptions.map((item) => item.key), "customerDetail"];
 
 const fastenerKeywordGroups = [
   {
@@ -3137,11 +3259,14 @@ const state = {
   favoritesOnly: false,
   view: "cards",
   selectedId: null,
+  detailMode: "summary",
   expandedIds: new Set(),
   adminSection: localStorage.getItem(storageKeys.adminSection) || "users",
   adminSearch: "",
   adminStatus: "all",
-  adminRuleType: "all"
+  adminRuleType: "all",
+  adminApprovedSearch: "",
+  adminApprovedStatus: "all"
 };
 
 const favorites = new Set();
@@ -3154,6 +3279,7 @@ const workspaceLoadState = {
 };
 let workspaceLoadPromise = null;
 let approvedCustomerRows = [];
+let adminApprovedCustomers = [];
 let knowledgeArticles = [];
 let adminProfiles = [];
 let customerReviewItems = [];
@@ -3201,6 +3327,8 @@ const els = {
   knowledgeView: document.getElementById("knowledgeView"),
   followupView: document.getElementById("followupView"),
   adminView: document.getElementById("adminView"),
+  customerDetailView: document.getElementById("customerDetailView"),
+  fullDetailContent: document.getElementById("fullDetailContent"),
   dashboardStrip: document.getElementById("dashboardStrip"),
   dailyLeads: document.getElementById("dailyLeads"),
   todayLeadCount: document.getElementById("todayLeadCount"),
@@ -3442,10 +3570,24 @@ function buildSearchIndex(customer) {
     customer.contactInfo,
     customer.website,
     customer.address,
+    customer.source,
+    customer.sourceUrl,
+    customer.approvedFrom,
+    stringifySearchPayload(customer.raw),
     ...(customer.keywordTags || []),
     ...(customer.advantageProducts || []),
     ...(customer.hsCodes || []).flatMap((item) => [item.code, item.label, ...(item.tags || [])])
   ].join(" "));
+}
+
+function stringifySearchPayload(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return "";
+  }
 }
 
 function buildWebSearch(query) {
@@ -3563,7 +3705,7 @@ function bindEvents() {
   els.keyword.addEventListener("input", () => {
     state.keyword = els.keyword.value.trim();
     state.visibleCount = libraryPageSize;
-    state.activeTab = "library";
+    setActiveTab("library");
     render();
   });
 
@@ -3577,7 +3719,7 @@ function bindEvents() {
     element.addEventListener("change", () => {
       state[key] = element.value;
       state.visibleCount = libraryPageSize;
-      state.activeTab = "library";
+      setActiveTab("library");
       render();
     });
   });
@@ -3585,7 +3727,7 @@ function bindEvents() {
   els.favoritesOnly.addEventListener("change", () => {
     state.favoritesOnly = els.favoritesOnly.checked;
     state.visibleCount = libraryPageSize;
-    state.activeTab = "library";
+    setActiveTab("library");
     render();
   });
 
@@ -3594,7 +3736,7 @@ function bindEvents() {
     if (!button) return;
     state.type = button.dataset.type;
     state.visibleCount = libraryPageSize;
-    state.activeTab = "library";
+    setActiveTab("library");
     renderTypeTabs();
     render();
   });
@@ -3613,14 +3755,19 @@ function bindEvents() {
       state.keyword = starter.dataset.libraryQuery;
       els.keyword.value = state.keyword;
       state.visibleCount = libraryPageSize;
-      state.activeTab = "library";
+      setActiveTab("library");
       render();
       return;
     }
 
     const action = event.target.closest("[data-action]");
-    if (!action) return;
-    handleCustomerAction(action);
+    if (action) {
+      handleCustomerAction(action);
+      return;
+    }
+    if (event.target.closest("a, button, input, select, textarea")) return;
+    const customerRow = event.target.closest("[data-customer-id]");
+    if (customerRow) selectCustomer(customerRow.dataset.customerId);
   });
 
   els.dailyLeads.addEventListener("click", (event) => {
@@ -3654,6 +3801,13 @@ function bindEvents() {
     if (copyButton) copyText(copyButton.dataset.copy);
   });
 
+  els.fullDetailContent?.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-action]");
+    if (action) handleCustomerAction(action);
+    const copyButton = event.target.closest("[data-copy]");
+    if (copyButton) copyText(copyButton.dataset.copy);
+  });
+
   els.queryPills.addEventListener("click", (event) => {
     const copyButton = event.target.closest("[data-copy]");
     if (copyButton) copyText(copyButton.dataset.copy);
@@ -3665,10 +3819,14 @@ function bindEvents() {
 
   els.detailContent.addEventListener("input", persistDetailRecord);
   els.detailContent.addEventListener("change", persistDetailRecord);
+  els.fullDetailContent?.addEventListener("input", persistDetailRecord);
+  els.fullDetailContent?.addEventListener("change", persistDetailRecord);
 
   els.closeDetail.addEventListener("click", () => {
     state.selectedId = null;
+    state.detailMode = "summary";
     els.detailPanel.classList.remove("open");
+    els.workspace.classList.remove("has-detail");
     renderDetail();
   });
 
@@ -3759,6 +3917,8 @@ async function initAuth() {
       adminActions = [];
       importBatches = [];
       importRules = [];
+      adminApprovedCustomers = [];
+      closeInlineDetail();
       setAuthMode("login");
     }
   });
@@ -3772,6 +3932,10 @@ async function initAuth() {
 
 function setAuthMode(mode) {
   authState.mode = mode;
+  if (mode === "login" && !authState.user) {
+    els.loginEmail.value = "";
+    els.loginPassword.value = "";
+  }
   renderAuthShell();
 }
 
@@ -3811,12 +3975,21 @@ function renderAuthShell() {
   els.resetPasswordForm.hidden = authState.mode !== "reset";
   els.profileForm.hidden = authState.mode !== "profile";
 
+  if (!authState.user && authState.mode === "login") scheduleBlankLoginFields();
   if (authState.mode === "profile") fillProfileForm();
   if (canUseApp) {
     els.userBadge.textContent = authState.profile?.company_name || authState.user?.email || "已登录";
     render();
     renderDetail();
   }
+}
+
+function scheduleBlankLoginFields() {
+  [60, 360, 900].forEach((delay) => window.setTimeout(() => {
+    if (authState.user || authState.mode !== "login") return;
+    els.loginEmail.value = "";
+    els.loginPassword.value = "";
+  }, delay));
 }
 
 async function signInWithEmail() {
@@ -4018,7 +4191,8 @@ async function loadSharedData() {
   const [customerResult, knowledgeResult] = await Promise.all([
     authState.client
       .from("approved_customers")
-      .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,created_at")
+      .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,raw,status,updated_at,revoked_at,revoke_reason,created_at")
+      .eq("status", "published")
       .order("created_at", { ascending: false }),
     authState.client
       .from("knowledge_articles")
@@ -4073,6 +4247,9 @@ function enrichApprovedCustomer(item, index) {
     industryGroup: item.industry || product,
     cardIndustry: item.product_detail || "",
     sourceUrl: item.source_url || "",
+    raw: item.raw || {},
+    status: item.status || "published",
+    approvedFrom: item.approved_from || "",
     approvedAt: item.created_at || ""
   };
   hydrateLeadIntel(lead);
@@ -4118,7 +4295,7 @@ async function loadAdminData() {
   if (!isAdmin() || !authState.adminUnlocked) return;
   workspaceLoadState.admin = "loading";
   const mark = perfStart("workspace.adminData");
-  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult] = await Promise.all([
+  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult, approvedAdminResult] = await Promise.all([
     authState.client
       .from("profiles")
       .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
@@ -4146,6 +4323,10 @@ async function loadAdminData() {
     authState.client
       .from("import_rules")
       .select("id,rule_type,value,label,active,created_at")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("approved_customers")
+      .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,raw,status,updated_at,revoked_at,revoked_by,revoke_reason,created_at")
       .order("created_at", { ascending: false })
   ]);
   adminProfiles = profileResult.error ? [] : profileResult.data || [];
@@ -4155,6 +4336,7 @@ async function loadAdminData() {
   adminActions = actionResult.error ? [] : actionResult.data || [];
   importBatches = batchResult.error ? [] : batchResult.data || [];
   importRules = ruleResult.error ? [] : ruleResult.data || [];
+  adminApprovedCustomers = approvedAdminResult.error ? [] : approvedAdminResult.data || [];
   workspaceLoadState.admin = "ready";
   rebuildCustomerPool();
   perfEnd(mark);
@@ -4286,6 +4468,8 @@ async function signOut() {
   adminActions = [];
   importBatches = [];
   importRules = [];
+  adminApprovedCustomers = [];
+  closeInlineDetail();
   setAuthMode("login");
 }
 
@@ -4311,20 +4495,24 @@ function render() {
   renderFollowup();
   renderAdmin();
   renderDetail();
+  renderCustomerDetailPage();
 }
 
 function renderShell() {
   if (state.activeTab === "admin" && !isAdmin()) state.activeTab = "dashboard";
+  if (!viewKeys.includes(state.activeTab)) state.activeTab = "dashboard";
   tabOptions.forEach((tab) => {
     const button = els.appTabs.querySelector(`[data-tab="${tab.key}"]`);
-    const view = els[`${tab.key}View`];
     if (button) {
       button.hidden = Boolean(tab.adminOnly && !isAdmin());
       button.classList.toggle("active", state.activeTab === tab.key);
     }
-    if (view) view.hidden = state.activeTab !== tab.key;
   });
-  els.workspace.classList.remove("dashboard-mode", "library-mode", "knowledge-mode", "followup-mode", "admin-mode");
+  viewKeys.forEach((key) => {
+    const view = els[`${key}View`];
+    if (view) view.hidden = state.activeTab !== key;
+  });
+  els.workspace.classList.remove("dashboard-mode", "library-mode", "knowledge-mode", "followup-mode", "admin-mode", "customerDetail-mode");
   els.workspace.classList.add(`${state.activeTab}-mode`);
 }
 
@@ -4575,7 +4763,7 @@ function renderDailyLeadCard(customer) {
         ${customer.advantageProducts.slice(0, 4).map((item) => `<span>${escapeHTML(item)}</span>`).join("")}
       </div>
       <div class="card-actions">
-        <button class="text-button primary" type="button" data-action="detail" data-id="${customer.id}">
+        <button class="text-button primary" type="button" data-action="full-detail" data-id="${customer.id}">
           <svg><use href="#icon-eye"></use></svg>
           <span>详情</span>
         </button>
@@ -4747,7 +4935,7 @@ function renderApprovedKnowledge(articles = knowledgeArticles) {
 
 function renderFollowup() {
   const statuses = ["待开发", "已收藏", "已查官网", "已找到邮箱", "已发开发信", "暂不匹配"];
-  const rows = getRankedCustomers(customers);
+  const rows = sortCustomers(customers.filter((customer) => !customer.audit));
   els.followupContent.innerHTML = `
     <section class="followup-hero">
       <div>
@@ -4780,6 +4968,7 @@ function renderAdmin() {
     ["batches", "导入批次"],
     ["rules", "入库规则"],
     ["customers", "待审核客户池"],
+    ["published", "已发布客户"],
     ["knowledge", "待审核知识库"],
     ["audit", "操作日志"]
   ];
@@ -4795,6 +4984,7 @@ function renderAdmin() {
     batches: renderImportBatches,
     rules: renderImportRules,
     customers: () => renderReviewPool("customers"),
+    published: renderPublishedCustomerManager,
     knowledge: () => renderReviewPool("knowledge"),
     audit: renderAdminAudit
   };
@@ -5102,6 +5292,117 @@ function renderImportBatches() {
       </div>
     </section>
   `;
+}
+
+function renderPublishedCustomerManager() {
+  const search = normalizeSearchText(state.adminApprovedSearch);
+  const rows = adminApprovedCustomers
+    .filter((item) => state.adminApprovedStatus === "all" || (item.status || "published") === state.adminApprovedStatus)
+    .filter((item) => {
+      if (!search) return true;
+      return normalizeSearchText([
+        item.company,
+        item.country,
+        item.product,
+        item.contact,
+        item.contact_info,
+        item.website,
+        item.source_name,
+        item.source_url,
+        item.customer_type,
+        item.hs_codes,
+        item.advantage_products,
+        item.industry,
+        item.market,
+        item.notes,
+        stringifySearchPayload(item.raw)
+      ].join(" ")).includes(search);
+    })
+    .map(renderPublishedCustomerRow)
+    .join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>已发布客户</h3>
+          <p>管理已经进入正式客户库的客户。编辑会实时影响客户库搜索；撤回后普通学员不可见，管理员可恢复。</p>
+        </div>
+        <strong>${adminApprovedCustomers.length} 条</strong>
+      </div>
+      <div class="admin-toolbar">
+        <label class="field compact">
+          <span>搜索</span>
+          <input type="search" value="${escapeAttr(state.adminApprovedSearch)}" data-approved-search placeholder="公司、产品、联系人、来源" />
+        </label>
+        <label class="field compact">
+          <span>状态</span>
+          <select data-approved-status>
+            ${["all", "published", "revoked"].map((status) => `
+              <option value="${status}" ${state.adminApprovedStatus === status ? "selected" : ""}>${status === "all" ? "全部" : getApprovedStatusLabel(status)}</option>
+            `).join("")}
+          </select>
+        </label>
+      </div>
+      <div class="published-customer-list">
+        ${rows || `<p class="status-empty">暂无已发布客户</p>`}
+      </div>
+    </section>
+  `;
+}
+
+function renderPublishedCustomerRow(item) {
+  const status = item.status || "published";
+  const fields = [
+    ["company", "公司名称", item.company],
+    ["country", "国家/地区", item.country],
+    ["product", "产品/行业", item.product],
+    ["customer_type", "客户类型", item.customer_type],
+    ["hs_codes", "HS 编码", item.hs_codes],
+    ["advantage_products", "优势产品", item.advantage_products],
+    ["website", "官网", item.website],
+    ["contact", "联系人", item.contact],
+    ["contact_info", "联系方式", item.contact_info],
+    ["source_name", "来源名称", item.source_name],
+    ["source_url", "来源链接", item.source_url],
+    ["market", "目的市场", item.market],
+    ["industry", "行业", item.industry],
+    ["notes", "备注", item.notes]
+  ];
+  return `
+    <article class="published-customer-item" data-approved-id="${escapeAttr(item.id)}">
+      <div class="admin-panel-head">
+        <div>
+          <span class="status-pill ${escapeAttr(status)}">${escapeHTML(getApprovedStatusLabel(status))}</span>
+          <h4>${escapeHTML(item.company || "未命名客户")}</h4>
+          <p>${escapeHTML([item.country, item.product, item.customer_type].filter(Boolean).join(" / ") || "字段待完善")}</p>
+        </div>
+        <div class="admin-actions">
+          <button class="mini-button" type="button" data-approved-save="${escapeAttr(item.id)}">保存编辑</button>
+          ${status === "revoked"
+            ? `<button class="mini-button" type="button" data-approved-restore="${escapeAttr(item.id)}">恢复发布</button>`
+            : `<button class="mini-button danger ghost" type="button" data-approved-revoke="${escapeAttr(item.id)}">撤回</button>`}
+        </div>
+      </div>
+      <div class="published-edit-grid">
+        ${fields.map(([key, label, value]) => `
+          <label class="field compact">
+            <span>${escapeHTML(label)}</span>
+            ${key === "notes" || key === "advantage_products" || key === "contact_info"
+              ? `<textarea data-approved-field="${escapeAttr(key)}">${escapeHTML(value || "")}</textarea>`
+              : `<input type="text" value="${escapeAttr(value || "")}" data-approved-field="${escapeAttr(key)}" />`}
+          </label>
+        `).join("")}
+      </div>
+      ${item.revoke_reason ? `<p class="reject-note">撤回原因：${escapeHTML(item.revoke_reason)}</p>` : ""}
+    </article>
+  `;
+}
+
+function getApprovedStatusLabel(status) {
+  if (status === "revoked") return "已撤回";
+  if (status === "published") return "已发布";
+  return status || "已发布";
 }
 
 function renderImportRules() {
@@ -5465,13 +5766,11 @@ function renderStatusColumn(status, rows) {
 }
 
 function getFilteredCustomers() {
-  const words = normalizeSearchText(state.keyword).split(/\s+/).filter(Boolean);
   return customers.filter((customer) => {
     const record = records[customer.id] || {};
-    const haystack = `${customer.searchIndex} ${normalizeSearchText(record.status)} ${normalizeSearchText(record.note)}`;
 
     return (
-      words.every((word) => haystack.includes(word)) &&
+      customerMatchesKeyword(customer, record, state.keyword) &&
       matchAll(state.country, customer.country) &&
       matchAll(state.region, customer.region) &&
       matchAll(state.market, customer.market) &&
@@ -5481,6 +5780,38 @@ function getFilteredCustomers() {
       (!state.favoritesOnly || favorites.has(customer.id))
     );
   });
+}
+
+function customerMatchesKeyword(customer, record = {}, keyword = "") {
+  const normalizedKeyword = normalizeSearchText(keyword);
+  if (!normalizedKeyword) return true;
+  const haystack = buildCustomerSearchHaystack(customer, record);
+  if (haystack.includes(normalizedKeyword)) return true;
+  const words = normalizedKeyword.split(/\s+/).filter(Boolean);
+  return words.every((word) => haystack.includes(word) || customerNameMatches(customer, word));
+}
+
+function buildCustomerSearchHaystack(customer, record = {}) {
+  return normalizeSearchText([
+    customer.searchIndex,
+    customer.name,
+    customer.source,
+    customer.sourceUrl,
+    customer.contactName,
+    customer.contactInfo,
+    customer.website,
+    customer.address,
+    customer.industryGroup,
+    customer.cardIndustry,
+    record.status,
+    record.note,
+    stringifySearchPayload(customer.raw)
+  ].filter(Boolean).join(" "));
+}
+
+function customerNameMatches(customer, word) {
+  const normalizedName = normalizeSearchText(customer.name);
+  return normalizedName.split(/\s+/).some((part) => part.includes(word) || word.includes(part));
 }
 
 function renderMetrics(filtered) {
@@ -5532,7 +5863,24 @@ function renderActiveFilters(filtered) {
 
   const visible = Math.min(state.visibleCount, filtered.length);
   els.resultSummary.textContent = `当前匹配 ${filtered.length} 条，已显示 ${visible} 条`;
+  if (!filtered.length && state.keyword && hasNonKeywordFilters()) {
+    const keywordOnlyCount = customers.filter((customer) => customerMatchesKeyword(customer, records[customer.id] || {}, state.keyword)).length;
+    if (keywordOnlyCount) {
+      els.activeFilters.textContent = `关键词本身可匹配 ${keywordOnlyCount} 条，但被国家、地区、产品、HS 或类型筛选排除了。可点击“重置筛选”后重新搜索。`;
+      return;
+    }
+  }
   els.activeFilters.textContent = active.length ? active.join(" / ") : "未启用筛选";
+}
+
+function hasNonKeywordFilters() {
+  return state.country !== "全部" ||
+    state.region !== "全部" ||
+    state.market !== "全部" ||
+    state.product !== "全部" ||
+    state.hs !== "全部" ||
+    state.type !== "全部" ||
+    state.favoritesOnly;
 }
 
 function renderCard(customer) {
@@ -5541,7 +5889,7 @@ function renderCard(customer) {
   const isExpanded = state.expandedIds.has(customer.id);
   const hsPreview = customer.hsCodes?.slice(0, 2).map((item) => item.code).join(" / ") || "待匹配";
   return `
-    <article class="customer-card ${isExpanded ? "expanded" : ""}">
+    <article class="customer-card ${isExpanded ? "expanded" : ""}" data-customer-id="${escapeAttr(customer.id)}">
       <div class="card-head">
         <div>
           <h3>${escapeHTML(customer.name)}</h3>
@@ -5583,7 +5931,7 @@ function renderCard(customer) {
         <button class="text-button" type="button" data-action="expand" data-id="${customer.id}">
           <span>${isExpanded ? "收起" : "展开"}</span>
         </button>
-        <button class="text-button primary" type="button" data-action="detail" data-id="${customer.id}">
+        <button class="text-button primary" type="button" data-action="full-detail" data-id="${customer.id}">
           <svg><use href="#icon-eye"></use></svg>
           <span>详情</span>
         </button>
@@ -5654,7 +6002,7 @@ function renderTable(customersToRender) {
   const rows = customersToRender.map((customer) => {
     const record = records[customer.id] || {};
     return `
-      <tr>
+      <tr data-customer-id="${escapeAttr(customer.id)}">
         <td><strong>${escapeHTML(customer.name)}</strong>${customer.audit ? `<span class="status-pill pending">待审核</span>` : ""}</td>
         <td>${escapeHTML(customer.country)}</td>
         <td>${escapeHTML(customer.region)}</td>
@@ -5665,7 +6013,7 @@ function renderTable(customersToRender) {
         <td>${customer.score}%</td>
         <td>${escapeHTML(record.status || "待开发")}</td>
         <td>
-          <button class="text-button" type="button" data-action="detail" data-id="${customer.id}">
+          <button class="text-button" type="button" data-action="full-detail" data-id="${customer.id}">
             <svg><use href="#icon-eye"></use></svg>
           </button>
         </td>
@@ -5695,7 +6043,7 @@ function renderTable(customersToRender) {
 }
 
 function renderDetail() {
-  const customer = customers.find((item) => item.id === state.selectedId);
+  const customer = state.detailMode === "summary" ? getSelectedCustomer() : null;
   if (!customer) {
     els.detailContent.innerHTML = `
       <div class="detail-empty">
@@ -5710,6 +6058,106 @@ function renderDetail() {
     return;
   }
 
+  els.detailContent.innerHTML = renderDetailSummary(customer);
+}
+
+function getSelectedCustomer() {
+  return customers.find((item) => item.id === state.selectedId);
+}
+
+function renderDetailSummary(customer) {
+  const record = records[customer.id] || {};
+  const hsPreview = customer.hsCodes?.slice(0, 2).map((item) => item.code).join(" / ") || "待匹配";
+  return `
+    <div class="detail-title">
+      <p class="eyebrow">Quick Profile</p>
+      <h3>${escapeHTML(customer.name)}</h3>
+      <div class="badge-row">
+        <span class="badge brand">${escapeHTML(customer.country)}</span>
+        <span class="badge green">${escapeHTML(customer.product)}</span>
+        <span class="badge blue">HS ${escapeHTML(hsPreview)}</span>
+      </div>
+    </div>
+
+    ${renderAuditBanner(customer)}
+
+    <section class="detail-section">
+      <h4>客户摘要</h4>
+      <div class="detail-grid">
+        <div><span>客户类型</span><strong>${escapeHTML(customer.type)}</strong></div>
+        <div><span>目的市场</span><strong>${escapeHTML(customer.market)}</strong></div>
+        <div><span>匹配度</span><strong>${customer.score}%</strong></div>
+        <div><span>跟进状态</span><strong>${escapeHTML(record.status || "待开发")}</strong></div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h4>快捷动作</h4>
+      <div class="link-row">
+        <button class="text-button primary" type="button" data-action="full-detail" data-id="${customer.id}">
+          <svg><use href="#icon-eye"></use></svg>
+          <span>打开完整详情</span>
+        </button>
+        <a class="text-button" href="${customer.links.official}" target="_blank" rel="noopener">查官网</a>
+        <a class="text-button" href="${customer.links.contacts}" target="_blank" rel="noopener">找联系方式</a>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h4>跟进管理</h4>
+      ${renderFollowupFields(customer, record)}
+    </section>
+  `;
+}
+
+function renderCustomerDetailPage() {
+  if (!els.fullDetailContent) return;
+  if (state.activeTab !== "customerDetail") {
+    els.fullDetailContent.innerHTML = "";
+    return;
+  }
+  const customer = getSelectedCustomer();
+  if (!customer) {
+    els.fullDetailContent.innerHTML = `
+      <section class="customer-detail-page">
+        <div class="detail-empty">
+          <h3>没有选择客户</h3>
+          <p>请回到客户库，点击客户卡片或详情按钮查看完整信息。</p>
+          <button class="text-button primary" type="button" data-tab-jump="library">返回客户库</button>
+        </div>
+      </section>
+    `;
+    return;
+  }
+  els.fullDetailContent.innerHTML = renderFullCustomerDetail(customer);
+}
+
+function renderFullCustomerDetail(customer) {
+  return `
+    <section class="customer-detail-page">
+      <div class="detail-page-hero">
+        <div>
+          <p class="eyebrow">Customer Full Profile</p>
+          <h2>${escapeHTML(customer.name)}</h2>
+          <p>${escapeHTML(customer.intent)}</p>
+          <div class="badge-row">
+            <span class="badge brand">${escapeHTML(customer.country)}</span>
+            <span class="badge">${escapeHTML(customer.region)}</span>
+            <span class="badge green">${escapeHTML(customer.product)}</span>
+            ${customer.ticker ? `<span class="badge gold">股票线索 ${escapeHTML(customer.ticker)}</span>` : ""}
+          </div>
+        </div>
+        <div class="detail-page-actions">
+          <button class="text-button" type="button" data-tab-jump="library">返回客户库</button>
+          <a class="text-button primary" href="${customer.links.official}" target="_blank" rel="noopener">联网查找</a>
+        </div>
+      </div>
+      ${renderFullDetailSections(customer)}
+    </section>
+  `;
+}
+
+function renderFullDetailSections(customer) {
   const record = records[customer.id] || {};
   const providerCards = networkProviders.map((provider) => {
     const href = customer.links[provider.key] || customer.links.official;
@@ -5738,21 +6186,10 @@ function renderDetail() {
   const hsSection = renderHsSection(customer);
   const productSection = renderProductIntelSection(customer);
 
-  els.detailContent.innerHTML = `
-    <div class="detail-title">
-      <p class="eyebrow">Customer Profile</p>
-      <h3>${escapeHTML(customer.name)}</h3>
-      <div class="badge-row">
-        <span class="badge brand">${escapeHTML(customer.country)}</span>
-        <span class="badge">${escapeHTML(customer.region)}</span>
-        <span class="badge green">${escapeHTML(customer.product)}</span>
-        ${customer.ticker ? `<span class="badge gold">股票线索 ${escapeHTML(customer.ticker)}</span>` : ""}
-      </div>
-    </div>
-
+  return `
     ${renderAuditBanner(customer)}
 
-    <section class="detail-section">
+    <section class="detail-section detail-page-section">
       <h4>客户判断</h4>
       <div class="detail-grid">
         <div><span>客户类型</span><strong>${escapeHTML(customer.type)}</strong></div>
@@ -5768,13 +6205,13 @@ function renderDetail() {
 
     ${hsSection}
 
-    <section class="detail-section">
+    <section class="detail-section detail-page-section">
       <h4>联网数据入口</h4>
       <div class="network-grid">${providerCards}</div>
       <p class="network-note">这些入口会打开外部实时网页，用于查官网、公司联系方式、新闻、股票和财报。后续接 API 后，可以把结果直接写回客户库。</p>
     </section>
 
-    <section class="detail-section">
+    <section class="detail-section detail-page-section">
       <h4>股票与财报</h4>
       <div class="finance-panel">
         <strong>${customer.ticker ? `疑似上市代码：${escapeHTML(customer.ticker)}` : "未确认上市代码"}</strong>
@@ -5788,23 +6225,12 @@ function renderDetail() {
       </div>
     </section>
 
-    <section class="detail-section">
+    <section class="detail-section detail-page-section">
       <h4>跟进管理</h4>
-      <label class="field">
-        <span>状态</span>
-        <select data-record-field="status" data-id="${customer.id}">
-          ${["待开发", "已收藏", "已查官网", "已找到邮箱", "已发开发信", "暂不匹配"].map((status) => `
-            <option value="${status}" ${status === (record.status || "待开发") ? "selected" : ""}>${status}</option>
-          `).join("")}
-        </select>
-      </label>
-      <label class="field">
-        <span>备注</span>
-        <textarea data-record-field="note" data-id="${customer.id}" placeholder="记录官网、联系人、邮箱、开发信反馈">${escapeHTML(record.note || "")}</textarea>
-      </label>
+      ${renderFollowupFields(customer, record)}
     </section>
 
-    <section class="detail-section">
+    <section class="detail-section detail-page-section">
       <h4>搜索词</h4>
       <div class="copy-list">
         ${searchQueries.map((query) => `
@@ -5817,6 +6243,23 @@ function renderDetail() {
         `).join("")}
       </div>
     </section>
+  `;
+}
+
+function renderFollowupFields(customer, record = {}) {
+  return `
+    <label class="field">
+      <span>状态</span>
+      <select data-record-field="status" data-id="${customer.id}">
+        ${["待开发", "已收藏", "已查官网", "已找到邮箱", "已发开发信", "暂不匹配"].map((status) => `
+          <option value="${status}" ${status === (record.status || "待开发") ? "selected" : ""}>${status}</option>
+        `).join("")}
+      </select>
+    </label>
+    <label class="field">
+      <span>备注</span>
+      <textarea data-record-field="note" data-id="${customer.id}" placeholder="记录官网、联系人、邮箱、开发信反馈">${escapeHTML(record.note || "")}</textarea>
+    </label>
   `;
 }
 
@@ -5918,6 +6361,7 @@ async function handleAdminClick(event) {
     adminActions = [];
     importBatches = [];
     importRules = [];
+    adminApprovedCustomers = [];
     workspaceLoadState.admin = "idle";
     rebuildCustomerPool();
     render();
@@ -6006,6 +6450,24 @@ async function handleAdminClick(event) {
     return;
   }
 
+  const approvedSaveButton = event.target.closest("[data-approved-save]");
+  if (approvedSaveButton) {
+    await saveApprovedCustomer(approvedSaveButton.dataset.approvedSave);
+    return;
+  }
+
+  const approvedRevokeButton = event.target.closest("[data-approved-revoke]");
+  if (approvedRevokeButton) {
+    await revokeApprovedCustomer(approvedRevokeButton.dataset.approvedRevoke);
+    return;
+  }
+
+  const approvedRestoreButton = event.target.closest("[data-approved-restore]");
+  if (approvedRestoreButton) {
+    await restoreApprovedCustomer(approvedRestoreButton.dataset.approvedRestore);
+    return;
+  }
+
   if (event.target.closest("[data-create-rule]")) {
     await createImportRule();
     return;
@@ -6036,6 +6498,14 @@ function handleAdminInput(event) {
   }
   if (event.target.matches("[data-rule-type-filter]")) {
     state.adminRuleType = event.target.value;
+    renderAdmin();
+  }
+  if (event.target.matches("[data-approved-search]")) {
+    state.adminApprovedSearch = event.target.value;
+    renderAdmin();
+  }
+  if (event.target.matches("[data-approved-status]")) {
+    state.adminApprovedStatus = event.target.value;
     renderAdmin();
   }
 }
@@ -6201,6 +6671,64 @@ async function invokeAdminUsers(action, payload = {}) {
   return data || { ok: true };
 }
 
+function collectApprovedCustomerPayload(id) {
+  const item = [...(els.adminContent?.querySelectorAll("[data-approved-id]") || [])]
+    .find((node) => node.dataset.approvedId === id);
+  if (!item) return null;
+  const payload = {};
+  item.querySelectorAll("[data-approved-field]").forEach((field) => {
+    payload[field.dataset.approvedField] = field.value.trim();
+  });
+  payload.updated_at = new Date().toISOString();
+  return payload;
+}
+
+async function saveApprovedCustomer(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const payload = collectApprovedCustomerPayload(id);
+  if (!payload) return showToast("没有找到要保存的客户");
+  if (!payload.company) return showToast("公司名称不能为空");
+  const { error } = await authState.client.from("approved_customers").update(payload).eq("id", id);
+  if (error) return showToast(`保存失败：${error.message}`);
+  await insertAdminAction("update_approved_customer", { entity_type: "approved_customers", entity_id: id, details: payload });
+  await refreshAdminWorkspace();
+  showToast("已保存客户信息");
+}
+
+async function revokeApprovedCustomer(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const reason = window.prompt("请输入撤回原因：", "管理员撤回，待重新核验");
+  if (reason === null) return;
+  const payload = {
+    status: "revoked",
+    revoked_at: new Date().toISOString(),
+    revoked_by: authState.user.id,
+    revoke_reason: reason,
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await authState.client.from("approved_customers").update(payload).eq("id", id);
+  if (error) return showToast(`撤回失败：${error.message}`);
+  await insertAdminAction("revoke_approved_customer", { entity_type: "approved_customers", entity_id: id, details: { reason } });
+  await refreshAdminWorkspace();
+  showToast("已撤回，普通学员将不可见");
+}
+
+async function restoreApprovedCustomer(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const payload = {
+    status: "published",
+    revoked_at: null,
+    revoked_by: null,
+    revoke_reason: "",
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await authState.client.from("approved_customers").update(payload).eq("id", id);
+  if (error) return showToast(`恢复失败：${error.message}`);
+  await insertAdminAction("restore_approved_customer", { entity_type: "approved_customers", entity_id: id, details: {} });
+  await refreshAdminWorkspace();
+  showToast("已恢复发布，普通学员可见");
+}
+
 async function approveReviewItem(kind, id, refreshAfter = true) {
   if (!isAdmin() || !authState.adminUnlocked) return;
   const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
@@ -6236,7 +6764,9 @@ async function approveReviewItem(kind, id, refreshAfter = true) {
       industry: item.industry || "",
       position: item.position || "",
       notes: item.notes || "",
-      ticker: item.ticker || ""
+      ticker: item.ticker || "",
+      status: "published",
+      updated_at: now
     };
     const { data: inserted, error: insertError } = await authState.client.from("approved_customers").insert(approved).select("id").single();
     if (insertError) return showToast(`客户入库失败：${insertError.message}`);
@@ -6419,12 +6949,20 @@ async function importReviewFile(kind, file) {
 }
 
 function setActiveTab(tab) {
-  if (!tabOptions.some((item) => item.key === tab)) return;
+  if (!viewKeys.includes(tab)) return;
+  if (tab !== "customerDetail") closeInlineDetail();
   state.activeTab = tab;
   render();
   if (tab === "admin" && isAdmin() && authState.adminUnlocked && workspaceLoadState.admin !== "loading") {
     refreshAdminWorkspace();
   }
+}
+
+function closeInlineDetail() {
+  state.selectedId = null;
+  state.detailMode = "summary";
+  els.detailPanel.classList.remove("open");
+  els.workspace.classList.remove("has-detail");
 }
 
 async function handleCustomerAction(action) {
@@ -6436,15 +6974,27 @@ async function handleCustomerAction(action) {
   const customer = customers.find((item) => item.id === action.dataset.id);
   if (!customer) return;
 
-  if (action.dataset.action === "detail") selectCustomer(customer.id);
+  if (action.dataset.action === "detail" || action.dataset.action === "summary") selectCustomer(customer.id);
+  if (action.dataset.action === "full-detail") openFullCustomerDetail(customer.id);
   if (action.dataset.action === "favorite") toggleFavorite(customer.id);
   if (action.dataset.action === "expand") toggleExpand(customer.id);
 }
 
 function selectCustomer(id) {
   state.selectedId = id;
+  state.detailMode = "summary";
   els.detailPanel.classList.add("open");
+  els.workspace.classList.add("has-detail");
   renderDetail();
+}
+
+function openFullCustomerDetail(id) {
+  state.selectedId = id;
+  state.detailMode = "page";
+  els.detailPanel.classList.remove("open");
+  els.workspace.classList.remove("has-detail");
+  state.activeTab = "customerDetail";
+  render();
 }
 
 async function toggleFavorite(id) {
