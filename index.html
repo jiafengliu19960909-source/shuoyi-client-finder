@@ -1484,6 +1484,12 @@ th {
   background: transparent;
 }
 
+.mini-button:disabled,
+.text-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -1517,6 +1523,13 @@ th {
 .status-pill.approved {
   color: #006b4f;
   background: rgba(0, 168, 120, 0.14);
+}
+
+.status-pill.neutral,
+.status-pill.ready,
+.status-pill.needs_review {
+  color: #3a3a3c;
+  background: rgba(0, 0, 0, 0.07);
 }
 
 .import-panel {
@@ -1569,6 +1582,65 @@ th {
 .review-main h4 {
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+.review-metrics {
+  display: grid;
+  gap: 4px;
+  text-align: right;
+}
+
+.review-metrics span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 680;
+}
+
+.risk-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.risk-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  color: #9f3412;
+  background: rgba(251, 146, 60, 0.16);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.risk-tag.confirm {
+  color: #4b5563;
+  background: rgba(107, 114, 128, 0.12);
+}
+
+.raw-details {
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(245, 245, 247, 0.82);
+}
+
+.raw-details summary {
+  cursor: pointer;
+  padding: 9px 12px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.raw-details pre {
+  max-height: 260px;
+  margin: 0;
+  padding: 12px;
+  overflow: auto;
+  color: #1d1d1f;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .reject-note {
@@ -2016,6 +2088,7 @@ th {
 .admin-hero-actions,
 .admin-toolbar,
 .invite-create,
+.rule-create,
 .admin-code-rotate {
   display: flex;
   flex-wrap: wrap;
@@ -2033,7 +2106,8 @@ th {
 }
 
 .admin-code-rotate,
-.invite-create {
+.invite-create,
+.rule-create {
   padding: 14px;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 22px;
@@ -2776,6 +2850,42 @@ const emailPlaybook = [
   "Could you share the main sizes or product categories you are currently sourcing?"
 ];
 
+const reviewConfirmTag = "需人工确认";
+const customerRequiredFieldMap = {
+  company: { label: "公司名称", read: (row) => row.company },
+  country: { label: "国家/地区", read: (row) => row.country },
+  product: { label: "产品或行业", read: (row) => row.product || row.industry || row.advantage_products },
+  source: { label: "信息来源", read: (row) => row.source_url || row.source_name }
+};
+const knowledgeRequiredFieldMap = {
+  title: { label: "标题", read: (row) => row.title },
+  category: { label: "分类", read: (row) => row.category },
+  content: { label: "正文", read: (row) => row.content || row.summary },
+  source: { label: "信息来源", read: (row) => row.source_url || row.source_name }
+};
+const importRuleTypes = [
+  ["block_word", "屏蔽词"],
+  ["constraint_word", "约束词"],
+  ["required_field", "必填字段"],
+  ["priority_country", "重点国家"],
+  ["priority_industry", "重点行业"]
+];
+const defaultImportRules = [
+  { rule_type: "required_field", value: "company", label: "公司名称" },
+  { rule_type: "required_field", value: "country", label: "国家/地区" },
+  { rule_type: "required_field", value: "product", label: "产品或行业" },
+  { rule_type: "required_field", value: "source", label: "信息来源" },
+  { rule_type: "block_word", value: "adult", label: "成人内容" },
+  { rule_type: "block_word", value: "casino", label: "博彩" },
+  { rule_type: "block_word", value: "gambling", label: "博彩" },
+  { rule_type: "block_word", value: "weapon", label: "武器" },
+  { rule_type: "block_word", value: "sanction", label: "制裁风险" },
+  { rule_type: "block_word", value: "博彩", label: "博彩" },
+  { rule_type: "block_word", value: "成人", label: "成人内容" },
+  { rule_type: "block_word", value: "武器", label: "武器" },
+  { rule_type: "block_word", value: "制裁", label: "制裁风险" }
+];
+
 const state = {
   activeTab: "dashboard",
   visibleCount: libraryPageSize,
@@ -2792,7 +2902,8 @@ const state = {
   expandedIds: new Set(),
   adminSection: localStorage.getItem(storageKeys.adminSection) || "users",
   adminSearch: "",
-  adminStatus: "all"
+  adminStatus: "all",
+  adminRuleType: "all"
 };
 
 const favorites = new Set();
@@ -2811,6 +2922,8 @@ let customerReviewItems = [];
 let knowledgeReviewItems = [];
 let inviteCodes = [];
 let adminActions = [];
+let importBatches = [];
+let importRules = [];
 
 const baseCustomers = [
   ...rawLeads.map((item, index) => enrichLead(item, index)),
@@ -3397,6 +3510,8 @@ async function initAuth() {
       knowledgeReviewItems = [];
       inviteCodes = [];
       adminActions = [];
+      importBatches = [];
+      importRules = [];
       setAuthMode("login");
     }
   });
@@ -3716,7 +3831,7 @@ async function loadAdminData() {
   if (!isAdmin() || !authState.adminUnlocked) return;
   workspaceLoadState.admin = "loading";
   const mark = perfStart("workspace.adminData");
-  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult] = await Promise.all([
+  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult] = await Promise.all([
     authState.client
       .from("profiles")
       .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
@@ -3736,6 +3851,14 @@ async function loadAdminData() {
     authState.client
       .from("admin_actions")
       .select("id,actor_id,action,target_user_id,entity_type,entity_id,details,created_at")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("import_batches")
+      .select("id,uploaded_by,kind,file_name,total_rows,valid_rows,invalid_rows,duplicate_rows,risk_rows,missing_rows,blocked_rows,status,created_at")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("import_rules")
+      .select("id,rule_type,value,label,active,created_at")
       .order("created_at", { ascending: false })
   ]);
   adminProfiles = profileResult.error ? [] : profileResult.data || [];
@@ -3743,6 +3866,8 @@ async function loadAdminData() {
   knowledgeReviewItems = knowledgeReviewResult.error ? [] : knowledgeReviewResult.data || [];
   inviteCodes = inviteResult.error ? [] : inviteResult.data || [];
   adminActions = actionResult.error ? [] : actionResult.data || [];
+  importBatches = batchResult.error ? [] : batchResult.data || [];
+  importRules = ruleResult.error ? [] : ruleResult.data || [];
   workspaceLoadState.admin = "ready";
   perfEnd(mark);
 }
@@ -3871,6 +3996,8 @@ async function signOut() {
   knowledgeReviewItems = [];
   inviteCodes = [];
   adminActions = [];
+  importBatches = [];
+  importRules = [];
   setAuthMode("login");
 }
 
@@ -4292,6 +4419,8 @@ function renderAdmin() {
     ["users", "注册人员"],
     ["admins", "管理员管理"],
     ["invites", "邀请码管理"],
+    ["batches", "导入批次"],
+    ["rules", "入库规则"],
     ["customers", "待审核客户池"],
     ["knowledge", "待审核知识库"],
     ["audit", "操作日志"]
@@ -4305,6 +4434,8 @@ function renderAdmin() {
     users: renderAdminUsers,
     admins: renderAdminManagers,
     invites: renderInviteManager,
+    batches: renderImportBatches,
+    rules: renderImportRules,
     customers: () => renderReviewPool("customers"),
     knowledge: () => renderReviewPool("knowledge"),
     audit: renderAdminAudit
@@ -4566,6 +4697,125 @@ function renderInviteManager() {
   `;
 }
 
+function renderImportBatches() {
+  const rows = importBatches.map((batch) => `
+    <tr>
+      <td>
+        <strong>${escapeHTML(batch.file_name || "未命名文件")}</strong>
+        <span>${escapeHTML(batch.kind === "knowledge" ? "知识库" : "客户池")} / ${escapeHTML(formatDate(batch.created_at))}</span>
+      </td>
+      <td>${Number(batch.total_rows || 0)}</td>
+      <td>${Number(batch.valid_rows || 0)}</td>
+      <td>${Number(batch.invalid_rows || 0)}</td>
+      <td>${Number(batch.duplicate_rows || 0)}</td>
+      <td>${Number(batch.risk_rows || 0)}</td>
+      <td>${Number(batch.missing_rows || 0)}</td>
+      <td>${Number(batch.blocked_rows || 0)}</td>
+      <td><span class="status-pill ${escapeAttr(batch.status || "pending")}">${escapeHTML(batch.status || "pending")}</span></td>
+    </tr>
+  `).join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>导入批次</h3>
+          <p>每次 CSV/XLSX 上传都会生成批次统计，便于追踪有效数据、风险数据和缺失字段。</p>
+        </div>
+        <strong>${importBatches.length} 个批次</strong>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table import-batch-table">
+          <thead>
+            <tr>
+              <th>文件</th>
+              <th>总数</th>
+              <th>有效</th>
+              <th>无效</th>
+              <th>重复</th>
+              <th>风险</th>
+              <th>缺失</th>
+              <th>屏蔽</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>${rows || `<tr><td colspan="9">暂无导入批次</td></tr>`}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderImportRules() {
+  const visibleRules = getEffectiveImportRules()
+    .filter((rule) => state.adminRuleType === "all" || rule.rule_type === state.adminRuleType);
+  const rows = visibleRules.map((rule) => `
+    <tr>
+      <td><span class="status-pill neutral">${escapeHTML(getRuleTypeLabel(rule.rule_type))}</span></td>
+      <td><strong>${escapeHTML(rule.value || "")}</strong><span>${escapeHTML(rule.label || "未填写说明")}</span></td>
+      <td><span class="status-pill ${rule.active === false ? "disabled" : "approved"}">${rule.active === false ? "disabled" : "active"}</span></td>
+      <td>
+        ${rule.id ? `
+          <button class="mini-button ${rule.active === false ? "" : "danger ghost"}" type="button" data-toggle-rule="${escapeAttr(rule.id)}" data-rule-active="${rule.active === false ? "true" : "false"}">
+            ${rule.active === false ? "启用" : "停用"}
+          </button>
+        ` : `<span class="admin-self">默认规则</span>`}
+      </td>
+    </tr>
+  `).join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>入库规则</h3>
+          <p>维护屏蔽词、约束词、重点国家/行业和必填字段。上传时会自动用于风险标记和批次统计。</p>
+        </div>
+        <strong>${visibleRules.length} 条规则</strong>
+      </div>
+      <div class="admin-toolbar">
+        <label class="field compact">
+          <span>规则类型</span>
+          <select data-rule-type-filter>
+            <option value="all" ${state.adminRuleType === "all" ? "selected" : ""}>全部</option>
+            ${importRuleTypes.map(([value, label]) => `<option value="${escapeAttr(value)}" ${state.adminRuleType === value ? "selected" : ""}>${escapeHTML(label)}</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <div class="rule-create">
+        <label class="field compact">
+          <span>类型</span>
+          <select data-new-rule-type>
+            ${importRuleTypes.map(([value, label]) => `<option value="${escapeAttr(value)}">${escapeHTML(label)}</option>`).join("")}
+          </select>
+        </label>
+        <label class="field compact">
+          <span>规则值</span>
+          <input type="text" data-new-rule-value placeholder="例如 casino / source / Germany" />
+        </label>
+        <label class="field compact">
+          <span>说明</span>
+          <input type="text" data-new-rule-label placeholder="便于管理员识别" />
+        </label>
+        <button class="text-button primary" type="button" data-create-rule>添加规则</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>类型</th>
+              <th>规则</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>${rows || `<tr><td colspan="4">暂无规则</td></tr>`}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
 function renderAdminAudit() {
   const rows = adminActions.map((item) => `
     <tr>
@@ -4606,9 +4856,11 @@ function renderReviewPool(kind) {
   const isCustomer = kind === "customers";
   const rows = isCustomer ? customerReviewItems : knowledgeReviewItems;
   const pendingCount = rows.filter((item) => item.review_status === "pending").length;
+  const cleanPendingCount = rows.filter((item) => item.review_status === "pending" && isReviewItemClean(item)).length;
+  const riskCount = rows.filter((item) => getReviewRiskTags(item).some((tag) => tag !== reviewConfirmTag)).length;
   const title = isCustomer ? "待审核客户池" : "待审核知识库";
   const hint = isCustomer
-    ? "支持 CSV / XLSX。字段可用：company/name/公司名称、country/国家、product/产品、contact/联系人、website/官网、source/来源、hs_codes/海关编码。"
+    ? "支持 CSV / XLSX。上传后自动识别字段、查重、检查来源、命中屏蔽词并生成风险标签，审核通过后才进入正式客户库。"
     : "支持 CSV / XLSX。字段可用：title/标题、category/分类、summary/摘要、keywords/关键词、hs_codes/海关编码、content/正文、source/来源。";
   return `
     <section class="admin-panel">
@@ -4617,7 +4869,15 @@ function renderReviewPool(kind) {
           <h3>${escapeHTML(title)}</h3>
           <p>${escapeHTML(hint)}</p>
         </div>
-        <strong>${pendingCount} 条待审</strong>
+        <div class="review-metrics">
+          <strong>${pendingCount} 条待审</strong>
+          <span>${riskCount} 条风险提示</span>
+        </div>
+      </div>
+      <div class="admin-toolbar">
+        <button class="text-button" type="button" data-bulk-approve="${escapeAttr(kind)}" ${cleanPendingCount ? "" : "disabled"}>
+          批量通过无风险项（${cleanPendingCount}）
+        </button>
       </div>
       <label class="import-panel">
         <input type="file" accept=".csv,.xlsx,.xls" data-import-kind="${escapeAttr(kind)}">
@@ -4639,6 +4899,22 @@ function renderReviewItem(kind, item) {
     : [item.category, item.keywords, item.hs_codes].filter(Boolean).join(" / ");
   const source = [item.source_name, item.source_url].filter(Boolean).join(" | ") || "内部资料";
   const status = item.review_status || "pending";
+  const riskTags = getReviewRiskTags(item);
+  const missingFields = Array.isArray(item.required_missing) ? item.required_missing : item.normalized?.required_missing || [];
+  const riskHtml = riskTags.length ? `
+    <div class="risk-tags">
+      ${riskTags.map((tag) => `<span class="risk-tag ${tag === reviewConfirmTag ? "confirm" : ""}">${escapeHTML(tag)}</span>`).join("")}
+    </div>
+  ` : "";
+  const missingHtml = missingFields.length
+    ? `<small class="reject-note">缺失字段：${escapeHTML(missingFields.map(getRequiredFieldLabel).join("、"))}</small>`
+    : "";
+  const duplicateHtml = item.duplicate_key
+    ? `<small class="reject-note">疑似重复键：${escapeHTML(item.duplicate_key)}${item.duplicate_of ? ` / ${escapeHTML(item.duplicate_of)}` : ""}</small>`
+    : "";
+  const rawHtml = item.raw
+    ? `<details class="raw-details"><summary>查看原始数据</summary><pre>${escapeHTML(JSON.stringify(item.raw, null, 2))}</pre></details>`
+    : "";
   return `
     <article class="review-item">
       <div class="review-main">
@@ -4646,9 +4922,14 @@ function renderReviewItem(kind, item) {
         <h4>${escapeHTML(title || "未命名条目")}</h4>
         <p>${escapeHTML(sub || "暂无补充字段")}</p>
         <small>来源：${escapeHTML(source)} · 上传：${escapeHTML(formatDate(item.created_at))}</small>
+        ${riskHtml}
+        ${missingHtml}
+        ${duplicateHtml}
         ${item.rejection_reason ? `<small class="reject-note">驳回原因：${escapeHTML(item.rejection_reason)}</small>` : ""}
+        ${rawHtml}
       </div>
       <div class="admin-actions">
+        ${item.source_url ? `<a class="mini-button" href="${escapeAttr(item.source_url)}" target="_blank" rel="noopener">查看来源</a>` : ""}
         ${status === "pending" ? `
           <button class="mini-button" type="button" data-review-action="approve" data-review-kind="${escapeAttr(kind)}" data-review-id="${item.id}">通过</button>
           <button class="mini-button danger ghost" type="button" data-review-action="reject" data-review-kind="${escapeAttr(kind)}" data-review-id="${item.id}">驳回</button>
@@ -5076,6 +5357,8 @@ async function handleAdminClick(event) {
     knowledgeReviewItems = [];
     inviteCodes = [];
     adminActions = [];
+    importBatches = [];
+    importRules = [];
     workspaceLoadState.admin = "idle";
     render();
     showToast("管理员后台已锁定");
@@ -5138,6 +5421,23 @@ async function handleAdminClick(event) {
     return;
   }
 
+  const bulkApproveButton = event.target.closest("[data-bulk-approve]");
+  if (bulkApproveButton) {
+    await bulkApproveReviewItems(bulkApproveButton.dataset.bulkApprove);
+    return;
+  }
+
+  if (event.target.closest("[data-create-rule]")) {
+    await createImportRule();
+    return;
+  }
+
+  const toggleRuleButton = event.target.closest("[data-toggle-rule]");
+  if (toggleRuleButton) {
+    await setImportRuleActive(toggleRuleButton.dataset.toggleRule, toggleRuleButton.dataset.ruleActive === "true");
+    return;
+  }
+
   const reviewButton = event.target.closest("[data-review-action]");
   if (reviewButton) {
     const { reviewAction, reviewKind, reviewId } = reviewButton.dataset;
@@ -5153,6 +5453,10 @@ function handleAdminInput(event) {
   }
   if (event.target.matches("[data-admin-status]")) {
     state.adminStatus = event.target.value;
+    renderAdmin();
+  }
+  if (event.target.matches("[data-rule-type-filter]")) {
+    state.adminRuleType = event.target.value;
     renderAdmin();
   }
 }
@@ -5253,6 +5557,43 @@ async function disableInviteCode(inviteId) {
   await refreshAdminWorkspace();
 }
 
+async function createImportRule() {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  const ruleType = getAdminPanelValue("[data-new-rule-type]");
+  const value = getAdminPanelValue("[data-new-rule-value]");
+  const label = getAdminPanelValue("[data-new-rule-label]");
+  if (!ruleType || !value) return showToast("请填写规则类型和规则值");
+  const { error } = await authState.client.from("import_rules").insert({
+    rule_type: ruleType,
+    value,
+    label,
+    active: true,
+    created_by: authState.user.id
+  });
+  if (error) return showToast(`规则创建失败：${error.message}`);
+  await insertAdminAction("create_import_rule", {
+    entity_type: "import_rules",
+    details: { rule_type: ruleType, value, label }
+  });
+  await refreshAdminWorkspace();
+}
+
+async function setImportRuleActive(ruleId, active) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!ruleId) return;
+  const { error } = await authState.client
+    .from("import_rules")
+    .update({ active })
+    .eq("id", ruleId);
+  if (error) return showToast(`规则更新失败：${error.message}`);
+  await insertAdminAction(active ? "enable_import_rule" : "disable_import_rule", {
+    entity_type: "import_rules",
+    entity_id: ruleId,
+    details: { active }
+  });
+  await refreshAdminWorkspace();
+}
+
 function getAdminPanelValue(selector) {
   return els.adminContent?.querySelector(selector)?.value.trim() || "";
 }
@@ -5265,7 +5606,7 @@ async function invokeAdminUsers(action, payload = {}) {
   return data || { ok: true };
 }
 
-async function approveReviewItem(kind, id) {
+async function approveReviewItem(kind, id, refreshAfter = true) {
   if (!isAdmin() || !authState.adminUnlocked) return;
   const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
   const item = sourceRows.find((row) => row.id === id);
@@ -5325,7 +5666,20 @@ async function approveReviewItem(kind, id) {
     }).eq("id", id);
     await insertAdminAction("approve_knowledge", { entity_type: "knowledge_review_items", entity_id: id, details: article });
   }
+  if (refreshAfter) await refreshAdminWorkspace();
+}
+
+async function bulkApproveReviewItems(kind) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
+  const rows = sourceRows.filter((item) => item.review_status === "pending" && isReviewItemClean(item));
+  if (!rows.length) return showToast("没有可批量通过的无风险项");
+  if (!window.confirm(`确认批量通过 ${rows.length} 条无风险待审内容？`)) return;
+  for (const item of rows) {
+    await approveReviewItem(kind, item.id, false);
+  }
   await refreshAdminWorkspace();
+  showToast(`已批量通过 ${rows.length} 条内容`);
 }
 
 async function rejectReviewItem(kind, id) {
@@ -5367,17 +5721,35 @@ async function importReviewFile(kind, file) {
     const normalized = rows.map((row, index) => kind === "customers"
       ? normalizeCustomerImport(row, file.name, index)
       : normalizeKnowledgeImport(row, file.name, index));
-    const validRows = normalized.filter((row) => row);
+    const duplicateContext = kind === "customers" ? createDuplicateContext() : null;
+    const validRows = normalized
+      .filter((row) => row)
+      .map((row) => kind === "customers" ? validateCustomerImportRow(row, duplicateContext) : validateKnowledgeImportRow(row));
     if (!validRows.length) return showToast("没有找到可导入的有效行，请检查字段名。");
     const table = kind === "customers" ? "customer_review_items" : "knowledge_review_items";
-    const { error } = await authState.client.from(table).insert(validRows);
+    const stats = summarizeImportRows(rows.length, validRows);
+    const { data: batch, error: batchError } = await authState.client
+      .from("import_batches")
+      .insert({
+        uploaded_by: authState.user.id,
+        kind,
+        file_name: file.name,
+        ...stats,
+        status: stats.risk_rows || stats.invalid_rows ? "needs_review" : "ready"
+      })
+      .select("id")
+      .single();
+    if (batchError) return showToast(`批次创建失败：${batchError.message}`);
+    const rowsToInsert = validRows.map((row) => ({ ...row, import_batch_id: batch.id }));
+    const { error } = await authState.client.from(table).insert(rowsToInsert);
     if (error) return showToast(`上传失败：${error.message}`);
     await insertAdminAction(kind === "customers" ? "upload_customer_review" : "upload_knowledge_review", {
       entity_type: table,
-      details: { file: file.name, rows: validRows.length }
+      entity_id: batch.id,
+      details: { file: file.name, ...stats }
     });
     await refreshAdminWorkspace();
-    showToast(`已导入 ${validRows.length} 条到待审核池`);
+    showToast(`已导入 ${validRows.length} 条到待审核池，风险 ${stats.risk_rows} 条`);
   } catch (error) {
     showToast(error.message || "文件解析失败");
   }
@@ -5521,6 +5893,180 @@ function getHsOptions(rows) {
   return [...map.values()].sort((a, b) => a.value.localeCompare(b.value, "zh-CN"));
 }
 
+function getEffectiveImportRules() {
+  const keyed = new Map();
+  defaultImportRules.forEach((rule) => {
+    keyed.set(`${rule.rule_type}:${normalizeRuleValue(rule.value)}`, { ...rule, active: true, id: "" });
+  });
+  importRules.forEach((rule) => {
+    keyed.set(`${rule.rule_type}:${normalizeRuleValue(rule.value)}`, {
+      ...rule,
+      active: rule.active !== false
+    });
+  });
+  return [...keyed.values()].sort((a, b) => {
+    const typeCompare = getRuleTypeLabel(a.rule_type).localeCompare(getRuleTypeLabel(b.rule_type), "zh-CN");
+    return typeCompare || String(a.value || "").localeCompare(String(b.value || ""), "zh-CN");
+  });
+}
+
+function getActiveImportRules(type) {
+  return getEffectiveImportRules().filter((rule) => rule.rule_type === type && rule.active !== false && String(rule.value || "").trim());
+}
+
+function getRuleTypeLabel(type) {
+  return importRuleTypes.find(([value]) => value === type)?.[1] || type || "规则";
+}
+
+function normalizeRuleValue(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function getRequiredCustomerFields() {
+  const configured = getActiveImportRules("required_field")
+    .map((rule) => normalizeRuleValue(rule.value))
+    .filter((field) => customerRequiredFieldMap[field]);
+  return configured.length ? uniqueRaw(configured) : ["company", "country", "product", "source"];
+}
+
+function getRequiredKnowledgeFields() {
+  return ["title", "category", "content", "source"];
+}
+
+function getRequiredFieldLabel(field) {
+  return customerRequiredFieldMap[field]?.label || knowledgeRequiredFieldMap[field]?.label || field;
+}
+
+function createDuplicateContext() {
+  const existing = new Set();
+  [...customers, ...customerReviewItems].forEach((item) => {
+    const key = normalizeCompanyKey(item.company || item.name || "");
+    if (key) existing.add(key);
+  });
+  return { existing, current: new Set() };
+}
+
+function validateCustomerImportRow(row, duplicateContext) {
+  const requiredMissing = getRequiredCustomerFields().filter((field) => !String(customerRequiredFieldMap[field]?.read(row) || "").trim());
+  const text = buildImportSearchText(row);
+  const blockHits = getActiveImportRules("block_word").filter((rule) => text.includes(normalizeRuleValue(rule.value)));
+  const constraintRules = getActiveImportRules("constraint_word");
+  const constraintMissed = constraintRules.length && !constraintRules.some((rule) => text.includes(normalizeRuleValue(rule.value)));
+  const duplicateKey = normalizeCompanyKey(row.company);
+  let duplicateOf = "";
+  if (duplicateKey && duplicateContext?.existing.has(duplicateKey)) duplicateOf = "existing_customer";
+  else if (duplicateKey && duplicateContext?.current.has(duplicateKey)) duplicateOf = "same_upload";
+  if (duplicateKey) duplicateContext?.current.add(duplicateKey);
+
+  const tags = new Set([reviewConfirmTag]);
+  if (requiredMissing.includes("source")) tags.add("缺少来源");
+  if (requiredMissing.length) tags.add("字段不足");
+  if (duplicateOf) tags.add("疑似重复");
+  if (blockHits.length) tags.add("命中屏蔽词");
+  if (constraintMissed) tags.add("未命中约束词");
+  const activePriorityCountries = getActiveImportRules("priority_country").map((rule) => normalizeRuleValue(rule.value));
+  const activePriorityIndustries = getActiveImportRules("priority_industry").map((rule) => normalizeRuleValue(rule.value));
+  if (activePriorityCountries.length && activePriorityCountries.some((item) => normalizeRuleValue(row.country).includes(item))) tags.add("重点国家");
+  if (activePriorityIndustries.length && activePriorityIndustries.some((item) => text.includes(item))) tags.add("重点行业");
+
+  return {
+    ...row,
+    source_name: row.source_name || "",
+    risk_tags: [...tags],
+    risk_score: calculateRiskScore(tags),
+    validation_status: tags.size > 1 ? "risk" : "ready",
+    duplicate_key: duplicateKey,
+    duplicate_of: duplicateOf,
+    required_missing: requiredMissing,
+    normalized: {
+      ...(row.normalized || {}),
+      risk_tags: [...tags],
+      required_missing: requiredMissing,
+      block_hits: blockHits.map((rule) => rule.value),
+      constraint_missed: Boolean(constraintMissed)
+    }
+  };
+}
+
+function validateKnowledgeImportRow(row) {
+  const requiredMissing = getRequiredKnowledgeFields().filter((field) => !String(knowledgeRequiredFieldMap[field]?.read(row) || "").trim());
+  const tags = new Set([reviewConfirmTag]);
+  if (requiredMissing.includes("source")) tags.add("缺少来源");
+  if (requiredMissing.length) tags.add("字段不足");
+  return {
+    ...row,
+    source_name: row.source_name || "",
+    risk_tags: [...tags],
+    risk_score: calculateRiskScore(tags),
+    validation_status: tags.size > 1 ? "risk" : "ready",
+    required_missing: requiredMissing,
+    normalized: {
+      ...(row.normalized || {}),
+      risk_tags: [...tags],
+      required_missing: requiredMissing
+    }
+  };
+}
+
+function summarizeImportRows(totalRows, rows) {
+  return {
+    total_rows: totalRows,
+    valid_rows: rows.length,
+    invalid_rows: Math.max(0, totalRows - rows.length),
+    duplicate_rows: rows.filter((row) => getReviewRiskTags(row).includes("疑似重复")).length,
+    risk_rows: rows.filter((row) => getReviewRiskTags(row).some((tag) => ![reviewConfirmTag, "重点国家", "重点行业"].includes(tag))).length,
+    missing_rows: rows.filter((row) => (row.required_missing || []).length).length,
+    blocked_rows: rows.filter((row) => getReviewRiskTags(row).includes("命中屏蔽词")).length
+  };
+}
+
+function calculateRiskScore(tags) {
+  let score = 0;
+  if (tags.has("缺少来源")) score += 30;
+  if (tags.has("字段不足")) score += 20;
+  if (tags.has("疑似重复")) score += 25;
+  if (tags.has("命中屏蔽词")) score += 60;
+  if (tags.has("未命中约束词")) score += 10;
+  return score;
+}
+
+function getReviewRiskTags(item) {
+  if (Array.isArray(item.risk_tags)) return item.risk_tags.filter(Boolean);
+  if (Array.isArray(item.normalized?.risk_tags)) return item.normalized.risk_tags.filter(Boolean);
+  return [];
+}
+
+function isReviewItemClean(item) {
+  const riskTags = getReviewRiskTags(item).filter((tag) => ![reviewConfirmTag, "重点国家", "重点行业"].includes(tag));
+  return !riskTags.length;
+}
+
+function buildImportSearchText(row) {
+  return normalizeRuleValue([
+    row.company,
+    row.country,
+    row.product,
+    row.industry,
+    row.customer_type,
+    row.advantage_products,
+    row.website,
+    row.source_name,
+    row.source_url,
+    row.notes,
+    row.hs_codes
+  ].filter(Boolean).join(" "));
+}
+
+function normalizeCompanyKey(value) {
+  return normalizeRuleValue(value)
+    .replace(/\b(ltd|limited|inc|corp|corporation|company|co|gmbh|srl|sa|llc|plc|pte)\b/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+}
+
+function uniqueRaw(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
 async function parseImportFile(file) {
   const name = file.name.toLowerCase();
   if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
@@ -5572,7 +6118,7 @@ function normalizeCustomerImport(row, fileName, index) {
   const normalized = normalizeRowKeys(row);
   const company = pickField(normalized, ["company", "name", "companyname", "客户名称", "公司名称", "企业名称"]);
   if (!company) return null;
-  const sourceName = pickField(normalized, ["source_name", "source", "来源", "信息来源"]) || `内部资料：${fileName}`;
+  const sourceName = pickField(normalized, ["source_name", "source", "来源", "信息来源"]);
   return {
     uploaded_by: authState.user.id,
     review_status: "pending",
@@ -5584,7 +6130,7 @@ function normalizeCustomerImport(row, fileName, index) {
     website: pickField(normalized, ["website", "web", "site", "官网", "网址"]),
     address: pickField(normalized, ["address", "地址"]),
     source_name: sourceName,
-    source_url: pickField(normalized, ["source_url", "sourceurl", "url", "来源链接", "资料链接"]),
+    source_url: pickField(normalized, ["source_url", "sourceurl", "url", "来源链接", "资料链接", "海关数据", "meta社媒", "展会链接"]),
     normalized: {
       import_file: fileName,
       import_row: index + 2
@@ -5605,7 +6151,7 @@ function normalizeKnowledgeImport(row, fileName, index) {
   const normalized = normalizeRowKeys(row);
   const title = pickField(normalized, ["title", "标题", "主题", "name"]);
   if (!title) return null;
-  const sourceName = pickField(normalized, ["source_name", "source", "来源", "信息来源"]) || `内部资料：${fileName}`;
+  const sourceName = pickField(normalized, ["source_name", "source", "来源", "信息来源"]);
   return {
     uploaded_by: authState.user.id,
     review_status: "pending",
