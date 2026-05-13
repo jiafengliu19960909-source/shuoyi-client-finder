@@ -1813,6 +1813,308 @@ th {
   }
 }
 
+/* Apple-like product polish */
+.login-kind-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  background: rgba(245, 245, 247, 0.86);
+}
+
+.login-kind {
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 760;
+}
+
+.login-kind.active {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+.admin-login-hint {
+  padding: 11px 13px;
+  border: 1px solid rgba(0, 113, 227, 0.16);
+  border-radius: 16px;
+  background: rgba(0, 113, 227, 0.07);
+}
+
+.auth-gate {
+  padding: 34px;
+  background:
+    linear-gradient(135deg, rgba(246, 247, 250, 0.96), rgba(255, 255, 255, 0.8) 42%, rgba(235, 241, 255, 0.9)),
+    #fbfbfd;
+}
+
+.auth-card {
+  position: relative;
+  overflow: hidden;
+  width: min(1120px, 100%);
+  min-height: 680px;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 500px);
+  align-items: center;
+  gap: 34px;
+  padding: 44px;
+  border-radius: 38px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.64)),
+    rgba(255, 255, 255, 0.82);
+  box-shadow: 0 34px 120px rgba(15, 23, 42, 0.16);
+}
+
+.auth-card::before {
+  content: "";
+  position: absolute;
+  inset: 32px 52% 32px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 34px;
+  background:
+    linear-gradient(150deg, rgba(18, 25, 43, 0.92), rgba(44, 86, 151, 0.66) 48%, rgba(245, 248, 255, 0.22)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px) 0 0 / 42px 42px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 28px 80px rgba(31, 55, 96, 0.28);
+}
+
+.auth-card::after {
+  content: "GLOBAL CLIENT RADAR";
+  position: absolute;
+  left: 74px;
+  bottom: 74px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.18em;
+}
+
+.auth-brand,
+.auth-form,
+.config-notice {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-brand {
+  align-self: start;
+  grid-column: 1;
+  padding: 8px;
+  color: #fff;
+}
+
+.auth-brand .eyebrow,
+.auth-brand h1 {
+  color: #fff;
+}
+
+.auth-card > .auth-form,
+.auth-card > .config-notice {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(28px) saturate(180%);
+}
+
+.auth-form h2,
+.config-notice h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.04;
+}
+
+.app-shell {
+  background:
+    linear-gradient(180deg, #f5f5f7 0, #fbfbfd 340px, #fff 100%),
+    #fbfbfd;
+}
+
+.topbar,
+.app-tabs {
+  background: rgba(251, 251, 253, 0.82);
+}
+
+.workbench-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 268px;
+  padding: 36px;
+  border-radius: 36px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 246, 255, 0.9) 52%, rgba(230, 237, 248, 0.92)),
+    #fff;
+}
+
+.workbench-hero::after {
+  content: "";
+  position: absolute;
+  right: 34px;
+  bottom: 26px;
+  width: min(360px, 42%);
+  height: 172px;
+  border: 1px solid rgba(0, 113, 227, 0.12);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.54)),
+    repeating-linear-gradient(90deg, rgba(0, 113, 227, 0.12) 0 2px, transparent 2px 32px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 28px);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.1);
+  pointer-events: none;
+}
+
+.workbench-hero > div,
+.hero-stat {
+  position: relative;
+  z-index: 1;
+}
+
+.workbench-hero h2 {
+  max-width: 720px;
+  font-size: clamp(40px, 6vw, 82px);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.hero-stat {
+  border-radius: 32px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(246, 247, 250, 0.88));
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.1);
+}
+
+.strip-card,
+.daily-card,
+.customer-card,
+.knowledge-card,
+.status-column,
+.admin-panel,
+.admin-hero {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 20px 70px rgba(15, 23, 42, 0.09);
+}
+
+.daily-card,
+.customer-card {
+  padding: 20px;
+}
+
+.daily-card:hover,
+.customer-card:hover,
+.strip-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 90px rgba(15, 23, 42, 0.13);
+}
+
+.admin-hero-actions,
+.admin-toolbar,
+.invite-create,
+.admin-code-rotate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+
+.admin-unlock-card {
+  max-width: 620px;
+}
+
+.field.compact {
+  min-width: min(260px, 100%);
+  margin-bottom: 0;
+}
+
+.admin-code-rotate,
+.invite-create {
+  padding: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 22px;
+  background: rgba(245, 245, 247, 0.76);
+}
+
+.admin-code-rotate h4 {
+  margin: 0 0 4px;
+}
+
+.admin-code-rotate input {
+  width: min(260px, 100%);
+}
+
+.admin-table code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.text-button.ghost {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 980px) {
+  .auth-card {
+    width: min(640px, 100%);
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+
+  .auth-card::before,
+  .auth-card::after {
+    display: none;
+  }
+
+  .auth-brand {
+    grid-column: 1;
+    color: var(--ink);
+  }
+
+  .auth-brand .eyebrow {
+    color: var(--blue);
+  }
+
+  .auth-brand h1 {
+    color: var(--ink);
+  }
+
+  .auth-card > .auth-form,
+  .auth-card > .config-notice {
+    grid-column: 1;
+    grid-row: auto;
+    padding: 22px;
+  }
+
+  .workbench-hero::after {
+    display: none;
+  }
+
+  .workbench-hero h2 {
+    font-size: clamp(34px, 12vw, 54px);
+  }
+}
+
+@media (max-width: 720px) {
+  .auth-gate {
+    padding: 14px;
+  }
+
+  .admin-toolbar,
+  .invite-create,
+  .admin-code-rotate,
+  .admin-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}
+
 </style>
   </head>
   <body>
@@ -1868,6 +2170,11 @@ th {
             <h2>登录客户工作台</h2>
             <p>每个账号的收藏、跟进状态和备注彼此隔离。</p>
           </div>
+          <div class="login-kind-switch" aria-label="登录类型">
+            <button class="login-kind active" type="button" data-login-kind="student">学员登录</button>
+            <button class="login-kind" type="button" data-login-kind="admin">管理员登录</button>
+          </div>
+          <p class="admin-login-hint" id="adminLoginHint" hidden>管理员使用邮箱密码登录后，还需要输入后台权限码才能进入管理员后台。</p>
           <label class="field">
             <span>邮箱</span>
             <input id="loginEmail" type="email" autocomplete="email" required />
@@ -2385,7 +2692,9 @@ const storageKeys = {
   favorites: "shuoyi.client.finder.favorites",
   records: "shuoyi.client.finder.records",
   pendingInvite: "shuoyi.client.finder.pendingInvite",
-  adminSection: "shuoyi.client.finder.adminSection"
+  adminSection: "shuoyi.client.finder.adminSection",
+  adminUnlocked: "shuoyi.client.finder.adminUnlocked",
+  loginKind: "shuoyi.client.finder.loginKind"
 };
 
 const supabaseConfig = window.SHUOYI_SUPABASE_CONFIG || {};
@@ -2399,7 +2708,10 @@ const authState = {
   user: null,
   profile: null,
   remoteReady: false,
-  loading: true
+  loading: true,
+  loginKind: sessionStorage.getItem(storageKeys.loginKind) || "student",
+  loginPhase: "",
+  adminUnlocked: sessionStorage.getItem(storageKeys.adminUnlocked) === "true"
 };
 
 if (authState.configured && window.supabase?.createClient) {
@@ -2478,17 +2790,27 @@ const state = {
   view: "cards",
   selectedId: null,
   expandedIds: new Set(),
-  adminSection: localStorage.getItem(storageKeys.adminSection) || "users"
+  adminSection: localStorage.getItem(storageKeys.adminSection) || "users",
+  adminSearch: "",
+  adminStatus: "all"
 };
 
 const favorites = new Set();
 const records = {};
 const recordSaveTimers = {};
+const workspaceLoadState = {
+  shared: "idle",
+  private: "idle",
+  admin: "idle"
+};
+let workspaceLoadPromise = null;
 let approvedCustomerRows = [];
 let knowledgeArticles = [];
 let adminProfiles = [];
 let customerReviewItems = [];
 let knowledgeReviewItems = [];
+let inviteCodes = [];
+let adminActions = [];
 
 const baseCustomers = [
   ...rawLeads.map((item, index) => enrichLead(item, index)),
@@ -2505,6 +2827,7 @@ const els = {
   forgotForm: document.getElementById("forgotForm"),
   resetPasswordForm: document.getElementById("resetPasswordForm"),
   profileForm: document.getElementById("profileForm"),
+  adminLoginHint: document.getElementById("adminLoginHint"),
   loginEmail: document.getElementById("loginEmail"),
   loginPassword: document.getElementById("loginPassword"),
   registerEmail: document.getElementById("registerEmail"),
@@ -2978,6 +3301,7 @@ function bindEvents() {
 
   els.adminContent.addEventListener("click", handleAdminClick);
   els.adminContent.addEventListener("change", handleAdminChange);
+  els.adminContent.addEventListener("input", handleAdminInput);
 
   els.detailContent.addEventListener("input", persistDetailRecord);
   els.detailContent.addEventListener("change", persistDetailRecord);
@@ -3002,6 +3326,11 @@ function bindAuthEvents() {
   document.querySelectorAll("[data-auth-mode]").forEach((button) => {
     button.addEventListener("click", () => setAuthMode(button.dataset.authMode));
   });
+
+  document.querySelectorAll("[data-login-kind]").forEach((button) => {
+    button.addEventListener("click", () => setLoginKind(button.dataset.loginKind));
+  });
+  setLoginKind(authState.loginKind);
 
   els.loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -3059,11 +3388,15 @@ async function initAuth() {
     if (authState.user) await loadUserWorkspace();
     else {
       authState.profile = null;
+      authState.adminUnlocked = false;
+      sessionStorage.removeItem(storageKeys.adminUnlocked);
       favorites.clear();
       Object.keys(records).forEach((key) => delete records[key]);
       adminProfiles = [];
       customerReviewItems = [];
       knowledgeReviewItems = [];
+      inviteCodes = [];
+      adminActions = [];
       setAuthMode("login");
     }
   });
@@ -3078,6 +3411,31 @@ async function initAuth() {
 function setAuthMode(mode) {
   authState.mode = mode;
   renderAuthShell();
+}
+
+function setLoginKind(kind) {
+  authState.loginKind = kind === "admin" ? "admin" : "student";
+  sessionStorage.setItem(storageKeys.loginKind, authState.loginKind);
+  document.querySelectorAll("[data-login-kind]").forEach((button) => {
+    button.classList.toggle("active", button.dataset.loginKind === authState.loginKind);
+  });
+  if (els.adminLoginHint) els.adminLoginHint.hidden = authState.loginKind !== "admin";
+}
+
+function setLoginPhase(message, isError = false) {
+  authState.loginPhase = message || "";
+  if (!message) return clearAuthMessage();
+  showAuthMessage(message, isError);
+}
+
+function perfStart(label) {
+  return { label, start: performance.now() };
+}
+
+function perfEnd(mark) {
+  const duration = Math.round(performance.now() - mark.start);
+  console.info(`[Shuoyi perf] ${mark.label}: ${duration}ms`);
+  return duration;
 }
 
 function renderAuthShell() {
@@ -3100,13 +3458,16 @@ function renderAuthShell() {
 }
 
 async function signInWithEmail() {
-  clearAuthMessage();
+  setLoginPhase("正在验证账号…");
+  const mark = perfStart("auth.signInWithPassword");
   const email = els.loginEmail.value.trim();
   const password = els.loginPassword.value;
   const { data, error } = await authState.client.auth.signInWithPassword({ email, password });
-  if (error) return showAuthMessage(error.message || "登录失败，请检查邮箱和密码。", true);
+  perfEnd(mark);
+  if (error) return setLoginPhase(error.message || "登录失败，请检查邮箱和密码。", true);
   authState.session = data.session;
   authState.user = data.user;
+  setLoginPhase("登录成功，正在进入工作台…");
   await loadUserWorkspace();
 }
 
@@ -3196,9 +3557,21 @@ async function claimInviteCode(code) {
 }
 
 async function loadUserWorkspace() {
+  if (!authState.user) return;
+  if (workspaceLoadPromise) return workspaceLoadPromise;
+  workspaceLoadPromise = loadUserWorkspaceCore().finally(() => {
+    workspaceLoadPromise = null;
+  });
+  return workspaceLoadPromise;
+}
+
+async function loadUserWorkspaceCore() {
   authState.loading = true;
+  const mark = perfStart("workspace.profileAndStatus");
+  setLoginPhase("正在加载账号资料…");
   await claimPendingInvite();
   await ensureProfile();
+  perfEnd(mark);
   if (!isActiveProfile()) {
     const reason = authState.profile?.blocked_reason ? `：${authState.profile.blocked_reason}` : "";
     await authState.client.auth.signOut();
@@ -3209,11 +3582,26 @@ async function loadUserWorkspace() {
     showAuthMessage(`账号当前不可用${reason}。请联系管理员处理。`, true);
     return;
   }
-  await loadSharedData();
-  await loadUserPrivateData();
-  if (isAdmin()) await loadAdminData();
+  if (authState.loginKind === "admin" && !isAdmin()) {
+    await authState.client.auth.signOut();
+    authState.session = null;
+    authState.user = null;
+    authState.profile = null;
+    authState.loading = false;
+    setAuthMode("login");
+    showAuthMessage("该账号不是管理员，请使用学员登录入口。", true);
+    return;
+  }
   authState.loading = false;
   setAuthMode(authState.profile?.onboarding_complete ? "app" : "profile");
+  if (authState.profile?.onboarding_complete) {
+    setLoginPhase("");
+    if (authState.loginKind === "admin" && isAdmin()) {
+      state.activeTab = "admin";
+      render();
+    }
+    startWorkspaceSync();
+  }
 }
 
 function isAdmin() {
@@ -3225,16 +3613,47 @@ function isActiveProfile() {
   return !["disabled", "deleted"].includes(authState.profile.status || "active") && !authState.profile.deleted_at;
 }
 
+function startWorkspaceSync() {
+  if (!authState.user) return;
+  workspaceLoadState.shared = "loading";
+  workspaceLoadState.private = "loading";
+  render();
+
+  const sharedMark = perfStart("workspace.sharedData");
+  loadSharedData()
+    .then(() => {
+      perfEnd(sharedMark);
+      workspaceLoadState.shared = "ready";
+    })
+    .catch((error) => {
+      console.warn("[Shuoyi perf] shared data failed", error);
+      workspaceLoadState.shared = "error";
+    })
+    .finally(render);
+
+  const privateMark = perfStart("workspace.privateData");
+  loadUserPrivateData()
+    .then(() => {
+      perfEnd(privateMark);
+      workspaceLoadState.private = "ready";
+    })
+    .catch((error) => {
+      console.warn("[Shuoyi perf] private data failed", error);
+      workspaceLoadState.private = "error";
+    })
+    .finally(render);
+}
+
 async function loadSharedData() {
   if (!authState.user) return;
   const [customerResult, knowledgeResult] = await Promise.all([
     authState.client
       .from("approved_customers")
-      .select("*")
+      .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,created_at")
       .order("created_at", { ascending: false }),
     authState.client
       .from("knowledge_articles")
-      .select("*")
+      .select("id,approved_from,created_by,title,category,summary,keywords,hs_codes,content,source_name,source_url,status,created_at")
       .eq("status", "published")
       .order("created_at", { ascending: false })
   ]);
@@ -3294,8 +3713,10 @@ function enrichApprovedCustomer(item, index) {
 }
 
 async function loadAdminData() {
-  if (!isAdmin()) return;
-  const [profileResult, customerReviewResult, knowledgeReviewResult] = await Promise.all([
+  if (!isAdmin() || !authState.adminUnlocked) return;
+  workspaceLoadState.admin = "loading";
+  const mark = perfStart("workspace.adminData");
+  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult] = await Promise.all([
     authState.client
       .from("profiles")
       .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
@@ -3307,11 +3728,23 @@ async function loadAdminData() {
     authState.client
       .from("knowledge_review_items")
       .select("*")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("invite_codes")
+      .select("id,code,note,max_uses,used_count,expires_at,active,created_at")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("admin_actions")
+      .select("id,actor_id,action,target_user_id,entity_type,entity_id,details,created_at")
       .order("created_at", { ascending: false })
   ]);
   adminProfiles = profileResult.error ? [] : profileResult.data || [];
   customerReviewItems = customerReviewResult.error ? [] : customerReviewResult.data || [];
   knowledgeReviewItems = knowledgeReviewResult.error ? [] : knowledgeReviewResult.data || [];
+  inviteCodes = inviteResult.error ? [] : inviteResult.data || [];
+  adminActions = actionResult.error ? [] : actionResult.data || [];
+  workspaceLoadState.admin = "ready";
+  perfEnd(mark);
 }
 
 async function claimPendingInvite() {
@@ -3324,7 +3757,7 @@ async function ensureProfile() {
   if (!authState.user) return;
   const { data, error } = await authState.client
     .from("profiles")
-    .select("*")
+    .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,onboarding_complete,role,status,blocked_reason,deleted_at,created_at,updated_at")
     .eq("id", authState.user.id)
     .maybeSingle();
 
@@ -3429,11 +3862,15 @@ async function signOut() {
   authState.session = null;
   authState.user = null;
   authState.profile = null;
+  authState.adminUnlocked = false;
+  sessionStorage.removeItem(storageKeys.adminUnlocked);
   favorites.clear();
   Object.keys(records).forEach((key) => delete records[key]);
   adminProfiles = [];
   customerReviewItems = [];
   knowledgeReviewItems = [];
+  inviteCodes = [];
+  adminActions = [];
   setAuthMode("login");
 }
 
@@ -3629,8 +4066,13 @@ function renderDashboardStrip() {
   const fastenerCount = ranked.filter(hasFastenerSignal).length;
   const contactReady = ranked.filter((customer) => customer.contactName || customer.contactInfo).length;
   const highPriority = ranked.filter((customer) => getLeadPriority(customer) === "高").length;
+  const syncHint = workspaceLoadState.shared === "loading" || workspaceLoadState.private === "loading"
+    ? "客户池和个人记录后台同步中"
+    : workspaceLoadState.shared === "error" || workspaceLoadState.private === "error"
+      ? "网络读取失败时使用本机缓存"
+      : "共享客户池与个人记录已隔离";
   return [
-    ["客户池", `${customers.length}`, "全部可筛选线索"],
+    ["客户池", `${customers.length}`, syncHint],
     ["标准件相关", `${fastenerCount}`, "Fasteners 关键词可搜"],
     ["联系方式较完整", `${contactReady}`, "适合优先开发"],
     ["高优先级", `${highPriority}`, "建议先跟进"]
@@ -3842,77 +4284,113 @@ function renderAdmin() {
     els.adminContent.innerHTML = "";
     return;
   }
+  if (!authState.adminUnlocked) {
+    els.adminContent.innerHTML = renderAdminUnlock();
+    return;
+  }
   const sections = [
     ["users", "注册人员"],
+    ["admins", "管理员管理"],
+    ["invites", "邀请码管理"],
     ["customers", "待审核客户池"],
-    ["knowledge", "待审核知识库"]
+    ["knowledge", "待审核知识库"],
+    ["audit", "操作日志"]
   ];
   const sectionHtml = sections.map(([key, label]) => `
     <button class="admin-tab ${state.adminSection === key ? "active" : ""}" type="button" data-admin-section="${key}">
       ${escapeHTML(label)}
     </button>
   `).join("");
-  const content = state.adminSection === "users"
-    ? renderAdminUsers()
-    : state.adminSection === "customers"
-      ? renderReviewPool("customers")
-      : renderReviewPool("knowledge");
+  const contentMap = {
+    users: renderAdminUsers,
+    admins: renderAdminManagers,
+    invites: renderInviteManager,
+    customers: () => renderReviewPool("customers"),
+    knowledge: () => renderReviewPool("knowledge"),
+    audit: renderAdminAudit
+  };
+  const content = (contentMap[state.adminSection] || renderAdminUsers)();
 
   els.adminContent.innerHTML = `
     <section class="admin-hero">
       <div>
         <p class="eyebrow">Admin Workspace</p>
         <h2>管理员后台</h2>
-        <p>注册人员、审核池和正式资源分开管理。只有审核通过的客户和知识内容会展示给学员。</p>
+        <p>后台已通过权限码解锁。注册人员、管理员、邀请码、审核池和操作日志分开管理。</p>
       </div>
-      <button class="text-button" type="button" data-admin-refresh>
-        <svg><use href="#icon-search"></use></svg>
-        <span>刷新后台数据</span>
-      </button>
+      <div class="admin-hero-actions">
+        <button class="text-button" type="button" data-admin-refresh>
+          <svg><use href="#icon-search"></use></svg>
+          <span>刷新后台数据</span>
+        </button>
+        <button class="text-button ghost" type="button" data-admin-lock>锁定后台</button>
+      </div>
     </section>
     <nav class="admin-tabs">${sectionHtml}</nav>
     ${content}
   `;
 }
 
+function renderAdminUnlock() {
+  return `
+    <section class="admin-hero admin-unlock-hero">
+      <div>
+        <p class="eyebrow">Admin Access</p>
+        <h2>输入后台权限码</h2>
+        <p>管理员邮箱密码登录后，还需要通过后台权限码。权限码不会写在网页前端，只在 Supabase Edge Function 中校验。</p>
+      </div>
+    </section>
+    <section class="admin-panel admin-unlock-card">
+      <div class="admin-panel-head">
+        <div>
+          <h3>后台二次验证</h3>
+          <p>解锁状态只保存在当前浏览器会话中，关闭标签页后需要重新输入。</p>
+        </div>
+      </div>
+      <label class="field">
+        <span>后台权限码</span>
+        <input id="adminAccessCode" type="password" autocomplete="off" data-admin-code placeholder="请输入管理员权限码" />
+      </label>
+      <button class="text-button primary" type="button" data-admin-unlock>解锁管理员后台</button>
+    </section>
+  `;
+}
+
 function renderAdminUsers() {
-  const rows = adminProfiles.map((profile) => {
-    const isSelf = profile.id === authState.user?.id;
-    const status = profile.status || "active";
-    const canDisable = status === "active" && !isSelf;
-    const canRestore = status === "disabled" && !profile.deleted_at;
-    const canDelete = !isSelf && status !== "deleted";
-    return `
-      <tr>
-        <td>
-          <strong>${escapeHTML(profile.email || "未记录邮箱")}</strong>
-          <span>${escapeHTML(profile.company_name || "未填写单位")}</span>
-        </td>
-        <td>${escapeHTML(profile.products || "未填写")}</td>
-        <td>${escapeHTML(profile.target_markets || "未填写")}</td>
-        <td><span class="status-pill ${escapeAttr(status)}">${escapeHTML(status)}</span></td>
-        <td>${escapeHTML(profile.role || "student")}</td>
-        <td>${escapeHTML(formatDate(profile.created_at))}</td>
-        <td>
-          <div class="admin-actions">
-            ${canDisable ? `<button class="mini-button danger" type="button" data-user-status="disabled" data-user-id="${profile.id}">禁用</button>` : ""}
-            ${canRestore ? `<button class="mini-button" type="button" data-user-status="active" data-user-id="${profile.id}">恢复</button>` : ""}
-            ${canDelete ? `<button class="mini-button danger ghost" type="button" data-user-delete data-user-id="${profile.id}">软删除</button>` : ""}
-            ${isSelf ? `<span class="admin-self">当前管理员</span>` : ""}
-          </div>
-        </td>
-      </tr>
-    `;
-  }).join("");
+  const normalizedSearch = state.adminSearch.trim().toLowerCase();
+  const rows = adminProfiles
+    .filter((profile) => state.adminStatus === "all" || (profile.status || "active") === state.adminStatus)
+    .filter((profile) => {
+      if (!normalizedSearch) return true;
+      return [profile.email, profile.company_name, profile.products, profile.target_markets]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(normalizedSearch));
+    })
+    .map(renderAdminUserRow)
+    .join("");
 
   return `
     <section class="admin-panel">
       <div class="admin-panel-head">
         <div>
           <h3>注册人员</h3>
-          <p>可以查看学员资料、禁用账号、恢复账号。软删除 Auth 用户需要部署 Edge Function 并配置 service role secret。</p>
+          <p>查看学员资料、搜索单位和产品方向，禁用、恢复或软删除账号。用户私有收藏和跟进记录仍由 RLS 隔离。</p>
         </div>
         <strong>${adminProfiles.length} 人</strong>
+      </div>
+      <div class="admin-toolbar">
+        <label class="field compact">
+          <span>搜索</span>
+          <input type="search" value="${escapeAttr(state.adminSearch)}" data-admin-search placeholder="邮箱、单位、产品、市场" />
+        </label>
+        <label class="field compact">
+          <span>状态</span>
+          <select data-admin-status>
+            ${["all", "active", "disabled", "deleted"].map((status) => `
+              <option value="${status}" ${state.adminStatus === status ? "selected" : ""}>${status === "all" ? "全部" : status}</option>
+            `).join("")}
+          </select>
+        </label>
       </div>
       <div class="admin-table-wrap">
         <table class="admin-table">
@@ -3928,6 +4406,196 @@ function renderAdminUsers() {
             </tr>
           </thead>
           <tbody>${rows || `<tr><td colspan="7">暂无注册人员</td></tr>`}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderAdminUserRow(profile) {
+  const isSelf = profile.id === authState.user?.id;
+  const status = profile.status || "active";
+  const role = profile.role || "student";
+  const canDisable = status === "active" && !isSelf;
+  const canRestore = status === "disabled" && !profile.deleted_at;
+  const canDelete = !isSelf && status !== "deleted";
+  return `
+    <tr>
+      <td>
+        <strong>${escapeHTML(profile.email || "未记录邮箱")}</strong>
+        <span>${escapeHTML(profile.company_name || "未填写单位")}</span>
+      </td>
+      <td>${escapeHTML(profile.products || "未填写")}</td>
+      <td>${escapeHTML(profile.target_markets || "未填写")}</td>
+      <td><span class="status-pill ${escapeAttr(status)}">${escapeHTML(status)}</span></td>
+      <td><span class="status-pill ${escapeAttr(role)}">${escapeHTML(role)}</span></td>
+      <td>${escapeHTML(formatDate(profile.created_at))}</td>
+      <td>
+        <div class="admin-actions">
+          ${canDisable ? `<button class="mini-button danger" type="button" data-user-status="disabled" data-user-id="${profile.id}">禁用</button>` : ""}
+          ${canRestore ? `<button class="mini-button" type="button" data-user-status="active" data-user-id="${profile.id}">恢复</button>` : ""}
+          ${canDelete ? `<button class="mini-button danger ghost" type="button" data-user-delete data-user-id="${profile.id}">软删除</button>` : ""}
+          ${isSelf ? `<span class="admin-self">当前账号</span>` : ""}
+        </div>
+      </td>
+    </tr>
+  `;
+}
+
+function renderAdminManagers() {
+  const admins = adminProfiles.filter((profile) => profile.role === "admin");
+  const rows = admins.map((profile) => {
+    const isSelf = profile.id === authState.user?.id;
+    return `
+      <tr>
+        <td>
+          <strong>${escapeHTML(profile.email || "未记录邮箱")}</strong>
+          <span>${escapeHTML(profile.company_name || "未填写单位")}</span>
+        </td>
+        <td><span class="status-pill ${escapeAttr(profile.status || "active")}">${escapeHTML(profile.status || "active")}</span></td>
+        <td>${escapeHTML(formatDate(profile.created_at))}</td>
+        <td>
+          ${isSelf
+            ? `<span class="admin-self">不能降级自己</span>`
+            : `<button class="mini-button danger ghost" type="button" data-demote-admin="${escapeAttr(profile.id)}">移除管理员</button>`}
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>管理员管理</h3>
+          <p>通过邮箱添加或移除管理员角色。不能移除当前登录管理员自己的权限。</p>
+        </div>
+        <strong>${admins.length} 位管理员</strong>
+      </div>
+      <div class="admin-toolbar">
+        <label class="field compact">
+          <span>管理员邮箱</span>
+          <input type="email" data-admin-promote-email placeholder="name@example.com" />
+        </label>
+        <button class="text-button primary" type="button" data-promote-admin>添加管理员</button>
+      </div>
+      <div class="admin-code-rotate">
+        <div>
+          <h4>后台权限码</h4>
+          <p>建议定期更换。新权限码只在服务端写入 hash，前端不会保存明文。</p>
+        </div>
+        <input type="password" data-admin-new-code placeholder="新的后台权限码" />
+        <button class="mini-button" type="button" data-rotate-admin-code>更换权限码</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>管理员</th>
+              <th>状态</th>
+              <th>注册时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>${rows || `<tr><td colspan="4">暂无管理员</td></tr>`}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderInviteManager() {
+  const rows = inviteCodes.map((invite) => `
+    <tr>
+      <td>
+        <strong>${escapeHTML(invite.code)}</strong>
+        <span>${escapeHTML(invite.note || "无备注")}</span>
+      </td>
+      <td>${Number(invite.used_count || 0)} / ${Number(invite.max_uses || 1)}</td>
+      <td>${invite.expires_at ? escapeHTML(formatDate(invite.expires_at)) : "长期有效"}</td>
+      <td><span class="status-pill ${invite.active ? "active" : "disabled"}">${invite.active ? "active" : "disabled"}</span></td>
+      <td>
+        ${invite.active ? `<button class="mini-button danger ghost" type="button" data-disable-invite="${escapeAttr(invite.id)}">禁用</button>` : ""}
+      </td>
+    </tr>
+  `).join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>邀请码管理</h3>
+          <p>用于控制谁可以注册学员账号。邀请码可设置使用次数和过期时间。</p>
+        </div>
+        <strong>${inviteCodes.length} 个邀请码</strong>
+      </div>
+      <div class="invite-create">
+        <label class="field compact">
+          <span>邀请码</span>
+          <input type="text" data-invite-code placeholder="例如 SHUOYI-2026-A" />
+        </label>
+        <label class="field compact">
+          <span>备注</span>
+          <input type="text" data-invite-note placeholder="来源或批次" />
+        </label>
+        <label class="field compact">
+          <span>最大次数</span>
+          <input type="number" min="1" value="1" data-invite-max />
+        </label>
+        <label class="field compact">
+          <span>过期时间</span>
+          <input type="date" data-invite-expire />
+        </label>
+        <button class="text-button primary" type="button" data-create-invite>创建邀请码</button>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>邀请码</th>
+              <th>使用次数</th>
+              <th>过期</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>${rows || `<tr><td colspan="5">暂无邀请码</td></tr>`}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function renderAdminAudit() {
+  const rows = adminActions.map((item) => `
+    <tr>
+      <td><strong>${escapeHTML(item.action || "")}</strong></td>
+      <td>${escapeHTML(item.entity_type || item.target_user_id || "-")}</td>
+      <td>${escapeHTML(formatDate(item.created_at))}</td>
+      <td><code>${escapeHTML(JSON.stringify(item.details || {}))}</code></td>
+    </tr>
+  `).join("");
+
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>操作日志</h3>
+          <p>记录管理员权限、用户状态、邀请码和审核操作，方便追溯。</p>
+        </div>
+        <strong>${adminActions.length} 条</strong>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>动作</th>
+              <th>对象</th>
+              <th>时间</th>
+              <th>详情</th>
+            </tr>
+          </thead>
+          <tbody>${rows || `<tr><td colspan="4">暂无操作日志</td></tr>`}</tbody>
         </table>
       </div>
     </section>
@@ -4395,11 +5063,31 @@ function renderTypeTabs() {
 }
 
 async function handleAdminClick(event) {
+  if (event.target.closest("[data-admin-unlock]")) {
+    await unlockAdminWorkspace();
+    return;
+  }
+
+  if (event.target.closest("[data-admin-lock]")) {
+    authState.adminUnlocked = false;
+    sessionStorage.removeItem(storageKeys.adminUnlocked);
+    adminProfiles = [];
+    customerReviewItems = [];
+    knowledgeReviewItems = [];
+    inviteCodes = [];
+    adminActions = [];
+    workspaceLoadState.admin = "idle";
+    render();
+    showToast("管理员后台已锁定");
+    return;
+  }
+
   const section = event.target.closest("[data-admin-section]");
   if (section) {
     state.adminSection = section.dataset.adminSection;
     localStorage.setItem(storageKeys.adminSection, state.adminSection);
     renderAdmin();
+    if (authState.adminUnlocked && workspaceLoadState.admin !== "loading") await loadAdminData();
     return;
   }
 
@@ -4420,11 +5108,52 @@ async function handleAdminClick(event) {
     return;
   }
 
+  const promoteButton = event.target.closest("[data-promote-admin]");
+  if (promoteButton) {
+    const email = getAdminPanelValue("[data-admin-promote-email]");
+    await setAdminRoleByEmail(email, "admin");
+    return;
+  }
+
+  const demoteButton = event.target.closest("[data-demote-admin]");
+  if (demoteButton) {
+    await setAdminRoleById(demoteButton.dataset.demoteAdmin, "student");
+    return;
+  }
+
+  if (event.target.closest("[data-rotate-admin-code]")) {
+    const newCode = getAdminPanelValue("[data-admin-new-code]");
+    await rotateAdminCode(newCode);
+    return;
+  }
+
+  if (event.target.closest("[data-create-invite]")) {
+    await createInviteCode();
+    return;
+  }
+
+  const disableInviteButton = event.target.closest("[data-disable-invite]");
+  if (disableInviteButton) {
+    await disableInviteCode(disableInviteButton.dataset.disableInvite);
+    return;
+  }
+
   const reviewButton = event.target.closest("[data-review-action]");
   if (reviewButton) {
     const { reviewAction, reviewKind, reviewId } = reviewButton.dataset;
     if (reviewAction === "approve") await approveReviewItem(reviewKind, reviewId);
     if (reviewAction === "reject") await rejectReviewItem(reviewKind, reviewId);
+  }
+}
+
+function handleAdminInput(event) {
+  if (event.target.matches("[data-admin-search]")) {
+    state.adminSearch = event.target.value;
+    renderAdmin();
+  }
+  if (event.target.matches("[data-admin-status]")) {
+    state.adminStatus = event.target.value;
+    renderAdmin();
   }
 }
 
@@ -4436,7 +5165,7 @@ async function handleAdminChange(event) {
 }
 
 async function refreshAdminWorkspace() {
-  await loadSharedData();
+  if (!authState.adminUnlocked) return renderAdmin();
   await loadAdminData();
   render();
   showToast("后台数据已刷新");
@@ -4444,27 +5173,88 @@ async function refreshAdminWorkspace() {
 
 async function updateUserStatus(userId, status) {
   if (!isAdmin() || !userId) return;
+  if (!authState.adminUnlocked) return showToast("请先输入后台权限码");
   if (userId === authState.user?.id) return showToast("不能修改当前管理员自己的状态");
   const blockedReason = status === "disabled" ? window.prompt("请输入禁用原因：", "管理员暂停使用权限") || "" : "";
-  const payload = {
-    status,
-    blocked_reason: status === "disabled" ? blockedReason : "",
-    deleted_at: null,
-    updated_at: new Date().toISOString()
-  };
-  const { error } = await authState.client.from("profiles").update(payload).eq("id", userId);
-  if (error) return showToast(`用户状态更新失败：${error.message}`);
-  await insertAdminAction(status === "disabled" ? "disable_user" : "restore_user", { target_user_id: userId, details: payload });
+  const result = await invokeAdminUsers("setStatus", { userId, status, blockedReason });
+  if (!result.ok) return showToast(result.message || "用户状态更新失败");
   await refreshAdminWorkspace();
 }
 
 async function softDeleteUser(userId) {
   if (!isAdmin() || !userId) return;
+  if (!authState.adminUnlocked) return showToast("请先输入后台权限码");
   if (userId === authState.user?.id) return showToast("不能删除当前管理员账号");
   if (!window.confirm("确认软删除该用户？删除后该用户将无法继续登录。")) return;
   const result = await invokeAdminUsers("deleteUser", { userId });
   if (!result.ok) return showToast(result.message || "软删除失败，请确认 Edge Function 已部署并配置 service role。");
   await refreshAdminWorkspace();
+}
+
+async function unlockAdminWorkspace() {
+  if (!isAdmin()) return;
+  const code = document.querySelector("[data-admin-code]")?.value.trim();
+  if (!code) return showToast("请输入后台权限码");
+  const result = await invokeAdminUsers("verifyAdminCode", { code });
+  if (!result.ok) return showToast(result.message || "后台权限码错误");
+  authState.adminUnlocked = true;
+  sessionStorage.setItem(storageKeys.adminUnlocked, "true");
+  await refreshAdminWorkspace();
+  showToast("管理员后台已解锁");
+}
+
+async function setAdminRoleByEmail(email, role) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!email) return showToast("请输入管理员邮箱");
+  const result = await invokeAdminUsers("setRole", { email, role });
+  if (!result.ok) return showToast(result.message || "管理员角色更新失败");
+  await refreshAdminWorkspace();
+}
+
+async function setAdminRoleById(userId, role) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!userId) return;
+  if (userId === authState.user?.id) return showToast("不能降级当前登录管理员");
+  const result = await invokeAdminUsers("setRole", { userId, role });
+  if (!result.ok) return showToast(result.message || "管理员角色更新失败");
+  await refreshAdminWorkspace();
+}
+
+async function rotateAdminCode(newCode) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!newCode || newCode.length < 8) return showToast("新权限码至少 8 位");
+  const result = await invokeAdminUsers("rotateAdminCode", { newCode });
+  if (!result.ok) return showToast(result.message || "权限码更新失败");
+  showToast("后台权限码已更新");
+  await refreshAdminWorkspace();
+}
+
+async function createInviteCode() {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  const code = getAdminPanelValue("[data-invite-code]").toUpperCase();
+  const note = getAdminPanelValue("[data-invite-note]");
+  const maxUses = Number(getAdminPanelValue("[data-invite-max]") || 1);
+  const expiresAtRaw = getAdminPanelValue("[data-invite-expire]");
+  if (!code) return showToast("请输入邀请码");
+  const result = await invokeAdminUsers("createInviteCode", {
+    code,
+    note,
+    maxUses,
+    expiresAt: expiresAtRaw ? new Date(`${expiresAtRaw}T23:59:59`).toISOString() : null
+  });
+  if (!result.ok) return showToast(result.message || "邀请码创建失败");
+  await refreshAdminWorkspace();
+}
+
+async function disableInviteCode(inviteId) {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  const result = await invokeAdminUsers("disableInviteCode", { inviteId });
+  if (!result.ok) return showToast(result.message || "邀请码禁用失败");
+  await refreshAdminWorkspace();
+}
+
+function getAdminPanelValue(selector) {
+  return els.adminContent?.querySelector(selector)?.value.trim() || "";
 }
 
 async function invokeAdminUsers(action, payload = {}) {
@@ -4476,7 +5266,7 @@ async function invokeAdminUsers(action, payload = {}) {
 }
 
 async function approveReviewItem(kind, id) {
-  if (!isAdmin()) return;
+  if (!isAdmin() || !authState.adminUnlocked) return;
   const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
   const item = sourceRows.find((row) => row.id === id);
   if (!item) return;
@@ -4539,7 +5329,7 @@ async function approveReviewItem(kind, id) {
 }
 
 async function rejectReviewItem(kind, id) {
-  if (!isAdmin()) return;
+  if (!isAdmin() || !authState.adminUnlocked) return;
   const reason = window.prompt("请输入驳回原因：", "信息来源或字段不完整");
   if (reason === null) return;
   const table = kind === "customers" ? "customer_review_items" : "knowledge_review_items";
@@ -4571,7 +5361,7 @@ async function insertAdminAction(action, payload = {}) {
 }
 
 async function importReviewFile(kind, file) {
-  if (!isAdmin()) return;
+  if (!isAdmin() || !authState.adminUnlocked) return;
   try {
     const rows = await parseImportFile(file);
     const normalized = rows.map((row, index) => kind === "customers"
@@ -4597,6 +5387,9 @@ function setActiveTab(tab) {
   if (!tabOptions.some((item) => item.key === tab)) return;
   state.activeTab = tab;
   render();
+  if (tab === "admin" && isAdmin() && authState.adminUnlocked && workspaceLoadState.admin !== "loading") {
+    refreshAdminWorkspace();
+  }
 }
 
 function handleCustomerAction(action) {
