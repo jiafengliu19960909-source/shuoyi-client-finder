@@ -333,6 +333,7 @@ svg {
 }
 
 .workspace.dashboard-mode,
+.workspace.calculator-mode,
 .workspace.knowledge-mode,
 .workspace.followup-mode,
 .workspace.admin-mode {
@@ -344,6 +345,7 @@ svg {
 }
 
 .workspace.dashboard-mode:not(.has-detail),
+.workspace.calculator-mode:not(.has-detail),
 .workspace.knowledge-mode:not(.has-detail),
 .workspace.followup-mode:not(.has-detail),
 .workspace.admin-mode:not(.has-detail),
@@ -352,6 +354,7 @@ svg {
 }
 
 .workspace.dashboard-mode .filter-panel,
+.workspace.calculator-mode .filter-panel,
 .workspace.knowledge-mode .filter-panel,
 .workspace.followup-mode .filter-panel,
 .workspace.admin-mode .filter-panel {
@@ -368,6 +371,12 @@ svg {
 .advisor-panel,
 .result-toolbar,
 .workbench-hero,
+.calculator-hero,
+.quote-term-panel,
+.quote-input-panel,
+.quote-result-panel,
+.quote-formula-panel,
+.quote-card-panel,
 .strip-card,
 .daily-card,
 .library-start,
@@ -1924,6 +1933,358 @@ th {
   gap: 14px;
 }
 
+.calculator-view,
+#calculatorContent {
+  display: grid;
+  gap: 16px;
+}
+
+.calculator-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 260px;
+  padding: 36px;
+  overflow: hidden;
+  border-radius: 36px;
+  background:
+    radial-gradient(circle at 78% 12%, rgba(0, 113, 227, 0.18), transparent 30%),
+    radial-gradient(circle at 92% 72%, rgba(0, 168, 120, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(242, 246, 255, 0.88));
+}
+
+.calculator-hero h2 {
+  max-width: 760px;
+  font-size: clamp(42px, 6vw, 86px);
+  line-height: 0.98;
+}
+
+.calculator-hero p {
+  max-width: 720px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.quote-rate-card {
+  display: grid;
+  flex: 0 0 min(320px, 36%);
+  gap: 8px;
+  padding: 22px;
+  border: 1px solid rgba(0, 113, 227, 0.12);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.1);
+}
+
+.quote-rate-card span,
+.quote-rate-card small,
+.quote-field small,
+.quote-term-button small,
+.quote-source-note p,
+.quote-panel-head p,
+.quote-disclaimer {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.quote-rate-card strong {
+  font-size: 22px;
+}
+
+.calculator-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(360px, 1.2fr) minmax(300px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.quote-term-panel,
+.quote-input-panel,
+.quote-result-panel,
+.quote-formula-panel,
+.quote-card-panel {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 30px;
+}
+
+.quote-term-list {
+  display: grid;
+  gap: 10px;
+}
+
+.quote-term-button {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  color: var(--ink);
+  text-align: left;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.quote-term-button:hover,
+.quote-term-button.active {
+  transform: translateY(-1px);
+  border-color: rgba(0, 113, 227, 0.34);
+  box-shadow: 0 16px 40px rgba(0, 113, 227, 0.12);
+}
+
+.quote-term-button.active {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), rgba(255, 255, 255, 0.94));
+}
+
+.quote-term-button span {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+}
+
+.quote-term-button strong {
+  font-size: 16px;
+}
+
+.quote-source-note,
+.quote-warning {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(245, 245, 247, 0.86);
+}
+
+.quote-warning {
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+}
+
+.quote-warning p {
+  margin: 0;
+}
+
+.quote-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.quote-panel-head h3,
+.quote-field-section h4,
+.quote-breakdown h4,
+.quote-card-preview h4 {
+  margin: 0;
+}
+
+.quote-field-section {
+  display: grid;
+  gap: 12px;
+}
+
+.quote-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quote-field {
+  display: grid;
+  gap: 7px;
+}
+
+.quote-field > span {
+  color: #424245;
+  font-size: 13px;
+  font-weight: 720;
+}
+
+.quote-input-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding-right: 11px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.quote-input-wrap input {
+  border: 0;
+  background: transparent;
+  outline: 0;
+}
+
+.quote-input-wrap em {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.quote-result-head {
+  display: grid;
+  gap: 7px;
+}
+
+.quote-result-head p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.quote-price-main {
+  display: grid;
+  gap: 5px;
+  padding: 22px;
+  border-radius: 28px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 88% 0, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(135deg, #111827, #1f5ca8 58%, #0071e3);
+}
+
+.quote-price-main span,
+.quote-price-main small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.quote-price-main strong {
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1;
+}
+
+.quote-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quote-metric,
+.quote-cost-line {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(245, 245, 247, 0.82);
+}
+
+.quote-metric span,
+.quote-cost-line span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.quote-breakdown {
+  display: grid;
+  gap: 8px;
+}
+
+.quote-cost-line {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.quote-output-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 16px;
+}
+
+.formula-steps {
+  display: grid;
+  gap: 10px;
+}
+
+.formula-step {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(245, 245, 247, 0.82);
+}
+
+.formula-step span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--blue);
+  font-size: 12px;
+  font-weight: 780;
+}
+
+.formula-step p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.quote-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.quote-card-preview {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid rgba(0, 113, 227, 0.12);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(245, 247, 252, 0.9));
+}
+
+.quote-card-price {
+  display: grid;
+  gap: 4px;
+}
+
+.quote-card-price strong {
+  color: var(--blue);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1;
+}
+
+.quote-card-preview dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.quote-card-preview dl div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.quote-card-preview dt {
+  color: var(--muted);
+}
+
+.quote-card-preview dd {
+  margin: 0;
+  font-weight: 760;
+}
+
+.quote-card-preview p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -1941,6 +2302,7 @@ th {
   }
 
   .workspace.dashboard-mode,
+  .workspace.calculator-mode,
   .workspace.knowledge-mode,
   .workspace.followup-mode,
   .workspace.admin-mode {
@@ -1997,6 +2359,7 @@ th {
   }
 
   .workbench-hero,
+  .calculator-hero,
   .knowledge-hero,
   .followup-hero,
   .admin-hero,
@@ -2006,11 +2369,22 @@ th {
   }
 
   .workbench-hero,
+  .calculator-hero,
   .knowledge-hero,
   .followup-hero,
   .admin-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .calculator-layout,
+  .quote-output-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-rate-card {
+    width: 100%;
+    flex-basis: auto;
   }
 
   .dashboard-strip,
@@ -2087,12 +2461,14 @@ th {
   }
 
   .workbench-hero p,
+  .calculator-hero p,
   .knowledge-hero p,
   .followup-hero p {
     max-width: 310px;
   }
 
   .workbench-hero,
+  .calculator-hero,
   .knowledge-hero,
   .followup-hero,
   .admin-hero,
@@ -2118,6 +2494,8 @@ th {
   .results-grid,
   .network-grid,
   .hs-grid,
+  .quote-field-grid,
+  .quote-metric-grid,
   .dashboard-strip,
   .daily-grid,
   .knowledge-grid,
@@ -2142,6 +2520,22 @@ th {
     width: 100%;
     aspect-ratio: auto;
     min-height: 118px;
+  }
+
+  .calculator-hero h2 {
+    max-width: 310px;
+    font-size: 34px;
+    line-height: 1.08;
+  }
+
+  .quote-panel-head,
+  .quote-card-preview dl div,
+  .quote-cost-line {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-panel-head {
+    flex-direction: column;
   }
 
   .playbook-row {
@@ -2689,6 +3083,7 @@ th {
       <nav class="app-tabs" id="appTabs" aria-label="主功能模块">
         <button class="app-tab active" type="button" data-tab="dashboard">工作台</button>
         <button class="app-tab" type="button" data-tab="library">客户库</button>
+        <button class="app-tab" type="button" data-tab="calculator">报价计算器</button>
         <button class="app-tab" type="button" data-tab="knowledge">标准件知识</button>
         <button class="app-tab" type="button" data-tab="followup">跟进记录</button>
         <button class="app-tab admin-only" id="adminTabButton" type="button" data-tab="admin" hidden>管理员后台</button>
@@ -2826,6 +3221,10 @@ th {
               <h3>没有匹配结果</h3>
               <p>换一个国家、地区或产品关键词试试。</p>
             </div>
+          </section>
+
+          <section class="tab-view calculator-view" id="calculatorView" hidden>
+            <div id="calculatorContent"></div>
           </section>
 
           <section class="tab-view knowledge-view" id="knowledgeView" hidden>
@@ -3107,6 +3506,7 @@ const libraryPageSize = 12;
 const tabOptions = [
   { key: "dashboard", label: "工作台" },
   { key: "library", label: "客户库" },
+  { key: "calculator", label: "报价计算器" },
   { key: "knowledge", label: "标准件知识" },
   { key: "followup", label: "跟进记录" },
   { key: "admin", label: "管理员后台", adminOnly: true }
@@ -3246,6 +3646,65 @@ const importDrafts = {
   knowledge: createImportDraft("knowledge")
 };
 
+const quoteTerms = [
+  {
+    key: "EXW",
+    title: "EXW 出厂价",
+    subtitle: "只核算工厂交货前成本，适合给客户做基础出厂报价。",
+    badge: "Factory gate"
+  },
+  {
+    key: "FOB",
+    title: "FOB 离岸价",
+    subtitle: "在 EXW 基础上加入国内运输、报关、港杂和装船前费用。",
+    badge: "Port of loading"
+  },
+  {
+    key: "CFR",
+    title: "CFR 成本+运费",
+    subtitle: "在 FOB 基础上加入国际运费，保险由买方负责。",
+    badge: "Sea freight"
+  },
+  {
+    key: "CIF",
+    title: "CIF 成本+运费+保险",
+    subtitle: "在 CFR 基础上按 110% 投保口径估算保险费用。",
+    badge: "Insured freight"
+  },
+  {
+    key: "DDP",
+    title: "DDP 完税后交货",
+    subtitle: "在 CIF 基础上加入目的国关税、进口税、清关和派送。",
+    badge: "Landed estimate"
+  }
+];
+
+const quoteState = {
+  term: "FOB",
+  productName: "",
+  quantity: "1000",
+  taxCost: "5",
+  vatRate: "13",
+  rebateRate: "13",
+  profitRate: "15",
+  exchangeRate: "7.20",
+  rateSource: "手动参考汇率",
+  factoryFees: "0",
+  domesticFreight: "0",
+  exportCustoms: "0",
+  portCharges: "0",
+  loadingFees: "0",
+  documentFees: "0",
+  freightUsd: "0",
+  insuranceRate: "0.3",
+  insuranceUplift: "110",
+  dutyRate: "0",
+  importVatRate: "0",
+  destinationClearanceUsd: "0",
+  destinationDeliveryUsd: "0",
+  destinationOtherUsd: "0"
+};
+
 const state = {
   activeTab: "dashboard",
   visibleCount: libraryPageSize,
@@ -3324,6 +3783,7 @@ const els = {
   appTabs: document.getElementById("appTabs"),
   dashboardView: document.getElementById("dashboardView"),
   libraryView: document.getElementById("libraryView"),
+  calculatorView: document.getElementById("calculatorView"),
   knowledgeView: document.getElementById("knowledgeView"),
   followupView: document.getElementById("followupView"),
   adminView: document.getElementById("adminView"),
@@ -3332,6 +3792,7 @@ const els = {
   dashboardStrip: document.getElementById("dashboardStrip"),
   dailyLeads: document.getElementById("dailyLeads"),
   todayLeadCount: document.getElementById("todayLeadCount"),
+  calculatorContent: document.getElementById("calculatorContent"),
   knowledgeContent: document.getElementById("knowledgeContent"),
   followupContent: document.getElementById("followupContent"),
   adminContent: document.getElementById("adminContent"),
@@ -3812,6 +4273,10 @@ function bindEvents() {
     const copyButton = event.target.closest("[data-copy]");
     if (copyButton) copyText(copyButton.dataset.copy);
   });
+
+  els.calculatorContent.addEventListener("input", handleCalculatorInput);
+  els.calculatorContent.addEventListener("change", handleCalculatorInput);
+  els.calculatorContent.addEventListener("click", handleCalculatorClick);
 
   els.adminContent.addEventListener("click", handleAdminClick);
   els.adminContent.addEventListener("change", handleAdminChange);
@@ -4491,6 +4956,7 @@ function render() {
   renderActiveFilters(filtered);
   renderDashboard();
   renderLibrary(filtered);
+  renderCalculator();
   renderKnowledge();
   renderFollowup();
   renderAdmin();
@@ -4512,7 +4978,7 @@ function renderShell() {
     const view = els[`${key}View`];
     if (view) view.hidden = state.activeTab !== key;
   });
-  els.workspace.classList.remove("dashboard-mode", "library-mode", "knowledge-mode", "followup-mode", "admin-mode", "customerDetail-mode");
+  els.workspace.classList.remove("dashboard-mode", "library-mode", "calculator-mode", "knowledge-mode", "followup-mode", "admin-mode", "customerDetail-mode");
   els.workspace.classList.add(`${state.activeTab}-mode`);
 }
 
@@ -4571,6 +5037,548 @@ function hasActiveSearch() {
     state.type !== "全部" ||
     state.favoritesOnly
   );
+}
+
+function renderCalculator() {
+  const term = quoteTerms.find((item) => item.key === quoteState.term) || quoteTerms[1];
+  els.calculatorContent.innerHTML = `
+    <section class="calculator-hero">
+      <div>
+        <p class="eyebrow">Export Quote Studio</p>
+        <h2>外贸报价计算器</h2>
+        <p>按 EXW、FOB、CFR、CIF、DDP 五种贸易术语核算报价。输入变量后自动生成人民币/美元报价、利润、退税影响和报价卡片。</p>
+      </div>
+      <div class="quote-rate-card">
+        <span>当前参考汇率</span>
+        <strong>1 USD = <b data-rate-value>${escapeHTML(quoteState.exchangeRate)}</b> CNY</strong>
+        <small data-rate-source>${escapeHTML(quoteState.rateSource)}</small>
+        <button class="text-button primary" type="button" data-refresh-rate>刷新汇率</button>
+      </div>
+    </section>
+
+    <section class="calculator-layout">
+      <aside class="quote-term-panel">
+        <p class="eyebrow">Incoterms</p>
+        <h3>选择报价方式</h3>
+        <div class="quote-term-list">
+          ${quoteTerms.map((item) => `
+            <button class="quote-term-button ${item.key === term.key ? "active" : ""}" type="button" data-quote-term="${item.key}">
+              <span>${escapeHTML(item.key)}</span>
+              <strong>${escapeHTML(item.title)}</strong>
+              <small>${escapeHTML(item.subtitle)}</small>
+            </button>
+          `).join("")}
+        </div>
+        <div class="quote-source-note">
+          <strong>口径提示</strong>
+          <p>第一版按含税成本、出口退税和参考汇率估算。DDP 涉及目的国税法，正式报价需由货代或清关行复核。</p>
+        </div>
+      </aside>
+
+      <section class="quote-input-panel">
+        <div class="quote-panel-head">
+          <div>
+            <span class="status-pill active">${escapeHTML(term.badge)}</span>
+            <h3>${escapeHTML(term.title)}</h3>
+            <p>${escapeHTML(term.subtitle)}</p>
+          </div>
+        </div>
+        ${renderCalculatorFields(term.key)}
+      </section>
+
+      <section class="quote-result-panel" id="quoteResultPanel"></section>
+    </section>
+
+    <section class="quote-output-grid">
+      <div class="quote-formula-panel" id="quoteFormulaPanel"></div>
+      <div class="quote-card-panel" id="quoteCardPanel"></div>
+    </section>
+  `;
+  refreshCalculatorOutputs();
+}
+
+function renderCalculatorFields(termKey) {
+  return `
+    <div class="quote-field-section">
+      <h4>基础变量</h4>
+      <div class="quote-field-grid">
+        ${renderQuoteField("productName", "产品名称（选填）", "text", "", "", "例如：DIN933 Hex Bolt")}
+        ${renderQuoteField("quantity", "数量", "number", "件", "1", "建议按一个报价批次填写")}
+        ${renderQuoteField("taxCost", "含税采购/生产成本", "number", "元/件", "0.01", "默认按中国含税成本核算")}
+        ${renderQuoteField("vatRate", "增值税率", "number", "%", "0.01", "常见为 13%，可手动修改")}
+        ${renderQuoteField("rebateRate", "出口退税率", "number", "%", "0.01", "按产品 HS 编码实际退税率复核")}
+        ${renderQuoteField("profitRate", "目标利润率", "number", "%", "0.01", "按利润 / 报价收入计算")}
+        ${renderQuoteField("exchangeRate", "美元兑人民币汇率", "number", "CNY/USD", "0.0001", "可刷新，也可按银行牌价手动改")}
+        ${renderQuoteField("factoryFees", "包装/检验/工厂杂费", "number", "元", "0.01", "EXW 前的总额费用")}
+      </div>
+    </div>
+
+    ${["FOB", "CFR", "CIF", "DDP"].includes(termKey) ? `
+      <div class="quote-field-section">
+        <h4>FOB 港前费用</h4>
+        <div class="quote-field-grid">
+          ${renderQuoteField("domesticFreight", "国内运输费", "number", "元", "0.01", "工厂到起运港/仓库")}
+          ${renderQuoteField("exportCustoms", "出口报关费", "number", "元", "0.01", "报关、商检等")}
+          ${renderQuoteField("portCharges", "港杂费", "number", "元", "0.01", "码头、仓储、港口操作")}
+          ${renderQuoteField("loadingFees", "装柜/装船相关费用", "number", "元", "0.01", "装柜、拖车附加等")}
+          ${renderQuoteField("documentFees", "单证费", "number", "元", "0.01", "提单、产地证等")}
+        </div>
+      </div>
+    ` : ""}
+
+    ${["CFR", "CIF", "DDP"].includes(termKey) ? `
+      <div class="quote-field-section">
+        <h4>CFR 国际运费</h4>
+        <div class="quote-field-grid">
+          ${renderQuoteField("freightUsd", "国际运费", "number", "USD", "0.01", "系统按当前汇率折算成人民币")}
+        </div>
+      </div>
+    ` : ""}
+
+    ${["CIF", "DDP"].includes(termKey) ? `
+      <div class="quote-field-section">
+        <h4>CIF 保险</h4>
+        <div class="quote-field-grid">
+          ${renderQuoteField("insuranceRate", "保险费率", "number", "%", "0.01", "常见可先按 0.3% 估算")}
+          ${renderQuoteField("insuranceUplift", "投保加成", "number", "%", "0.01", "常见按发票金额 110% 投保")}
+        </div>
+      </div>
+    ` : ""}
+
+    ${termKey === "DDP" ? `
+      <div class="quote-field-section">
+        <h4>DDP 目的国费用</h4>
+        <div class="quote-field-grid">
+          ${renderQuoteField("dutyRate", "目的国关税率", "number", "%", "0.01", "按目的国 HS 编码税率填写")}
+          ${renderQuoteField("importVatRate", "目的国 VAT/GST", "number", "%", "0.01", "按目的国进口税规则填写")}
+          ${renderQuoteField("destinationClearanceUsd", "目的港清关费", "number", "USD", "0.01", "清关行报价")}
+          ${renderQuoteField("destinationDeliveryUsd", "目的地派送费", "number", "USD", "0.01", "港口/仓库到客户地址")}
+          ${renderQuoteField("destinationOtherUsd", "目的国其他费用", "number", "USD", "0.01", "仓储、查验、操作等")}
+        </div>
+      </div>
+    ` : ""}
+  `;
+}
+
+function renderQuoteField(key, label, type, suffix, step, help) {
+  const value = quoteState[key] ?? "";
+  return `
+    <label class="quote-field">
+      <span>${escapeHTML(label)}</span>
+      <div class="quote-input-wrap">
+        <input data-quote-field="${escapeAttr(key)}" type="${escapeAttr(type)}" value="${escapeAttr(value)}" ${type === "number" ? `min="0" step="${escapeAttr(step)}"` : ""} />
+        ${suffix ? `<em>${escapeHTML(suffix)}</em>` : ""}
+      </div>
+      <small>${escapeHTML(help)}</small>
+    </label>
+  `;
+}
+
+function handleCalculatorInput(event) {
+  const field = event.target.closest("[data-quote-field]");
+  if (!field) return;
+  const key = field.dataset.quoteField;
+  quoteState[key] = field.value;
+  if (key === "exchangeRate") {
+    quoteState.rateSource = "手动修改";
+    const value = els.calculatorContent.querySelector("[data-rate-value]");
+    const source = els.calculatorContent.querySelector("[data-rate-source]");
+    if (value) value.textContent = quoteState.exchangeRate;
+    if (source) source.textContent = quoteState.rateSource;
+  }
+  refreshCalculatorOutputs();
+}
+
+async function handleCalculatorClick(event) {
+  const termButton = event.target.closest("[data-quote-term]");
+  if (termButton) {
+    quoteState.term = termButton.dataset.quoteTerm;
+    renderCalculator();
+    return;
+  }
+
+  if (event.target.closest("[data-refresh-rate]")) {
+    await refreshCalculatorRate(event.target.closest("[data-refresh-rate]"));
+    return;
+  }
+
+  const copyQuote = event.target.closest("[data-copy-quote]");
+  if (copyQuote) {
+    const result = calculateQuote();
+    if (!result.valid) return showToast("请先补全有效报价数据");
+    copyText(copyQuote.dataset.copyQuote === "formula" ? buildQuoteFormulaText(result) : buildQuoteCardText(result));
+    return;
+  }
+
+  if (event.target.closest("[data-print-quote]")) {
+    printQuoteCard();
+  }
+}
+
+async function refreshCalculatorRate(button) {
+  const original = button?.textContent;
+  if (button) {
+    button.disabled = true;
+    button.textContent = "刷新中…";
+  }
+  try {
+    const frankfurter = await fetch("https://api.frankfurter.app/latest?from=CNY&to=USD");
+    if (!frankfurter.ok) throw new Error("Frankfurter unavailable");
+    const data = await frankfurter.json();
+    const cnyToUsd = Number(data?.rates?.USD);
+    if (!cnyToUsd) throw new Error("Invalid Frankfurter rate");
+    quoteState.exchangeRate = (1 / cnyToUsd).toFixed(4);
+    quoteState.rateSource = `Frankfurter ${data.date || "latest"}`;
+  } catch {
+    try {
+      const fallback = await fetch("https://open.er-api.com/v6/latest/CNY");
+      if (!fallback.ok) throw new Error("Fallback unavailable");
+      const data = await fallback.json();
+      const cnyToUsd = Number(data?.rates?.USD);
+      if (!cnyToUsd) throw new Error("Invalid fallback rate");
+      quoteState.exchangeRate = (1 / cnyToUsd).toFixed(4);
+      quoteState.rateSource = `open.er-api ${data.time_last_update_utc || "latest"}`;
+    } catch {
+      showToast("汇率刷新失败，请手动填写参考汇率");
+    }
+  } finally {
+    const input = els.calculatorContent.querySelector('[data-quote-field="exchangeRate"]');
+    const value = els.calculatorContent.querySelector("[data-rate-value]");
+    const source = els.calculatorContent.querySelector("[data-rate-source]");
+    if (input) input.value = quoteState.exchangeRate;
+    if (value) value.textContent = quoteState.exchangeRate;
+    if (source) source.textContent = quoteState.rateSource;
+    refreshCalculatorOutputs();
+    if (button) {
+      button.disabled = false;
+      button.textContent = original || "刷新汇率";
+    }
+  }
+}
+
+function refreshCalculatorOutputs() {
+  const result = calculateQuote();
+  const resultPanel = els.calculatorContent.querySelector("#quoteResultPanel");
+  const formulaPanel = els.calculatorContent.querySelector("#quoteFormulaPanel");
+  const cardPanel = els.calculatorContent.querySelector("#quoteCardPanel");
+  if (resultPanel) resultPanel.innerHTML = renderQuoteResults(result);
+  if (formulaPanel) formulaPanel.innerHTML = renderQuoteFormula(result);
+  if (cardPanel) cardPanel.innerHTML = renderQuoteCard(result);
+}
+
+function calculateQuote() {
+  const term = quoteState.term;
+  const quantity = toNumber(quoteState.quantity);
+  const taxCost = toNumber(quoteState.taxCost);
+  const vatRate = toRate(quoteState.vatRate);
+  const rebateRate = toRate(quoteState.rebateRate);
+  const profitRate = toRate(quoteState.profitRate);
+  const exchangeRate = toNumber(quoteState.exchangeRate);
+  const warnings = [];
+
+  if (quantity <= 0) warnings.push("数量必须大于 0。");
+  if (taxCost <= 0) warnings.push("含税采购/生产成本必须大于 0。");
+  if (exchangeRate <= 0) warnings.push("汇率必须大于 0。");
+  if (profitRate >= 1) warnings.push("目标利润率不能等于或超过 100%。");
+
+  const netUnitCost = taxCost / (1 + vatRate);
+  const rebatePerUnit = netUnitCost * rebateRate;
+  const actualUnitCost = taxCost - rebatePerUnit;
+  if (actualUnitCost < 0) warnings.push("退税金额高于含税成本，请检查增值税率和退税率。");
+
+  const factoryFees = toNumber(quoteState.factoryFees);
+  const exwCost = actualUnitCost * quantity + factoryFees;
+  const fobExtras = [
+    ["国内运输费", toNumber(quoteState.domesticFreight)],
+    ["出口报关费", toNumber(quoteState.exportCustoms)],
+    ["港杂费", toNumber(quoteState.portCharges)],
+    ["装柜/装船相关费用", toNumber(quoteState.loadingFees)],
+    ["单证费", toNumber(quoteState.documentFees)]
+  ];
+  const fobCost = exwCost + fobExtras.reduce((sum, item) => sum + item[1], 0);
+  const freightCny = toNumber(quoteState.freightUsd) * exchangeRate;
+  const cfrCost = fobCost + freightCny;
+  const insuranceFactor = toRate(quoteState.insuranceRate) * (toNumber(quoteState.insuranceUplift) / 100);
+  const destinationFeesCny = [
+    ["目的港清关费", toNumber(quoteState.destinationClearanceUsd) * exchangeRate],
+    ["目的地派送费", toNumber(quoteState.destinationDeliveryUsd) * exchangeRate],
+    ["目的国其他费用", toNumber(quoteState.destinationOtherUsd) * exchangeRate]
+  ];
+  let costBase = exwCost;
+  let quoteCny = 0;
+  let insuranceCost = 0;
+  let dutyCost = 0;
+  let importVatCost = 0;
+  let destinationTotal = 0;
+
+  if (term === "EXW") {
+    costBase = exwCost;
+    quoteCny = divideForMargin(costBase, profitRate);
+  } else if (term === "FOB") {
+    costBase = fobCost;
+    quoteCny = divideForMargin(costBase, profitRate);
+  } else if (term === "CFR") {
+    costBase = cfrCost;
+    quoteCny = divideForMargin(costBase, profitRate);
+  } else if (term === "CIF") {
+    const denominator = 1 - profitRate - insuranceFactor;
+    if (denominator <= 0) warnings.push("目标利润率 + 保险因子不能等于或超过 100%。");
+    quoteCny = denominator > 0 ? cfrCost / denominator : 0;
+    insuranceCost = quoteCny * insuranceFactor;
+    costBase = cfrCost + insuranceCost;
+  } else if (term === "DDP") {
+    const denominator = 1 - profitRate - insuranceFactor;
+    if (denominator <= 0) warnings.push("目标利润率 + 保险因子不能等于或超过 100%。");
+    const cifQuote = denominator > 0 ? cfrCost / denominator : 0;
+    insuranceCost = cifQuote * insuranceFactor;
+    dutyCost = cifQuote * toRate(quoteState.dutyRate);
+    importVatCost = (cifQuote + dutyCost) * toRate(quoteState.importVatRate);
+    destinationTotal = destinationFeesCny.reduce((sum, item) => sum + item[1], 0);
+    quoteCny = cifQuote + dutyCost + importVatCost + destinationTotal;
+    costBase = cfrCost + insuranceCost + dutyCost + importVatCost + destinationTotal;
+  }
+
+  const profitCny = quoteCny - costBase;
+  const quoteUsd = exchangeRate > 0 ? quoteCny / exchangeRate : 0;
+  return {
+    term,
+    termInfo: quoteTerms.find((item) => item.key === term) || quoteTerms[0],
+    valid: warnings.length === 0 && quoteCny > 0 && Number.isFinite(quoteCny),
+    warnings,
+    quantity,
+    taxCost,
+    vatRate,
+    rebateRate,
+    profitRate,
+    exchangeRate,
+    netUnitCost,
+    rebatePerUnit,
+    actualUnitCost,
+    exwCost,
+    fobExtras,
+    fobCost,
+    freightCny,
+    cfrCost,
+    insuranceFactor,
+    insuranceCost,
+    dutyCost,
+    importVatCost,
+    destinationFeesCny,
+    destinationTotal,
+    costBase,
+    quoteCny,
+    quoteUsd,
+    unitCny: quantity > 0 ? quoteCny / quantity : 0,
+    unitUsd: quantity > 0 && exchangeRate > 0 ? quoteCny / quantity / exchangeRate : 0,
+    profitCny,
+    profitUsd: exchangeRate > 0 ? profitCny / exchangeRate : 0,
+    productName: quoteState.productName.trim() || "未填写产品",
+    rateSource: quoteState.rateSource
+  };
+}
+
+function divideForMargin(cost, profitRate) {
+  return profitRate < 1 ? cost / (1 - profitRate) : 0;
+}
+
+function renderQuoteResults(result) {
+  const warnings = result.warnings.length ? `
+    <div class="quote-warning">
+      ${result.warnings.map((item) => `<p>${escapeHTML(item)}</p>`).join("")}
+    </div>
+  ` : "";
+  return `
+    <div class="quote-result-head">
+      <span class="status-pill active">${escapeHTML(result.term)}</span>
+      <h3>报价结果</h3>
+      <p>${escapeHTML(result.termInfo.subtitle)}</p>
+    </div>
+    ${warnings}
+    <div class="quote-price-main">
+      <span>美元总价</span>
+      <strong>${formatUsd(result.quoteUsd)}</strong>
+      <small>美元单价 ${formatUsd(result.unitUsd)} / 件</small>
+    </div>
+    <div class="quote-metric-grid">
+      ${renderQuoteMetric("人民币总价", formatCny(result.quoteCny))}
+      ${renderQuoteMetric("人民币单价", `${formatCny(result.unitCny)} / 件`)}
+      ${renderQuoteMetric("预计利润", `${formatCny(result.profitCny)} / ${formatUsd(result.profitUsd)}`)}
+      ${renderQuoteMetric("退税影响", `${formatCny(result.rebatePerUnit)} / 件`)}
+    </div>
+    <div class="quote-breakdown">
+      <h4>核心费用拆分</h4>
+      ${renderQuoteCostLine("实际成本", result.actualUnitCost * result.quantity)}
+      ${renderQuoteCostLine("工厂杂费", toNumber(quoteState.factoryFees))}
+      ${["FOB", "CFR", "CIF", "DDP"].includes(result.term) ? result.fobExtras.map((item) => renderQuoteCostLine(item[0], item[1])).join("") : ""}
+      ${["CFR", "CIF", "DDP"].includes(result.term) ? renderQuoteCostLine("国际运费", result.freightCny) : ""}
+      ${["CIF", "DDP"].includes(result.term) ? renderQuoteCostLine("保险费", result.insuranceCost) : ""}
+      ${result.term === "DDP" ? `
+        ${renderQuoteCostLine("目的国关税", result.dutyCost)}
+        ${renderQuoteCostLine("目的国 VAT/GST", result.importVatCost)}
+        ${result.destinationFeesCny.map((item) => renderQuoteCostLine(item[0], item[1])).join("")}
+      ` : ""}
+    </div>
+  `;
+}
+
+function renderQuoteMetric(label, value) {
+  return `
+    <div class="quote-metric">
+      <span>${escapeHTML(label)}</span>
+      <strong>${escapeHTML(value)}</strong>
+    </div>
+  `;
+}
+
+function renderQuoteCostLine(label, value) {
+  return `
+    <div class="quote-cost-line">
+      <span>${escapeHTML(label)}</span>
+      <strong>${formatCny(value)}</strong>
+    </div>
+  `;
+}
+
+function renderQuoteFormula(result) {
+  return `
+    <div class="quote-panel-head">
+      <div>
+        <p class="eyebrow">Formula</p>
+        <h3>计算公式</h3>
+        <p>面向学员展示每一步口径，方便检查报价逻辑。</p>
+      </div>
+      <button class="text-button" type="button" data-copy-quote="formula">
+        <svg><use href="#icon-copy"></use></svg>
+        <span>复制公式</span>
+      </button>
+    </div>
+    <div class="formula-steps">
+      ${buildQuoteFormulaLines(result).map((line, index) => `
+        <div class="formula-step">
+          <span>${index + 1}</span>
+          <p>${escapeHTML(line)}</p>
+        </div>
+      `).join("")}
+    </div>
+    <p class="quote-disclaimer">说明：Incoterms 只定义买卖双方费用和风险责任边界，不替代税务、报关、保险和目的国清关确认。</p>
+  `;
+}
+
+function renderQuoteCard(result) {
+  return `
+    <div class="quote-panel-head">
+      <div>
+        <p class="eyebrow">Quote Card</p>
+        <h3>一键报价卡片</h3>
+        <p>可复制给学员复盘，也可打印后另存为 PDF。</p>
+      </div>
+      <div class="quote-card-actions">
+        <button class="text-button primary" type="button" data-copy-quote="card">
+          <svg><use href="#icon-copy"></use></svg>
+          <span>复制报价</span>
+        </button>
+        <button class="text-button" type="button" data-print-quote>
+          <span>打印/PDF</span>
+        </button>
+      </div>
+    </div>
+    <article class="quote-card-preview" id="quoteCardPreview">
+      <span class="status-pill active">${escapeHTML(result.term)}</span>
+      <h4>${escapeHTML(result.productName)}</h4>
+      <div class="quote-card-price">
+        <strong>${formatUsd(result.quoteUsd)}</strong>
+        <span>${formatUsd(result.unitUsd)} / 件</span>
+      </div>
+      <dl>
+        <div><dt>数量</dt><dd>${formatNumber(result.quantity, 0)} 件</dd></div>
+        <div><dt>人民币总价</dt><dd>${formatCny(result.quoteCny)}</dd></div>
+        <div><dt>目标利润率</dt><dd>${formatPercent(result.profitRate)}</dd></div>
+        <div><dt>汇率</dt><dd>1 USD = ${formatNumber(result.exchangeRate, 4)} CNY</dd></div>
+      </dl>
+      <p>参考来源：Incoterms 2020 成本责任、出口退税口径、CIF 110% 投保惯例和公开汇率。DDP 为估算，需复核目的国税费。</p>
+    </article>
+  `;
+}
+
+function buildQuoteFormulaLines(result) {
+  const lines = [
+    `不含税成本 = 含税成本 ${formatCny(result.taxCost)} ÷ (1 + 增值税率 ${formatPercent(result.vatRate)}) = ${formatCny(result.netUnitCost)} / 件`,
+    `退税金额 = 不含税成本 ${formatCny(result.netUnitCost)} × 出口退税率 ${formatPercent(result.rebateRate)} = ${formatCny(result.rebatePerUnit)} / 件`,
+    `实际成本 = 含税成本 ${formatCny(result.taxCost)} - 退税金额 ${formatCny(result.rebatePerUnit)} = ${formatCny(result.actualUnitCost)} / 件`,
+    `EXW 成本 = 实际成本 × 数量 + 工厂杂费 = ${formatCny(result.exwCost)}`
+  ];
+  if (["FOB", "CFR", "CIF", "DDP"].includes(result.term)) {
+    lines.push(`FOB 成本 = EXW 成本 + 国内运输/报关/港杂/装柜/单证费 = ${formatCny(result.fobCost)}`);
+  }
+  if (["CFR", "CIF", "DDP"].includes(result.term)) {
+    lines.push(`CFR 成本 = FOB 成本 + 国际运费 = ${formatCny(result.cfrCost)}`);
+  }
+  if (result.term === "CIF") {
+    lines.push(`CIF 报价 = CFR 成本 ÷ (1 - 目标利润率 - 保险费率 × 投保加成) = ${formatCny(result.quoteCny)}`);
+  } else if (result.term === "DDP") {
+    lines.push(`CIF 报价 = CFR 成本 ÷ (1 - 目标利润率 - 保险费率 × 投保加成) = ${formatCny(result.quoteCny - result.dutyCost - result.importVatCost - result.destinationTotal)}`);
+    lines.push(`DDP 报价 = CIF 报价 + 关税 + VAT/GST + 目的国清关/派送/其他费用 = ${formatCny(result.quoteCny)}`);
+  } else {
+    lines.push(`${result.term} 报价 = 成本合计 ÷ (1 - 目标利润率 ${formatPercent(result.profitRate)}) = ${formatCny(result.quoteCny)}`);
+  }
+  lines.push(`美元报价 = 人民币报价 ${formatCny(result.quoteCny)} ÷ 汇率 ${formatNumber(result.exchangeRate, 4)} = ${formatUsd(result.quoteUsd)}`);
+  return lines;
+}
+
+function buildQuoteCardText(result) {
+  return [
+    `烁翌国际报价卡片`,
+    `产品：${result.productName}`,
+    `贸易术语：${result.term} - ${result.termInfo.title}`,
+    `数量：${formatNumber(result.quantity, 0)} 件`,
+    `美元总价：${formatUsd(result.quoteUsd)}`,
+    `美元单价：${formatUsd(result.unitUsd)} / 件`,
+    `人民币总价：${formatCny(result.quoteCny)}`,
+    `目标利润率：${formatPercent(result.profitRate)}`,
+    `参考汇率：1 USD = ${formatNumber(result.exchangeRate, 4)} CNY（${result.rateSource}）`,
+    `预计利润：${formatCny(result.profitCny)} / ${formatUsd(result.profitUsd)}`,
+    `说明：DDP 和目的国税费为估算，正式报价需复核清关、税率、保险和货代费用。`
+  ].join("\n");
+}
+
+function buildQuoteFormulaText(result) {
+  return buildQuoteFormulaLines(result).join("\n");
+}
+
+function printQuoteCard() {
+  const result = calculateQuote();
+  if (!result.valid) return showToast("请先补全有效报价数据");
+  const win = window.open("", "_blank", "noopener,noreferrer");
+  if (!win) {
+    window.print();
+    return;
+  }
+  win.document.write(`
+    <!doctype html>
+    <html lang="zh-CN">
+      <head>
+        <meta charset="UTF-8" />
+        <title>烁翌国际报价卡片</title>
+        <style>
+          body { margin: 0; padding: 32px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; color: #1d1d1f; }
+          .card { max-width: 720px; margin: 0 auto; padding: 32px; border: 1px solid #ddd; border-radius: 28px; }
+          h1 { margin: 0 0 8px; font-size: 34px; }
+          pre { white-space: pre-wrap; line-height: 1.8; font-size: 15px; }
+        </style>
+      </head>
+      <body>
+        <section class="card">
+          <h1>烁翌国际报价卡片</h1>
+          <pre>${escapeHTML(buildQuoteCardText(result))}</pre>
+          <hr />
+          <pre>${escapeHTML(buildQuoteFormulaText(result))}</pre>
+        </section>
+      </body>
+    </html>
+  `);
+  win.document.close();
+  win.focus();
+  win.print();
 }
 
 function sortCustomers(rows) {
@@ -7509,6 +8517,38 @@ function formatDate(value) {
   return date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" });
 }
 
+function toNumber(value) {
+  const number = Number(String(value ?? "").replaceAll(",", "").trim());
+  return Number.isFinite(number) ? number : 0;
+}
+
+function toRate(value) {
+  return toNumber(value) / 100;
+}
+
+function formatNumber(value, digits = 2) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "0";
+  return number.toLocaleString("zh-CN", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits
+  });
+}
+
+function formatCny(value) {
+  return `¥${formatNumber(value)}`;
+}
+
+function formatUsd(value) {
+  return `$${formatNumber(value)}`;
+}
+
+function formatPercent(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "0.00%";
+  return `${formatNumber(number * 100)}%`;
+}
+
 function scopedStorageKey(key) {
   return authState.user?.id ? `${key}.${authState.user.id}` : key;
 }
@@ -7574,7 +8614,7 @@ function csvEscape(value) {
 async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
-    showToast("搜索词已复制");
+    showToast("内容已复制");
   } catch {
     const input = document.createElement("textarea");
     input.value = text;
@@ -7582,7 +8622,7 @@ async function copyText(text) {
     input.select();
     document.execCommand("copy");
     input.remove();
-    showToast("搜索词已复制");
+    showToast("内容已复制");
   }
 }
 
