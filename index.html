@@ -3100,7 +3100,21 @@ th {
             <span>关键词</span>
             <div class="search-input">
               <svg><use href="#icon-search"></use></svg>
-              <input id="keywordInput" type="search" placeholder="Fasteners、标准件、公司名、产品、HS编码" autocomplete="off" />
+              <input
+                id="keywordInput"
+                type="search"
+                name="shuoyi_client_keyword_query"
+                placeholder="Fasteners、标准件、公司名、产品、HS编码"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="none"
+                spellcheck="false"
+                inputmode="search"
+                data-lpignore="true"
+                data-1p-ignore="true"
+                data-form-type="other"
+                readonly
+              />
             </div>
           </label>
 
@@ -4164,11 +4178,19 @@ function bindEvents() {
   });
 
   els.keyword.addEventListener("input", () => {
+    if (shouldClearKeywordAutofill(els.keyword.value)) {
+      clearKeywordAutofill();
+      return;
+    }
     state.keyword = els.keyword.value.trim();
     state.visibleCount = libraryPageSize;
     setActiveTab("library");
     render();
   });
+  ["pointerdown", "focus", "keydown"].forEach((eventName) => {
+    els.keyword.addEventListener(eventName, releaseKeywordAutofillGuard);
+  });
+  els.keyword.addEventListener("blur", armKeywordAutofillGuard);
 
   [
     [els.country, "country"],
@@ -4446,6 +4468,7 @@ function renderAuthShell() {
     els.userBadge.textContent = authState.profile?.company_name || authState.user?.email || "已登录";
     render();
     renderDetail();
+    scheduleKeywordAutofillCleanup();
   }
 }
 
@@ -4455,6 +4478,46 @@ function scheduleBlankLoginFields() {
     els.loginEmail.value = "";
     els.loginPassword.value = "";
   }, delay));
+}
+
+function armKeywordAutofillGuard() {
+  if (!els.keyword) return;
+  els.keyword.setAttribute("readonly", "readonly");
+}
+
+function releaseKeywordAutofillGuard() {
+  if (!els.keyword) return;
+  els.keyword.removeAttribute("readonly");
+}
+
+function scheduleKeywordAutofillCleanup() {
+  armKeywordAutofillGuard();
+  [80, 360, 900, 1600].forEach((delay) => window.setTimeout(clearKeywordAutofill, delay));
+}
+
+function shouldClearKeywordAutofill(value) {
+  return document.activeElement !== els.keyword && looksLikeAccountAutofill(value);
+}
+
+function looksLikeAccountAutofill(value) {
+  const text = String(value || "").trim().toLowerCase();
+  if (!text) return false;
+  const currentEmail = String(authState.user?.email || "").trim().toLowerCase();
+  const loginEmail = String(els.loginEmail?.value || "").trim().toLowerCase();
+  if (currentEmail && text === currentEmail) return true;
+  if (loginEmail && text === loginEmail) return true;
+  return Boolean(currentEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text));
+}
+
+function clearKeywordAutofill() {
+  if (!els.keyword || !looksLikeAccountAutofill(els.keyword.value)) return;
+  if (document.activeElement === els.keyword) return;
+  els.keyword.value = "";
+  if (looksLikeAccountAutofill(state.keyword)) {
+    state.keyword = "";
+    state.visibleCount = libraryPageSize;
+    render();
+  }
 }
 
 async function signInWithEmail() {
