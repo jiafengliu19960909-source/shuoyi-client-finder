@@ -3228,6 +3228,35 @@ th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+.access-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(181, 106, 25, 0.18);
+  border-radius: 18px;
+  background: rgba(181, 106, 25, 0.07);
+}
+
+.access-code-box.has-code {
+  border-color: rgba(0, 168, 120, 0.18);
+  background: rgba(0, 168, 120, 0.08);
+}
+
+.access-code-box span,
+.access-code-box small {
+  display: block;
+  color: var(--muted);
+}
+
+.access-code-box strong {
+  display: block;
+  margin: 4px 0;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+
 .public-note,
 .error-text {
   color: #b42318;
@@ -3888,7 +3917,8 @@ const storageKeys = {
   pendingInvite: "shuoyi.client.finder.pendingInvite",
   adminSection: "shuoyi.client.finder.adminSection",
   adminUnlocked: "shuoyi.client.finder.adminUnlocked",
-  loginKind: "shuoyi.client.finder.loginKind"
+  loginKind: "shuoyi.client.finder.loginKind",
+  shipmentAccessCodes: "shuoyi.client.finder.shipmentAccessCodes"
 };
 
 const supabaseConfig = window.SHUOYI_SUPABASE_CONFIG || {};
@@ -4216,6 +4246,7 @@ const state = {
 const favorites = new Set();
 const records = {};
 const recordSaveTimers = {};
+const shipmentAccessCodes = readJSON(storageKeys.shipmentAccessCodes, {});
 const workspaceLoadState = {
   shared: "idle",
   private: "idle",
@@ -7162,6 +7193,7 @@ function renderOrderAdminPanel(order) {
   const milestones = getOrderMilestones(order.id);
   const files = getOrderFiles(order.id);
   const comments = getOrderComments(order.id);
+  const visibleAccessCode = shipmentAccessCodes[order.id] || "";
   return `
     <article class="admin-panel order-admin-panel" data-order-panel="${escapeAttr(order.id)}">
       <div class="admin-panel-head">
@@ -7205,6 +7237,14 @@ function renderOrderAdminPanel(order) {
         <input type="checkbox" data-order-field="customer_visible" ${order.customer_visible ? "checked" : ""} />
         <span>允许客户用订单号和查询码查看</span>
       </label>
+      <div class="access-code-box ${visibleAccessCode ? "has-code" : ""}">
+        <div>
+          <span>客户查询码</span>
+          <strong>${visibleAccessCode ? escapeHTML(visibleAccessCode) : "已加密保存，无法反查明文"}</strong>
+          <small>${visibleAccessCode ? "请把订单号和查询码一起发给对应客户。" : "如果创建时没有保存查询码，请点击“重置查询码”生成新的。"} </small>
+        </div>
+        ${visibleAccessCode ? `<button class="mini-button" type="button" data-order-copy-query="${escapeAttr(order.id)}">复制查询信息</button>` : `<button class="mini-button" type="button" data-order-reset-code="${escapeAttr(order.id)}">生成新查询码</button>`}
+      </div>
       <div class="card-actions">
         <button class="text-button primary" type="button" data-order-save="${escapeAttr(order.id)}">保存订单</button>
         <button class="text-button" type="button" data-order-reset-code="${escapeAttr(order.id)}">重置查询码</button>
@@ -8870,7 +8910,7 @@ async function createShipmentOrder() {
   const hash = await hashShipmentAccessCode(accessCode);
   if (!hash) return;
   delete payload.access_code;
-  const { error } = await authState.client.from("orders").insert({
+  const { data: inserted, error } = await authState.client.from("orders").insert({
     ...payload,
     status: "生产中",
     customer_visible: false,
@@ -8878,12 +8918,13 @@ async function createShipmentOrder() {
     created_by: authState.user.id,
     assigned_user_id: authState.user.id,
     updated_at: new Date().toISOString()
-  });
+  }).select("id").single();
   if (error) return showToast(`订单创建失败：${error.message}`);
+  if (inserted?.id) rememberShipmentAccessCode(inserted.id, accessCode);
   await insertAdminAction("create_shipment_order", { entity_type: "orders", details: { order_number: payload.order_number } });
   await copyText(`订单号：${payload.order_number}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
   await refreshAdminWorkspace();
-  showToast("订单已创建，查询码已复制");
+  showToast("订单已创建，查询码已显示并复制");
 }
 
 async function saveShipmentOrder(id) {
@@ -8925,16 +8966,25 @@ async function resetShipmentAccessCode(id) {
     updated_at: new Date().toISOString()
   }).eq("id", id);
   if (error) return showToast(`查询码重置失败：${error.message}`);
+  rememberShipmentAccessCode(id, accessCode);
   await insertAdminAction("reset_shipment_access_code", { entity_type: "orders", entity_id: id, details: { order_number: order?.order_number || "" } });
   await copyText(`订单号：${order?.order_number || ""}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
   await refreshAdminWorkspace();
-  showToast("新查询码已复制，请只发送给对应客户");
+  showToast("新查询码已显示并复制，请只发送给对应客户");
 }
 
 function copyShipmentQueryInfo(id) {
   const order = shipmentOrders.find((item) => item.id === id);
   if (!order) return showToast("没有找到订单");
-  copyText(`订单号：${order.order_number || ""}\n查询码：请使用后台重置后复制的新查询码\n查货网址：${getAuthRedirectUrl()}`);
+  const accessCode = shipmentAccessCodes[id];
+  if (!accessCode) return showToast("明文查询码无法反查，请先点击“重置查询码”生成新的");
+  copyText(`订单号：${order.order_number || ""}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
+}
+
+function rememberShipmentAccessCode(orderId, accessCode) {
+  if (!orderId || !accessCode) return;
+  shipmentAccessCodes[orderId] = accessCode;
+  sessionStorage.setItem(storageKeys.shipmentAccessCodes, JSON.stringify(shipmentAccessCodes));
 }
 
 async function hashShipmentAccessCode(plainCode) {
