@@ -334,6 +334,7 @@ svg {
 
 .workspace.dashboard-mode,
 .workspace.calculator-mode,
+.workspace.tracking-mode,
 .workspace.knowledge-mode,
 .workspace.followup-mode,
 .workspace.admin-mode {
@@ -346,6 +347,7 @@ svg {
 
 .workspace.dashboard-mode:not(.has-detail),
 .workspace.calculator-mode:not(.has-detail),
+.workspace.tracking-mode:not(.has-detail),
 .workspace.knowledge-mode:not(.has-detail),
 .workspace.followup-mode:not(.has-detail),
 .workspace.admin-mode:not(.has-detail),
@@ -355,6 +357,7 @@ svg {
 
 .workspace.dashboard-mode .filter-panel,
 .workspace.calculator-mode .filter-panel,
+.workspace.tracking-mode .filter-panel,
 .workspace.knowledge-mode .filter-panel,
 .workspace.followup-mode .filter-panel,
 .workspace.admin-mode .filter-panel {
@@ -2881,6 +2884,382 @@ th {
   }
 }
 
+.public-tracking-card {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid rgba(0, 113, 227, 0.14);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(0, 113, 227, 0.08), rgba(255, 255, 255, 0.72)),
+    rgba(255, 255, 255, 0.74);
+}
+
+.auth-card > .public-tracking-card {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  align-self: end;
+  border-color: rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(18px) saturate(150%);
+}
+
+.auth-card > .public-tracking-card .eyebrow,
+.auth-card > .public-tracking-card h2,
+.auth-card > .public-tracking-card p,
+.auth-card > .public-tracking-card .field span {
+  color: #fff;
+}
+
+.auth-card > .public-tracking-card input {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.public-tracking-card h2 {
+  margin: 4px 0;
+  font-size: 24px;
+}
+
+.public-tracking-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.public-tracking-form,
+.public-tracking-result,
+.tracking-list,
+.tracking-detail-shell,
+.shipment-timeline,
+.shipment-comments,
+.admin-mini-list,
+.order-admin-list,
+.order-admin-panel,
+.order-mini-form {
+  display: grid;
+  gap: 12px;
+}
+
+.public-tracking-result {
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.public-shipment-summary,
+.shipment-detail-head,
+.shipment-card-head,
+.tracking-hero,
+.tracking-toolbar,
+.shipment-meta-row,
+.admin-mini-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tracking-hero,
+.shipment-detail-card,
+.tracking-toolbar,
+.shipment-empty {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(18px) saturate(160%);
+}
+
+.tracking-hero {
+  min-height: 220px;
+  padding: 34px;
+  background:
+    radial-gradient(circle at 86% 16%, rgba(0, 113, 227, 0.18), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(242, 247, 255, 0.72));
+}
+
+.tracking-hero h2 {
+  margin: 8px 0;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.04;
+}
+
+.tracking-hero p {
+  max-width: 680px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.tracking-hero-card {
+  display: grid;
+  gap: 6px;
+  min-width: 180px;
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.tracking-hero-card span {
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.tracking-toolbar {
+  margin-top: 18px;
+  padding: 18px;
+  flex-wrap: wrap;
+}
+
+.tracking-status-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.status-chip.active {
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.tracking-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: min(360px, 100%);
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.tracking-search svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--blue);
+  fill: none;
+}
+
+.tracking-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.tracking-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.4fr);
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.shipment-card,
+.shipment-empty {
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.shipment-card:hover,
+.shipment-card.active {
+  transform: translateY(-2px);
+  border-color: rgba(0, 113, 227, 0.24);
+  box-shadow: 0 16px 50px rgba(0, 113, 227, 0.12);
+}
+
+.shipment-card h3,
+.shipment-detail-card h3,
+.public-shipment-summary h3 {
+  margin: 4px 0;
+}
+
+.shipment-card p,
+.shipment-detail-card p,
+.shipment-comment p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.progress-rail {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.progress-rail span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), #5ac8fa);
+}
+
+.shipment-detail-card {
+  padding: 24px;
+}
+
+.tracking-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.tracking-facts.compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tracking-facts div {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.035);
+}
+
+.tracking-facts span,
+.shipment-meta-row,
+.admin-mini-row span,
+.shipment-comment span,
+.muted-text {
+  color: var(--muted);
+}
+
+.tracking-facts strong {
+  display: block;
+  margin-top: 4px;
+}
+
+.next-action {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(0, 113, 227, 0.08);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  border-radius: 999px;
+  background: var(--blue);
+  box-shadow: 0 0 0 6px rgba(0, 113, 227, 0.12);
+}
+
+.timeline-item:not(.public) .timeline-dot {
+  background: #8e8e93;
+  box-shadow: 0 0 0 6px rgba(142, 142, 147, 0.12);
+}
+
+.shipment-file-grid,
+.public-file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.shipment-file-card,
+.public-file-card {
+  display: grid;
+  gap: 8px;
+  min-height: 160px;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.public-file-card img,
+.file-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  object-fit: cover;
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.08), rgba(0, 0, 0, 0.04));
+}
+
+.file-thumb {
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.order-create-grid,
+.order-edit-grid,
+.order-admin-subgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.order-mini-form {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.admin-mini-row {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.public-note,
+.error-text {
+  color: #b42318;
+  line-height: 1.6;
+}
+
+.status-pill.in-production { background: rgba(0, 113, 227, 0.1); color: var(--blue); }
+.status-pill.ready-ship { background: rgba(181, 106, 25, 0.12); color: var(--gold); }
+.status-pill.in-transit { background: rgba(90, 200, 250, 0.16); color: #006a94; }
+.status-pill.arrived { background: rgba(0, 168, 120, 0.12); color: var(--green); }
+.status-pill.customs { background: rgba(88, 86, 214, 0.12); color: #5856d6; }
+
+@media (max-width: 900px) {
+  .tracking-hero,
+  .tracking-toolbar,
+  .public-shipment-summary,
+  .shipment-detail-head,
+  .shipment-card-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tracking-layout,
+  .tracking-facts,
+  .tracking-facts.compact,
+  .order-create-grid,
+  .order-edit-grid,
+  .order-admin-subgrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
   </head>
   <body>
@@ -3048,6 +3427,26 @@ th {
         </form>
 
         <p class="auth-message" id="authMessage"></p>
+
+        <section class="public-tracking-card" aria-label="客户查货入口">
+          <div>
+            <p class="eyebrow">Shipment Tracking</p>
+            <h2>客户查货入口</h2>
+            <p>输入订单号和查询码，查看管理员公开给客户的生产、装柜、海运和到港进度。</p>
+          </div>
+          <form class="public-tracking-form" id="publicTrackingForm">
+            <label class="field">
+              <span>订单号</span>
+              <input id="publicOrderNumber" type="text" autocomplete="off" placeholder="例如：SY-2026-001" required />
+            </label>
+            <label class="field">
+              <span>查询码</span>
+              <input id="publicAccessCode" type="password" autocomplete="off" placeholder="由业务员提供" required />
+            </label>
+            <button class="text-button primary" type="submit">查看货物进度</button>
+          </form>
+          <div class="public-tracking-result" id="publicTrackingResult" hidden></div>
+        </section>
       </div>
     </section>
 
@@ -3084,6 +3483,7 @@ th {
         <button class="app-tab active" type="button" data-tab="dashboard">工作台</button>
         <button class="app-tab" type="button" data-tab="library">客户库</button>
         <button class="app-tab" type="button" data-tab="calculator">报价计算器</button>
+        <button class="app-tab" type="button" data-tab="tracking">跟单系统</button>
         <button class="app-tab" type="button" data-tab="knowledge">标准件知识</button>
         <button class="app-tab" type="button" data-tab="followup">跟进记录</button>
         <button class="app-tab admin-only" id="adminTabButton" type="button" data-tab="admin" hidden>管理员后台</button>
@@ -3239,6 +3639,10 @@ th {
 
           <section class="tab-view calculator-view" id="calculatorView" hidden>
             <div id="calculatorContent"></div>
+          </section>
+
+          <section class="tab-view tracking-view" id="trackingView" hidden>
+            <div id="trackingContent"></div>
           </section>
 
           <section class="tab-view knowledge-view" id="knowledgeView" hidden>
@@ -3521,11 +3925,73 @@ const tabOptions = [
   { key: "dashboard", label: "工作台" },
   { key: "library", label: "客户库" },
   { key: "calculator", label: "报价计算器" },
+  { key: "tracking", label: "跟单系统" },
   { key: "knowledge", label: "标准件知识" },
   { key: "followup", label: "跟进记录" },
   { key: "admin", label: "管理员后台", adminOnly: true }
 ];
 const viewKeys = [...tabOptions.map((item) => item.key), "customerDetail"];
+
+const shipmentStatuses = ["生产中", "待发货", "海运中", "到港", "清关中", "已完成", "异常"];
+const shipmentStatusHints = {
+  "生产中": "确认生产、包装、检验和预计出货时间。",
+  "待发货": "准备装柜、报关资料、订舱信息和放行节点。",
+  "海运中": "跟踪船名航次、提单号、ETA 和海运异常。",
+  "到港": "提醒客户准备清关资料和目的港费用。",
+  "清关中": "跟进目的港清关、缴税和派送计划。",
+  "已完成": "归档订单资料，沉淀复购和评价线索。",
+  "异常": "优先处理延期、查验、缺资料或客户投诉。"
+};
+const milestoneTemplates = ["下单确认", "生产排期", "质检完成", "装柜完成", "出口报关", "开船", "预计到港", "目的港清关", "派送完成"];
+const fileTypeOptions = ["装柜图片", "产品图片", "质检照片", "商业发票", "装箱单", "提单", "报关资料", "海运截图", "其他文件"];
+const shipmentPortalFunctionNames = ["shipment-portal", "smooth-task"];
+
+const verifiedFastenerArticles = [
+  {
+    id: "verified-fastener-basics",
+    title: "标准件基础：Bolt、Screw、Nut、Washer、Anchor 怎么区分",
+    category: "标准件基础",
+    summary: "开发客户时先把英文产品词说清楚：bolt 更偏螺栓连接，screw 更偏螺钉/螺丝，nut 是螺母，washer 是垫圈，anchor 是锚栓或膨胀类固定件。",
+    content: "建议业务员把 fasteners 作为总词，再按 bolts, screws, nuts, washers, threaded rods, anchors 拆分搜索。官网产品目录若出现 hex bolt、socket screw、flat washer、lock nut、wedge anchor，通常可判断为标准件或五金紧固件客户。",
+    keywords: "fasteners, bolts, screws, nuts, washers, threaded rods, anchors, standard parts, hardware",
+    hs_codes: "731815, 731816, 731821, 731822, 731829",
+    source_name: "Bolt Depot Fastener Information",
+    source_url: "https://boltdepot.com/fastener-information"
+  },
+  {
+    id: "verified-fastener-hs",
+    title: "紧固件常用 HS 编码开发线索",
+    category: "HS 编码",
+    summary: "7318 章覆盖钢铁制螺钉、螺栓、螺母、垫圈等紧固件；731815 常用于螺钉和螺栓，731816 常用于螺母，731821/731822 常用于垫圈。",
+    content: "做客户开发时，可以把 HS 编码和英文产品词组合搜索，例如 731815 bolts importer、731816 nuts distributor、731821 spring washers customs data。正式报关归类需要结合材质、用途、结构和当地海关解释确认。",
+    keywords: "731815, 731816, 731821, 731822, 731829, customs data, importer, distributor",
+    hs_codes: "731815, 731816, 731821, 731822, 731829",
+    source_name: "USITC Harmonized Tariff Schedule",
+    source_url: "https://hts.usitc.gov/search?query=7318"
+  },
+  {
+    id: "verified-fastener-grades",
+    title: "材料与等级：8.8、10.9、12.9 与 ASTM 线索",
+    category: "材料与等级",
+    summary: "标准件客户常问强度等级、材料和标准。开发信里可突出 carbon steel、stainless steel、alloy steel、Grade 8.8/10.9/12.9、ASTM A307/F3125 等能力。",
+    content: "不要在开发信里承诺未验证的标准符合性。更稳妥的表达是：we can quote according to your drawing, grade, coating and packing requirements，并附上可做等级、材质、表面处理和质检报告能力。",
+    keywords: "carbon steel, stainless steel, alloy steel, Grade 8.8, Grade 10.9, Grade 12.9, ASTM A307, ASTM F3125",
+    hs_codes: "731815, 731816",
+    source_name: "Portland Bolt Technical FAQs",
+    source_url: "https://www.portlandbolt.com/technical/faqs/"
+  },
+  {
+    id: "verified-fastener-coating",
+    title: "表面处理关键词：镀锌、热镀锌、发黑、磷化、达克罗",
+    category: "表面处理",
+    summary: "表面处理往往直接影响价格、交期和目标市场。常见开发词包括 zinc plated、hot dip galvanized、black oxide、phosphate、dacromet、zinc nickel。",
+    content: "欧美客户通常关注防腐蚀、盐雾测试、环保要求和批次稳定性。报价前应确认 coating、salt spray hours、thread tolerance、packing method 和是否需要第三方检验。",
+    keywords: "zinc plated, hot dip galvanized, black oxide, phosphate, dacromet, zinc nickel, salt spray test",
+    hs_codes: "731815, 731816, 731821, 731822",
+    source_name: "Bolt Depot Materials and Finishes",
+    source_url: "https://boltdepot.com/fastener-information/materials-and-grades/materials"
+  }
+];
 
 const fastenerKeywordGroups = [
   {
@@ -3739,7 +4205,12 @@ const state = {
   adminStatus: "all",
   adminRuleType: "all",
   adminApprovedSearch: "",
-  adminApprovedStatus: "all"
+  adminApprovedStatus: "all",
+  trackingStatus: "全部",
+  trackingSearch: "",
+  selectedOrderId: null,
+  publicTrackingBusy: false,
+  publicTrackingResult: null
 };
 
 const favorites = new Set();
@@ -3748,12 +4219,18 @@ const recordSaveTimers = {};
 const workspaceLoadState = {
   shared: "idle",
   private: "idle",
-  admin: "idle"
+  admin: "idle",
+  tracking: "idle"
 };
 let workspaceLoadPromise = null;
 let approvedCustomerRows = [];
 let adminApprovedCustomers = [];
 let knowledgeArticles = [];
+let shipmentOrders = [];
+let shipmentMilestones = [];
+let shipmentFiles = [];
+let shipmentComments = [];
+let shipmentAccessLogs = [];
 let adminProfiles = [];
 let customerReviewItems = [];
 let knowledgeReviewItems = [];
@@ -3777,6 +4254,10 @@ const els = {
   forgotForm: document.getElementById("forgotForm"),
   resetPasswordForm: document.getElementById("resetPasswordForm"),
   profileForm: document.getElementById("profileForm"),
+  publicTrackingForm: document.getElementById("publicTrackingForm"),
+  publicOrderNumber: document.getElementById("publicOrderNumber"),
+  publicAccessCode: document.getElementById("publicAccessCode"),
+  publicTrackingResult: document.getElementById("publicTrackingResult"),
   adminLoginHint: document.getElementById("adminLoginHint"),
   loginEmail: document.getElementById("loginEmail"),
   loginPassword: document.getElementById("loginPassword"),
@@ -3798,6 +4279,7 @@ const els = {
   dashboardView: document.getElementById("dashboardView"),
   libraryView: document.getElementById("libraryView"),
   calculatorView: document.getElementById("calculatorView"),
+  trackingView: document.getElementById("trackingView"),
   knowledgeView: document.getElementById("knowledgeView"),
   followupView: document.getElementById("followupView"),
   adminView: document.getElementById("adminView"),
@@ -3807,6 +4289,7 @@ const els = {
   dailyLeads: document.getElementById("dailyLeads"),
   todayLeadCount: document.getElementById("todayLeadCount"),
   calculatorContent: document.getElementById("calculatorContent"),
+  trackingContent: document.getElementById("trackingContent"),
   knowledgeContent: document.getElementById("knowledgeContent"),
   followupContent: document.getElementById("followupContent"),
   adminContent: document.getElementById("adminContent"),
@@ -4077,6 +4560,21 @@ function normalizeSearchText(value) {
     .trim();
 }
 
+function statusClass(status) {
+  const map = {
+    "生产中": "in-production",
+    "待发货": "ready-ship",
+    "海运中": "in-transit",
+    "到港": "arrived",
+    "清关中": "customs",
+    "已完成": "published",
+    "异常": "rejected",
+    "revoked": "rejected",
+    "published": "published"
+  };
+  return map[status] || "neutral";
+}
+
 function textMatchesTag(text, tag) {
   const normalized = normalizeSearchText(tag);
   if (!normalized) return false;
@@ -4165,6 +4663,11 @@ function scoreLead(country, product, type, index) {
 }
 
 function bindEvents() {
+  els.publicTrackingForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await lookupPublicShipment();
+  });
+
   els.appTabs.addEventListener("click", (event) => {
     const button = event.target.closest("[data-tab]");
     if (!button) return;
@@ -4263,6 +4766,18 @@ function bindEvents() {
   els.followupContent.addEventListener("click", (event) => {
     const action = event.target.closest("[data-action]");
     if (action) handleCustomerAction(action);
+  });
+
+  els.trackingContent?.addEventListener("click", (event) => {
+    handleTrackingClick(event);
+  });
+
+  els.trackingContent?.addEventListener("input", (event) => {
+    handleTrackingInput(event);
+  });
+
+  els.trackingContent?.addEventListener("change", (event) => {
+    handleTrackingChange(event);
   });
 
   els.knowledgeContent.addEventListener("click", (event) => {
@@ -4716,7 +5231,7 @@ function startWorkspaceSync() {
 
 async function loadSharedData() {
   if (!authState.user) return;
-  const [customerResult, knowledgeResult] = await Promise.all([
+  const [customerResult, knowledgeResult, trackingResult] = await Promise.all([
     authState.client
       .from("approved_customers")
       .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,raw,status,updated_at,revoked_at,revoke_reason,created_at")
@@ -4726,12 +5241,54 @@ async function loadSharedData() {
       .from("knowledge_articles")
       .select("id,approved_from,created_by,title,category,summary,keywords,hs_codes,content,source_name,source_url,status,created_at")
       .eq("status", "published")
-      .order("created_at", { ascending: false })
+      .order("created_at", { ascending: false }),
+    loadTrackingData()
   ]);
 
   if (!customerResult.error) approvedCustomerRows = customerResult.data || [];
   if (!knowledgeResult.error) knowledgeArticles = knowledgeResult.data || [];
+  if (trackingResult === false) workspaceLoadState.tracking = "error";
   rebuildCustomerPool();
+}
+
+async function loadTrackingData() {
+  if (!authState.user) return false;
+  workspaceLoadState.tracking = "loading";
+  const [orderResult, milestoneResult, fileResult, commentResult] = await Promise.all([
+    authState.client
+      .from("orders")
+      .select("id,order_number,customer_name,customer_email,customer_company,product_name,quantity,trade_term,destination_port,origin_port,status,customer_visible,tracking_url,container_no,bill_of_lading,booking_no,vessel_voyage,eta,etd,next_action,created_by,assigned_user_id,archived_at,created_at,updated_at")
+      .order("updated_at", { ascending: false }),
+    authState.client
+      .from("order_milestones")
+      .select("id,order_id,title,description,status,event_date,sort_order,customer_visible,created_at,updated_at")
+      .order("sort_order", { ascending: true }),
+    authState.client
+      .from("order_files")
+      .select("id,order_id,file_name,file_type,mime_type,size_bytes,storage_path,customer_visible,created_at")
+      .order("created_at", { ascending: false }),
+    authState.client
+      .from("order_comments")
+      .select("id,order_id,body,customer_visible,created_by,created_at")
+      .order("created_at", { ascending: false })
+  ]);
+
+  if (orderResult.error) {
+    console.warn("[Shuoyi] tracking data unavailable", orderResult.error);
+    shipmentOrders = [];
+    shipmentMilestones = [];
+    shipmentFiles = [];
+    shipmentComments = [];
+    workspaceLoadState.tracking = "error";
+    return false;
+  }
+
+  shipmentOrders = orderResult.data || [];
+  shipmentMilestones = milestoneResult.error ? [] : milestoneResult.data || [];
+  shipmentFiles = fileResult.error ? [] : fileResult.data || [];
+  shipmentComments = commentResult.error ? [] : commentResult.data || [];
+  workspaceLoadState.tracking = "ready";
+  return true;
 }
 
 function rebuildCustomerPool() {
@@ -4823,7 +5380,7 @@ async function loadAdminData() {
   if (!isAdmin() || !authState.adminUnlocked) return;
   workspaceLoadState.admin = "loading";
   const mark = perfStart("workspace.adminData");
-  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult, approvedAdminResult] = await Promise.all([
+  const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult, approvedAdminResult, shipmentLogResult] = await Promise.all([
     authState.client
       .from("profiles")
       .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
@@ -4856,6 +5413,12 @@ async function loadAdminData() {
       .from("approved_customers")
       .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,raw,status,updated_at,revoked_at,revoked_by,revoke_reason,created_at")
       .order("created_at", { ascending: false })
+    ,
+    authState.client
+      .from("order_access_logs")
+      .select("id,order_id,order_number,success,client_label,created_at")
+      .order("created_at", { ascending: false })
+      .limit(80)
   ]);
   adminProfiles = profileResult.error ? [] : profileResult.data || [];
   customerReviewItems = customerReviewResult.error ? [] : customerReviewResult.data || [];
@@ -4865,6 +5428,7 @@ async function loadAdminData() {
   importBatches = batchResult.error ? [] : batchResult.data || [];
   importRules = ruleResult.error ? [] : ruleResult.data || [];
   adminApprovedCustomers = approvedAdminResult.error ? [] : approvedAdminResult.data || [];
+  shipmentAccessLogs = shipmentLogResult.error ? [] : shipmentLogResult.data || [];
   workspaceLoadState.admin = "ready";
   rebuildCustomerPool();
   perfEnd(mark);
@@ -5020,6 +5584,7 @@ function render() {
   renderDashboard();
   renderLibrary(filtered);
   renderCalculator();
+  renderTracking();
   renderKnowledge();
   renderFollowup();
   renderAdmin();
@@ -5041,7 +5606,7 @@ function renderShell() {
     const view = els[`${key}View`];
     if (view) view.hidden = state.activeTab !== key;
   });
-  els.workspace.classList.remove("dashboard-mode", "library-mode", "calculator-mode", "knowledge-mode", "followup-mode", "admin-mode", "customerDetail-mode");
+  els.workspace.classList.remove("dashboard-mode", "library-mode", "calculator-mode", "tracking-mode", "knowledge-mode", "followup-mode", "admin-mode", "customerDetail-mode");
   els.workspace.classList.add(`${state.activeTab}-mode`);
 }
 
@@ -5948,7 +6513,8 @@ function getVisibleKnowledgeArticles() {
   const pendingArticles = shouldShowAdminReviewPreview()
     ? knowledgeReviewItems.filter(isPendingReviewItem).map(enrichReviewKnowledge)
     : [];
-  return [...pendingArticles, ...knowledgeArticles.map((article) => ({ ...article, audit: null }))];
+  const verifiedArticles = verifiedFastenerArticles.map((article) => ({ ...article, status: "published", audit: null }));
+  return [...pendingArticles, ...verifiedArticles, ...knowledgeArticles.map((article) => ({ ...article, audit: null }))];
 }
 
 function enrichReviewKnowledge(item) {
@@ -6036,11 +6602,13 @@ function renderAdmin() {
     ["users", "注册人员"],
     ["admins", "管理员管理"],
     ["invites", "邀请码管理"],
+    ["orders", "订单跟单"],
     ["batches", "导入批次"],
     ["rules", "入库规则"],
     ["customers", "待审核客户池"],
     ["published", "已发布客户"],
     ["knowledge", "待审核知识库"],
+    ["trackingLogs", "查货日志"],
     ["audit", "操作日志"]
   ];
   const sectionHtml = sections.map(([key, label]) => `
@@ -6052,11 +6620,13 @@ function renderAdmin() {
     users: renderAdminUsers,
     admins: renderAdminManagers,
     invites: renderInviteManager,
+    orders: renderOrderManager,
     batches: renderImportBatches,
     rules: renderImportRules,
     customers: () => renderReviewPool("customers"),
     published: renderPublishedCustomerManager,
     knowledge: () => renderReviewPool("knowledge"),
+    trackingLogs: renderShipmentAccessLogs,
     audit: renderAdminAudit
   };
   const content = (contentMap[state.adminSection] || renderAdminUsers)();
@@ -6546,6 +7116,209 @@ function renderImportRules() {
   `;
 }
 
+function renderOrderManager() {
+  const rows = shipmentOrders.map(renderOrderAdminPanel).join("");
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>订单跟单</h3>
+          <p>创建订单、更新海运节点、上传图片和单据。客户只有拿到订单号和查询码后，才能查看你公开的内容。</p>
+        </div>
+        <strong>${shipmentOrders.length} 单</strong>
+      </div>
+
+      <div class="order-create-grid">
+        ${renderAdminInput("订单号", "order_number", "SY-2026-001")}
+        ${renderAdminInput("客户名称", "customer_name", "Buyer name")}
+        ${renderAdminInput("客户公司", "customer_company", "Customer company")}
+        ${renderAdminInput("客户邮箱", "customer_email", "buyer@example.com")}
+        ${renderAdminInput("产品", "product_name", "Hex bolts / nuts / washers")}
+        ${renderAdminInput("数量", "quantity", "100000 pcs")}
+        ${renderAdminInput("贸易术语", "trade_term", "FOB Tianjin")}
+        ${renderAdminInput("目的港", "destination_port", "Hamburg")}
+        ${renderAdminInput("起运港", "origin_port", "Tianjin")}
+        ${renderAdminInput("查询码", "access_code", "留空自动生成")}
+      </div>
+      <button class="text-button primary" type="button" data-order-create>创建订单并生成查询码</button>
+    </section>
+
+    <section class="order-admin-list">
+      ${rows || `<div class="admin-panel"><p>暂无订单。先创建一条测试订单，再上传装柜图片或提单资料。</p></div>`}
+    </section>
+  `;
+}
+
+function renderAdminInput(label, field, placeholder = "") {
+  return `
+    <label class="field">
+      <span>${escapeHTML(label)}</span>
+      <input data-new-order-field="${escapeAttr(field)}" type="text" placeholder="${escapeAttr(placeholder)}" />
+    </label>
+  `;
+}
+
+function renderOrderAdminPanel(order) {
+  const milestones = getOrderMilestones(order.id);
+  const files = getOrderFiles(order.id);
+  const comments = getOrderComments(order.id);
+  return `
+    <article class="admin-panel order-admin-panel" data-order-panel="${escapeAttr(order.id)}">
+      <div class="admin-panel-head">
+        <div>
+          <h3>${escapeHTML(order.order_number || "未编号订单")}</h3>
+          <p>${escapeHTML(order.customer_company || order.customer_name || "未填写客户")} · ${escapeHTML(order.product_name || "未填写产品")}</p>
+        </div>
+        <span class="status-pill ${escapeAttr(statusClass(order.status))}">${escapeHTML(order.status || "生产中")}</span>
+      </div>
+
+      <div class="order-edit-grid">
+        ${renderOrderField(order, "order_number", "订单号")}
+        ${renderOrderField(order, "customer_name", "客户名称")}
+        ${renderOrderField(order, "customer_company", "客户公司")}
+        ${renderOrderField(order, "customer_email", "客户邮箱")}
+        ${renderOrderField(order, "product_name", "产品")}
+        ${renderOrderField(order, "quantity", "数量")}
+        ${renderOrderField(order, "trade_term", "贸易术语")}
+        ${renderOrderField(order, "origin_port", "起运港")}
+        ${renderOrderField(order, "destination_port", "目的港")}
+        ${renderOrderField(order, "container_no", "箱号")}
+        ${renderOrderField(order, "bill_of_lading", "提单号")}
+        ${renderOrderField(order, "booking_no", "订舱号")}
+        ${renderOrderField(order, "vessel_voyage", "船名航次")}
+        ${renderOrderField(order, "etd", "ETD", "date")}
+        ${renderOrderField(order, "eta", "ETA", "date")}
+        ${renderOrderField(order, "tracking_url", "物流链接")}
+      </div>
+
+      <label class="field">
+        <span>状态</span>
+        <select data-order-field="status">
+          ${shipmentStatuses.map((status) => `<option value="${escapeAttr(status)}" ${order.status === status ? "selected" : ""}>${escapeHTML(status)}</option>`).join("")}
+        </select>
+      </label>
+      <label class="field">
+        <span>下一步动作</span>
+        <textarea data-order-field="next_action" rows="2">${escapeHTML(order.next_action || "")}</textarea>
+      </label>
+      <label class="toggle-row">
+        <input type="checkbox" data-order-field="customer_visible" ${order.customer_visible ? "checked" : ""} />
+        <span>允许客户用订单号和查询码查看</span>
+      </label>
+      <div class="card-actions">
+        <button class="text-button primary" type="button" data-order-save="${escapeAttr(order.id)}">保存订单</button>
+        <button class="text-button" type="button" data-order-reset-code="${escapeAttr(order.id)}">重置查询码</button>
+        <button class="text-button ghost" type="button" data-order-copy-query="${escapeAttr(order.id)}">复制客户查询信息</button>
+        <button class="text-button danger" type="button" data-order-archive="${escapeAttr(order.id)}">归档</button>
+      </div>
+
+      <div class="order-admin-subgrid">
+        <section>
+          <h4>新增海运节点</h4>
+          <div class="order-mini-form">
+            <select data-milestone-template>
+              ${milestoneTemplates.map((item) => `<option value="${escapeAttr(item)}">${escapeHTML(item)}</option>`).join("")}
+            </select>
+            <input data-milestone-date type="date" />
+            <input data-milestone-desc type="text" placeholder="节点说明，例如：已装柜，等待报关放行" />
+            <label class="toggle-row compact"><input data-milestone-visible type="checkbox" checked /> <span>客户可见</span></label>
+            <button class="text-button" type="button" data-milestone-add="${escapeAttr(order.id)}">添加节点</button>
+          </div>
+          <div class="admin-mini-list">
+            ${milestones.map((item) => `
+              <div class="admin-mini-row">
+                <div><strong>${escapeHTML(item.title)}</strong><span>${escapeHTML(formatDate(item.event_date || item.created_at))}</span></div>
+                <button class="mini-button" type="button" data-milestone-visibility="${escapeAttr(item.id)}" data-visible="${item.customer_visible ? "false" : "true"}">${item.customer_visible ? "隐藏客户" : "公开客户"}</button>
+              </div>
+            `).join("") || `<p class="muted-text">暂无节点</p>`}
+          </div>
+        </section>
+
+        <section>
+          <h4>图片和单据上传</h4>
+          <div class="order-mini-form">
+            <select data-file-type>
+              ${fileTypeOptions.map((type) => `<option value="${escapeAttr(type)}">${escapeHTML(type)}</option>`).join("")}
+            </select>
+            <label class="import-file-picker">
+              <input type="file" data-shipment-file-order="${escapeAttr(order.id)}" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" />
+              <span>上传图片或单据</span>
+            </label>
+          </div>
+          <div class="admin-mini-list">
+            ${files.map((file) => `
+              <div class="admin-mini-row">
+                <div><strong>${escapeHTML(file.file_name)}</strong><span>${escapeHTML(file.file_type || "文件")} · ${file.customer_visible ? "客户可见" : "内部"}</span></div>
+                <button class="mini-button" type="button" data-file-visibility="${escapeAttr(file.id)}" data-visible="${file.customer_visible ? "false" : "true"}">${file.customer_visible ? "隐藏客户" : "公开客户"}</button>
+              </div>
+            `).join("") || `<p class="muted-text">暂无文件</p>`}
+          </div>
+        </section>
+      </div>
+
+      <section>
+        <h4>备注</h4>
+        <div class="order-mini-form">
+          <input data-order-comment type="text" placeholder="输入内部或客户可见备注" />
+          <label class="toggle-row compact"><input data-order-comment-visible type="checkbox" /> <span>客户可见</span></label>
+          <button class="text-button" type="button" data-order-comment-add="${escapeAttr(order.id)}">添加备注</button>
+        </div>
+        <div class="admin-mini-list">
+          ${comments.slice(0, 5).map((comment) => `
+            <div class="admin-mini-row">
+              <div><strong>${escapeHTML(comment.body)}</strong><span>${comment.customer_visible ? "客户可见" : "内部"} · ${escapeHTML(formatDate(comment.created_at))}</span></div>
+            </div>
+          `).join("") || `<p class="muted-text">暂无备注</p>`}
+        </div>
+      </section>
+    </article>
+  `;
+}
+
+function renderOrderField(order, field, label, type = "text") {
+  return `
+    <label class="field">
+      <span>${escapeHTML(label)}</span>
+      <input data-order-field="${escapeAttr(field)}" type="${escapeAttr(type)}" value="${escapeAttr(formatOrderInputValue(order[field], type))}" />
+    </label>
+  `;
+}
+
+function formatOrderInputValue(value, type) {
+  if (!value) return "";
+  if (type === "date") return String(value).slice(0, 10);
+  return value;
+}
+
+function renderShipmentAccessLogs() {
+  return `
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>客户查货日志</h3>
+          <p>记录订单号查询是否成功，用于发现客户查询失败、查询码错误或异常访问。</p>
+        </div>
+        <strong>${shipmentAccessLogs.length} 条</strong>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>时间</th><th>订单号</th><th>结果</th><th>备注</th></tr></thead>
+          <tbody>
+            ${shipmentAccessLogs.map((log) => `
+              <tr>
+                <td>${escapeHTML(formatDate(log.created_at))}</td>
+                <td>${escapeHTML(log.order_number || "-")}</td>
+                <td><span class="status-pill ${log.success ? "published" : "rejected"}">${log.success ? "成功" : "失败"}</span></td>
+                <td>${escapeHTML(log.client_label || "")}</td>
+              </tr>
+            `).join("") || `<tr><td colspan="4">暂无客户查货记录</td></tr>`}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
 function renderAdminAudit() {
   const rows = adminActions.map((item) => `
     <tr>
@@ -6834,6 +7607,240 @@ function renderStatusColumn(status, rows) {
       `).join("") : `<p class="status-empty">暂无客户</p>`}
     </article>
   `;
+}
+
+function renderTracking() {
+  if (!els.trackingContent) return;
+  const visibleOrders = getVisibleShipmentOrders();
+  const selected = getSelectedShipmentOrder(visibleOrders);
+  const statusCards = ["全部", ...shipmentStatuses].map((status) => {
+    const count = status === "全部" ? shipmentOrders.length : shipmentOrders.filter((order) => order.status === status).length;
+    return `
+      <button class="status-chip ${state.trackingStatus === status ? "active" : ""}" type="button" data-tracking-status="${escapeAttr(status)}">
+        <span>${escapeHTML(status)}</span>
+        <strong>${count}</strong>
+      </button>
+    `;
+  }).join("");
+
+  els.trackingContent.innerHTML = `
+    <section class="tracking-hero">
+      <div>
+        <p class="eyebrow">Order Command Center</p>
+        <h2>跟单系统</h2>
+        <p>把生产、装柜、报关、开船、到港、清关和派送节点集中管理。客户只用订单号和查询码查看公开进度。</p>
+      </div>
+      <div class="tracking-hero-card">
+        <span>${shipmentOrders.length}</span>
+        <strong>跟踪订单</strong>
+        <small>${workspaceLoadState.tracking === "error" ? "请先执行跟单系统 SQL" : "人工更新，客户可查"}</small>
+      </div>
+    </section>
+
+    <section class="tracking-toolbar">
+      <div class="tracking-status-row">${statusCards}</div>
+      <label class="tracking-search">
+        <svg><use href="#icon-search"></use></svg>
+        <input data-tracking-search type="search" placeholder="搜索订单号、客户、产品、箱号、提单号" value="${escapeAttr(state.trackingSearch)}" />
+      </label>
+      ${isAdmin() ? `<button class="text-button primary" type="button" data-open-admin-orders>进入后台订单管理</button>` : ""}
+    </section>
+
+    ${workspaceLoadState.tracking === "error" ? renderTrackingSetupNotice() : ""}
+    <section class="tracking-layout">
+      <div class="tracking-list">
+        ${visibleOrders.length ? visibleOrders.map(renderShipmentOrderCard).join("") : renderNoShipmentOrders()}
+      </div>
+      <div class="tracking-detail-shell">
+        ${selected ? renderShipmentOrderDetail(selected) : renderTrackingIntro()}
+      </div>
+    </section>
+  `;
+}
+
+function renderTrackingSetupNotice() {
+  return `
+    <section class="admin-panel warning-panel">
+      <h3>跟单系统数据库尚未就绪</h3>
+      <p>请在 Supabase SQL Editor 执行新版 <code>supabase-schema.sql</code>，并部署 <code>shipment-portal</code> Edge Function 后再使用图片上传和客户查询。</p>
+    </section>
+  `;
+}
+
+function getVisibleShipmentOrders() {
+  const query = normalizeSearchText(state.trackingSearch);
+  return shipmentOrders
+    .filter((order) => state.trackingStatus === "全部" || order.status === state.trackingStatus)
+    .filter((order) => {
+      if (!query) return true;
+      return normalizeSearchText([
+        order.order_number,
+        order.customer_name,
+        order.customer_company,
+        order.customer_email,
+        order.product_name,
+        order.container_no,
+        order.bill_of_lading,
+        order.booking_no,
+        order.destination_port,
+        order.vessel_voyage
+      ].join(" ")).includes(query);
+    })
+    .sort((a, b) => new Date(b.updated_at || b.created_at || 0) - new Date(a.updated_at || a.created_at || 0));
+}
+
+function getSelectedShipmentOrder(orders = getVisibleShipmentOrders()) {
+  if (state.selectedOrderId) {
+    const selected = shipmentOrders.find((order) => order.id === state.selectedOrderId);
+    if (selected) return selected;
+  }
+  return orders[0] || null;
+}
+
+function renderShipmentOrderCard(order) {
+  const milestones = getOrderMilestones(order.id);
+  const progress = getShipmentProgress(order);
+  return `
+    <article class="shipment-card ${state.selectedOrderId === order.id ? "active" : ""}" data-shipment-card="${escapeAttr(order.id)}">
+      <div class="shipment-card-head">
+        <div>
+          <p class="eyebrow">${escapeHTML(order.order_number || "未编号订单")}</p>
+          <h3>${escapeHTML(order.customer_name || order.customer_company || "未填写客户")}</h3>
+        </div>
+        <span class="status-pill ${escapeAttr(statusClass(order.status))}">${escapeHTML(order.status || "生产中")}</span>
+      </div>
+      <p>${escapeHTML(order.product_name || "未填写产品")} · ${escapeHTML(order.destination_port || "未填写目的港")}</p>
+      <div class="progress-rail"><span style="width:${progress}%"></span></div>
+      <div class="shipment-meta-row">
+        <span>${milestones.length} 个节点</span>
+        <span>${getOrderFiles(order.id).length} 个文件</span>
+        <span>${order.customer_visible ? "客户可查" : "客户不可见"}</span>
+      </div>
+    </article>
+  `;
+}
+
+function renderNoShipmentOrders() {
+  return `
+    <article class="shipment-empty">
+      <h3>暂无跟踪订单</h3>
+      <p>管理员可在后台创建订单、上传图片和单据，再把查询码发给客户。</p>
+    </article>
+  `;
+}
+
+function renderTrackingIntro() {
+  return `
+    <section class="shipment-detail-card">
+      <p class="eyebrow">Shipment Visibility</p>
+      <h3>选择左侧订单查看进度</h3>
+      <p>跟单系统会集中显示时间轴、客户可见文件、内部备注和下一步动作，避免订单资料散落在聊天记录里。</p>
+    </section>
+  `;
+}
+
+function renderShipmentOrderDetail(order) {
+  const milestones = getOrderMilestones(order.id);
+  const files = getOrderFiles(order.id);
+  const comments = getOrderComments(order.id);
+  return `
+    <section class="shipment-detail-card">
+      <div class="shipment-detail-head">
+        <div>
+          <p class="eyebrow">${escapeHTML(order.order_number || "Order")}</p>
+          <h3>${escapeHTML(order.product_name || "未填写产品")}</h3>
+          <p>${escapeHTML(order.customer_company || order.customer_name || "未填写客户")} · ${escapeHTML(order.destination_port || "未填写目的港")}</p>
+        </div>
+        <span class="status-pill ${escapeAttr(statusClass(order.status))}">${escapeHTML(order.status || "生产中")}</span>
+      </div>
+      <div class="tracking-facts">
+        ${renderFact("贸易术语", order.trade_term || "未填写")}
+        ${renderFact("数量", order.quantity || "未填写")}
+        ${renderFact("起运港", order.origin_port || "未填写")}
+        ${renderFact("目的港", order.destination_port || "未填写")}
+        ${renderFact("箱号", order.container_no || "未填写")}
+        ${renderFact("提单号", order.bill_of_lading || "未填写")}
+        ${renderFact("船名航次", order.vessel_voyage || "未填写")}
+        ${renderFact("ETA", formatDate(order.eta))}
+      </div>
+      ${order.next_action ? `<div class="next-action"><strong>下一步动作</strong><span>${escapeHTML(order.next_action)}</span></div>` : ""}
+      ${order.tracking_url ? `<a class="text-button" href="${escapeAttr(order.tracking_url)}" target="_blank" rel="noopener">打开物流链接</a>` : ""}
+    </section>
+
+    <section class="shipment-detail-card">
+      <h3>海运进度时间轴</h3>
+      <div class="shipment-timeline">
+        ${milestones.length ? milestones.map(renderShipmentMilestone).join("") : `<p class="muted-text">暂无节点，后台添加后会在这里显示。</p>`}
+      </div>
+    </section>
+
+    <section class="shipment-detail-card">
+      <h3>图片与单据</h3>
+      <div class="shipment-file-grid">
+        ${files.length ? files.map(renderInternalShipmentFile).join("") : `<p class="muted-text">暂无文件。</p>`}
+      </div>
+    </section>
+
+    <section class="shipment-detail-card">
+      <h3>跟单备注</h3>
+      <div class="shipment-comments">
+        ${comments.length ? comments.map((comment) => `
+          <div class="shipment-comment">
+            <span>${escapeHTML(formatDate(comment.created_at))} · ${comment.customer_visible ? "客户可见" : "内部"}</span>
+            <p>${escapeHTML(comment.body)}</p>
+          </div>
+        `).join("") : `<p class="muted-text">暂无备注。</p>`}
+      </div>
+    </section>
+  `;
+}
+
+function renderShipmentMilestone(item) {
+  return `
+    <div class="timeline-item ${item.customer_visible ? "public" : ""}">
+      <span class="timeline-dot"></span>
+      <div>
+        <strong>${escapeHTML(item.title || "未命名节点")}</strong>
+        <small>${escapeHTML(formatDate(item.event_date || item.created_at))} · ${item.customer_visible ? "客户可见" : "内部可见"}</small>
+        ${item.description ? `<p>${escapeHTML(item.description)}</p>` : ""}
+      </div>
+    </div>
+  `;
+}
+
+function renderInternalShipmentFile(file) {
+  const isImage = String(file.mime_type || "").startsWith("image/");
+  return `
+    <article class="shipment-file-card">
+      ${isImage ? `<div class="file-thumb placeholder-thumb">图片需通过客户查询或后台签名链接查看</div>` : `<div class="file-thumb doc-thumb">${escapeHTML(file.file_type || "文件")}</div>`}
+      <strong>${escapeHTML(file.file_name || "未命名文件")}</strong>
+      <span>${escapeHTML(file.file_type || "文件")} · ${file.customer_visible ? "客户可见" : "内部"}</span>
+    </article>
+  `;
+}
+
+function getOrderMilestones(orderId) {
+  return shipmentMilestones
+    .filter((item) => item.order_id === orderId)
+    .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0) || new Date(a.event_date || a.created_at || 0) - new Date(b.event_date || b.created_at || 0));
+}
+
+function getOrderFiles(orderId) {
+  return shipmentFiles.filter((item) => item.order_id === orderId);
+}
+
+function getOrderComments(orderId) {
+  return shipmentComments.filter((item) => item.order_id === orderId);
+}
+
+function getShipmentProgress(order) {
+  const index = shipmentStatuses.indexOf(order.status || "生产中");
+  if (index < 0) return 16;
+  return Math.round(((index + 1) / shipmentStatuses.length) * 100);
+}
+
+function renderFact(label, value) {
+  return `<div><span>${escapeHTML(label)}</span><strong>${escapeHTML(value || "未填写")}</strong></div>`;
 }
 
 function getFilteredCustomers() {
@@ -7544,6 +8551,59 @@ async function handleAdminClick(event) {
     return;
   }
 
+  if (event.target.closest("[data-order-create]")) {
+    await createShipmentOrder();
+    return;
+  }
+
+  const orderSaveButton = event.target.closest("[data-order-save]");
+  if (orderSaveButton) {
+    await saveShipmentOrder(orderSaveButton.dataset.orderSave);
+    return;
+  }
+
+  const orderArchiveButton = event.target.closest("[data-order-archive]");
+  if (orderArchiveButton) {
+    await archiveShipmentOrder(orderArchiveButton.dataset.orderArchive);
+    return;
+  }
+
+  const orderResetButton = event.target.closest("[data-order-reset-code]");
+  if (orderResetButton) {
+    await resetShipmentAccessCode(orderResetButton.dataset.orderResetCode);
+    return;
+  }
+
+  const orderCopyButton = event.target.closest("[data-order-copy-query]");
+  if (orderCopyButton) {
+    copyShipmentQueryInfo(orderCopyButton.dataset.orderCopyQuery);
+    return;
+  }
+
+  const milestoneAddButton = event.target.closest("[data-milestone-add]");
+  if (milestoneAddButton) {
+    await addShipmentMilestone(milestoneAddButton.dataset.milestoneAdd);
+    return;
+  }
+
+  const milestoneVisibilityButton = event.target.closest("[data-milestone-visibility]");
+  if (milestoneVisibilityButton) {
+    await updateShipmentVisibility("order_milestones", milestoneVisibilityButton.dataset.milestoneVisibility, milestoneVisibilityButton.dataset.visible === "true");
+    return;
+  }
+
+  const fileVisibilityButton = event.target.closest("[data-file-visibility]");
+  if (fileVisibilityButton) {
+    await updateShipmentVisibility("order_files", fileVisibilityButton.dataset.fileVisibility, fileVisibilityButton.dataset.visible === "true");
+    return;
+  }
+
+  const commentAddButton = event.target.closest("[data-order-comment-add]");
+  if (commentAddButton) {
+    await addShipmentComment(commentAddButton.dataset.orderCommentAdd);
+    return;
+  }
+
   const toggleRuleButton = event.target.closest("[data-toggle-rule]");
   if (toggleRuleButton) {
     await setImportRuleActive(toggleRuleButton.dataset.toggleRule, toggleRuleButton.dataset.ruleActive === "true");
@@ -7582,6 +8642,13 @@ function handleAdminInput(event) {
 }
 
 async function handleAdminChange(event) {
+  const shipmentFileInput = event.target.closest("[data-shipment-file-order]");
+  if (shipmentFileInput && shipmentFileInput.files?.length) {
+    await uploadShipmentFile(shipmentFileInput.dataset.shipmentFileOrder, shipmentFileInput.files[0]);
+    shipmentFileInput.value = "";
+    return;
+  }
+
   const mapSelect = event.target.closest("[data-import-map][data-map-field]");
   if (mapSelect) {
     const draft = importDrafts[mapSelect.dataset.importMap];
@@ -7600,6 +8667,37 @@ async function handleAdminChange(event) {
   setImportDraftFile(input.dataset.importKind, input.files[0]);
   input.value = "";
 }
+
+function handleTrackingClick(event) {
+  const statusButton = event.target.closest("[data-tracking-status]");
+  if (statusButton) {
+    state.trackingStatus = statusButton.dataset.trackingStatus || "全部";
+    renderTracking();
+    return;
+  }
+
+  const card = event.target.closest("[data-shipment-card]");
+  if (card) {
+    state.selectedOrderId = card.dataset.shipmentCard;
+    renderTracking();
+    return;
+  }
+
+  if (event.target.closest("[data-open-admin-orders]")) {
+    state.adminSection = "orders";
+    localStorage.setItem(storageKeys.adminSection, state.adminSection);
+    setActiveTab("admin");
+  }
+}
+
+function handleTrackingInput(event) {
+  if (event.target.matches("[data-tracking-search]")) {
+    state.trackingSearch = event.target.value;
+    renderTracking();
+  }
+}
+
+function handleTrackingChange() {}
 
 async function refreshAdminWorkspace() {
   if (!authState.adminUnlocked) return renderAdmin();
@@ -7740,6 +8838,278 @@ async function invokeAdminUsers(action, payload = {}) {
   });
   if (error) return { ok: false, message: error.message };
   return data || { ok: true };
+}
+
+function collectNewOrderPayload() {
+  const payload = {};
+  els.adminContent?.querySelectorAll("[data-new-order-field]").forEach((field) => {
+    payload[field.dataset.newOrderField] = field.value.trim();
+  });
+  return payload;
+}
+
+function collectOrderPayload(id) {
+  const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(id)}"]`);
+  if (!panel) return null;
+  const payload = {};
+  panel.querySelectorAll("[data-order-field]").forEach((field) => {
+    if (field.type === "checkbox") payload[field.dataset.orderField] = field.checked;
+    else payload[field.dataset.orderField] = field.value.trim();
+  });
+  payload.updated_at = new Date().toISOString();
+  return payload;
+}
+
+async function createShipmentOrder() {
+  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  const payload = collectNewOrderPayload();
+  if (!payload.order_number || !payload.customer_name || !payload.product_name) {
+    return showToast("订单号、客户名称和产品不能为空");
+  }
+  const accessCode = payload.access_code || generateShipmentAccessCode();
+  const hash = await hashShipmentAccessCode(accessCode);
+  if (!hash) return;
+  delete payload.access_code;
+  const { error } = await authState.client.from("orders").insert({
+    ...payload,
+    status: "生产中",
+    customer_visible: false,
+    access_code_hash: hash,
+    created_by: authState.user.id,
+    assigned_user_id: authState.user.id,
+    updated_at: new Date().toISOString()
+  });
+  if (error) return showToast(`订单创建失败：${error.message}`);
+  await insertAdminAction("create_shipment_order", { entity_type: "orders", details: { order_number: payload.order_number } });
+  await copyText(`订单号：${payload.order_number}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
+  await refreshAdminWorkspace();
+  showToast("订单已创建，查询码已复制");
+}
+
+async function saveShipmentOrder(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const payload = collectOrderPayload(id);
+  if (!payload) return showToast("没有找到订单表单");
+  if (!payload.order_number || !payload.customer_name || !payload.product_name) return showToast("订单号、客户名称和产品不能为空");
+  const { error } = await authState.client.from("orders").update(payload).eq("id", id);
+  if (error) return showToast(`订单保存失败：${error.message}`);
+  await insertAdminAction("update_shipment_order", { entity_type: "orders", entity_id: id, details: payload });
+  await refreshAdminWorkspace();
+  showToast("订单已保存");
+}
+
+async function archiveShipmentOrder(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!window.confirm("确认归档该订单？归档后客户查询入口会关闭。")) return;
+  const payload = {
+    status: "已完成",
+    customer_visible: false,
+    archived_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+  const { error } = await authState.client.from("orders").update(payload).eq("id", id);
+  if (error) return showToast(`归档失败：${error.message}`);
+  await insertAdminAction("archive_shipment_order", { entity_type: "orders", entity_id: id, details: payload });
+  await refreshAdminWorkspace();
+  showToast("订单已归档，客户不可继续查询");
+}
+
+async function resetShipmentAccessCode(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const order = shipmentOrders.find((item) => item.id === id);
+  const accessCode = window.prompt("请输入新的查询码，留空自动生成：", "") || generateShipmentAccessCode();
+  const hash = await hashShipmentAccessCode(accessCode);
+  if (!hash) return;
+  const { error } = await authState.client.from("orders").update({
+    access_code_hash: hash,
+    updated_at: new Date().toISOString()
+  }).eq("id", id);
+  if (error) return showToast(`查询码重置失败：${error.message}`);
+  await insertAdminAction("reset_shipment_access_code", { entity_type: "orders", entity_id: id, details: { order_number: order?.order_number || "" } });
+  await copyText(`订单号：${order?.order_number || ""}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
+  await refreshAdminWorkspace();
+  showToast("新查询码已复制，请只发送给对应客户");
+}
+
+function copyShipmentQueryInfo(id) {
+  const order = shipmentOrders.find((item) => item.id === id);
+  if (!order) return showToast("没有找到订单");
+  copyText(`订单号：${order.order_number || ""}\n查询码：请使用后台重置后复制的新查询码\n查货网址：${getAuthRedirectUrl()}`);
+}
+
+async function hashShipmentAccessCode(plainCode) {
+  const { data, error } = await authState.client.rpc("hash_order_access_code", { plain_code: plainCode });
+  if (error || !data) {
+    showToast(`查询码加密失败：${error?.message || "请先执行新版 SQL"}`);
+    return "";
+  }
+  return data;
+}
+
+async function addShipmentMilestone(orderId) {
+  if (!isAdmin() || !authState.adminUnlocked || !orderId) return showToast("请先输入后台权限码");
+  const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
+  if (!panel) return;
+  const title = panel.querySelector("[data-milestone-template]")?.value || "订单更新";
+  const description = panel.querySelector("[data-milestone-desc]")?.value.trim() || shipmentStatusHints[title] || "";
+  const eventDate = panel.querySelector("[data-milestone-date]")?.value || new Date().toISOString().slice(0, 10);
+  const customerVisible = panel.querySelector("[data-milestone-visible]")?.checked ?? true;
+  const { error } = await authState.client.from("order_milestones").insert({
+    order_id: orderId,
+    title,
+    description,
+    status: "done",
+    event_date: eventDate,
+    sort_order: getOrderMilestones(orderId).length + 1,
+    customer_visible: customerVisible
+  });
+  if (error) return showToast(`节点添加失败：${error.message}`);
+  await insertAdminAction("add_shipment_milestone", { entity_type: "order_milestones", details: { order_id: orderId, title } });
+  await refreshAdminWorkspace();
+}
+
+async function addShipmentComment(orderId) {
+  if (!isAdmin() || !authState.adminUnlocked || !orderId) return showToast("请先输入后台权限码");
+  const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
+  const body = panel?.querySelector("[data-order-comment]")?.value.trim() || "";
+  const customerVisible = panel?.querySelector("[data-order-comment-visible]")?.checked || false;
+  if (!body) return showToast("请输入备注内容");
+  const { error } = await authState.client.from("order_comments").insert({
+    order_id: orderId,
+    body,
+    customer_visible: customerVisible,
+    created_by: authState.user.id
+  });
+  if (error) return showToast(`备注添加失败：${error.message}`);
+  await insertAdminAction("add_shipment_comment", { entity_type: "order_comments", details: { order_id: orderId, customer_visible: customerVisible } });
+  await refreshAdminWorkspace();
+}
+
+async function updateShipmentVisibility(table, id, visible) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const { error } = await authState.client.from(table).update({ customer_visible: visible }).eq("id", id);
+  if (error) return showToast(`可见性更新失败：${error.message}`);
+  await insertAdminAction("update_shipment_visibility", { entity_type: table, entity_id: id, details: { customer_visible: visible } });
+  await refreshAdminWorkspace();
+}
+
+async function uploadShipmentFile(orderId, file) {
+  if (!isAdmin() || !authState.adminUnlocked || !orderId || !file) return showToast("请先输入后台权限码");
+  const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
+  const fileType = panel?.querySelector("[data-file-type]")?.value || "其他文件";
+  const storagePath = `${orderId}/${Date.now()}-${sanitizeFileName(file.name)}`;
+  const uploadResult = await authState.client.storage.from("shipment-files").upload(storagePath, file, {
+    cacheControl: "3600",
+    upsert: false
+  });
+  if (uploadResult.error) return showToast(`文件上传失败：${uploadResult.error.message}`);
+  const { error } = await authState.client.from("order_files").insert({
+    order_id: orderId,
+    file_name: file.name,
+    file_type: fileType,
+    mime_type: file.type || "application/octet-stream",
+    size_bytes: file.size || 0,
+    storage_path: storagePath,
+    customer_visible: false,
+    uploaded_by: authState.user.id
+  });
+  if (error) return showToast(`文件记录保存失败：${error.message}`);
+  await insertAdminAction("upload_shipment_file", { entity_type: "order_files", details: { order_id: orderId, file_name: file.name, file_type: fileType } });
+  await refreshAdminWorkspace();
+  showToast("文件已上传，默认仅内部可见");
+}
+
+function sanitizeFileName(name) {
+  return String(name || "file")
+    .normalize("NFKD")
+    .replace(/[^\w.\-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 120) || "file";
+}
+
+function generateShipmentAccessCode() {
+  const part = () => Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `SY-${part()}-${part()}`;
+}
+
+async function lookupPublicShipment() {
+  if (!authState.configured || !authState.client) {
+    return renderPublicTrackingMessage("网站还没有连接 Supabase，暂时无法查询订单。", true);
+  }
+  const orderNumber = els.publicOrderNumber?.value.trim();
+  const accessCode = els.publicAccessCode?.value.trim();
+  if (!orderNumber || !accessCode) return renderPublicTrackingMessage("请输入订单号和查询码。", true);
+  state.publicTrackingBusy = true;
+  renderPublicTrackingMessage("正在查询货物进度，请稍候...");
+  const { data, error, functionName } = await invokeShipmentPortal({ action: "lookup", orderNumber, accessCode });
+  state.publicTrackingBusy = false;
+  if (error || !data?.ok) {
+    return renderPublicTrackingMessage(data?.message || error?.message || "没有找到可公开查看的订单，请核对订单号和查询码。", true);
+  }
+  state.publicTrackingResult = { ...data, functionName };
+  renderPublicShipmentResult(data);
+}
+
+async function invokeShipmentPortal(payload) {
+  let lastError = null;
+  for (const functionName of shipmentPortalFunctionNames) {
+    const { data, error } = await authState.client.functions.invoke(functionName, { body: payload });
+    if (!error) return { data, error: null, functionName };
+    lastError = error;
+  }
+  return { data: null, error: lastError, functionName: "" };
+}
+
+function renderPublicTrackingMessage(message, isError = false) {
+  if (!els.publicTrackingResult) return;
+  els.publicTrackingResult.hidden = false;
+  els.publicTrackingResult.innerHTML = `<p class="${isError ? "error-text" : "muted-text"}">${escapeHTML(message)}</p>`;
+}
+
+function renderPublicShipmentResult(data) {
+  const order = data.order || {};
+  const milestones = data.milestones || [];
+  const files = data.files || [];
+  const comments = data.comments || [];
+  els.publicTrackingResult.hidden = false;
+  els.publicTrackingResult.innerHTML = `
+    <section class="public-shipment-summary">
+      <div>
+        <p class="eyebrow">${escapeHTML(order.order_number || "Order")}</p>
+        <h3>${escapeHTML(order.product_name || "货物进度")}</h3>
+        <p>${escapeHTML(order.customer_company || order.customer_name || "")} · ${escapeHTML(order.destination_port || "")}</p>
+      </div>
+      <span class="status-pill ${escapeAttr(statusClass(order.status))}">${escapeHTML(order.status || "生产中")}</span>
+    </section>
+    <div class="tracking-facts compact">
+      ${renderFact("数量", order.quantity || "未公开")}
+      ${renderFact("贸易术语", order.trade_term || "未公开")}
+      ${renderFact("起运港", order.origin_port || "未公开")}
+      ${renderFact("目的港", order.destination_port || "未公开")}
+      ${renderFact("船名航次", order.vessel_voyage || "未公开")}
+      ${renderFact("ETA", formatDate(order.eta))}
+    </div>
+    <div class="shipment-timeline public">
+      ${milestones.length ? milestones.map(renderShipmentMilestone).join("") : `<p class="muted-text">暂无公开节点。</p>`}
+    </div>
+    <div class="public-file-grid">
+      ${files.length ? files.map(renderPublicShipmentFile).join("") : `<p class="muted-text">暂无公开图片或单据。</p>`}
+    </div>
+    ${comments.length ? `<div class="shipment-comments">${comments.map((comment) => `<div class="shipment-comment"><span>${escapeHTML(formatDate(comment.created_at))}</span><p>${escapeHTML(comment.body)}</p></div>`).join("")}</div>` : ""}
+    <p class="public-note">页面只展示卖方公开给客户的节点和资料；正式 ETA、清关税费和派送时间以船司、货代或目的港清关行为准。</p>
+  `;
+}
+
+function renderPublicShipmentFile(file) {
+  const isImage = String(file.mime_type || "").startsWith("image/");
+  return `
+    <a class="public-file-card" href="${escapeAttr(file.signed_url || "#")}" target="_blank" rel="noopener">
+      ${isImage ? `<img src="${escapeAttr(file.signed_url || "")}" alt="${escapeAttr(file.file_name || "shipment file")}" loading="lazy" />` : `<div class="file-thumb doc-thumb">${escapeHTML(file.file_type || "文件")}</div>`}
+      <strong>${escapeHTML(file.file_name || "文件")}</strong>
+      <span>${escapeHTML(file.file_type || "公开资料")}</span>
+    </a>
+  `;
 }
 
 function collectApprovedCustomerPayload(id) {
