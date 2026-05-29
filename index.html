@@ -117,6 +117,37 @@ button {
   line-height: 1.7;
 }
 
+.translation,
+.login-kind small,
+.text-button small,
+.link-button small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(29, 29, 31, 0.58);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.field .translation {
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+
+.login-kind small {
+  font-size: 11px;
+}
+
+.text-button small {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.text-button.ghost small,
+.text-button:not(.primary) small,
+.link-button small {
+  color: rgba(0, 113, 227, 0.72);
+}
+
 .profile-form {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -2592,7 +2623,7 @@ th {
 }
 
 .login-kind {
-  min-height: 38px;
+  min-height: 52px;
   border: 0;
   border-radius: 999px;
   color: var(--muted);
@@ -3481,108 +3512,132 @@ th {
           <div>
             <p class="eyebrow">Login</p>
             <h2>登录客户工作台</h2>
+            <small class="translation">Sign in to your private client workspace.</small>
             <p>每个账号的收藏、跟进状态和备注彼此隔离。</p>
+            <small class="translation">Favorites, follow-up status, and notes are kept private for each account.</small>
           </div>
           <div class="login-kind-switch" aria-label="登录类型">
-            <button class="login-kind active" type="button" data-login-kind="student">学员登录</button>
-            <button class="login-kind" type="button" data-login-kind="admin">管理员登录</button>
+            <button class="login-kind active" type="button" data-login-kind="student">学员登录<small>Student Sign-In</small></button>
+            <button class="login-kind" type="button" data-login-kind="admin">管理员登录<small>Admin Sign-In</small></button>
           </div>
-          <p class="admin-login-hint" id="adminLoginHint" hidden>管理员使用邮箱密码登录后，还需要输入后台权限码才能进入管理员后台。</p>
+          <p class="admin-login-hint" id="adminLoginHint" hidden>管理员使用邮箱密码登录后，还需要输入后台权限码才能进入管理员后台。<small class="translation">Admins sign in with email and password, then unlock the admin console with a secure access code.</small></p>
           <label class="field">
             <span>邮箱</span>
+            <small class="translation">Email address</small>
               <input id="loginEmail" type="email" autocomplete="off" autocapitalize="none" spellcheck="false" name="shuoyi_email_blank" required />
           </label>
           <label class="field">
             <span>密码</span>
+            <small class="translation">Password</small>
               <input id="loginPassword" type="password" autocomplete="new-password" name="shuoyi_password_blank" required />
           </label>
-          <button class="text-button primary" type="submit">登录</button>
-          <button class="link-button" type="button" data-auth-mode="register">没有账号，使用邀请码注册</button>
-          <button class="link-button" type="button" data-auth-mode="forgot">忘记密码，通过邮箱重置</button>
+          <button class="text-button primary" type="submit">登录<small>Sign in</small></button>
+          <button class="link-button" type="button" data-auth-mode="register">没有账号，使用邀请码注册<small>Create an account with an invite code</small></button>
+          <button class="link-button" type="button" data-auth-mode="forgot">忘记密码，通过邮箱重置<small>Reset your password by email</small></button>
         </form>
 
         <form class="auth-form" id="registerForm" hidden>
           <div>
             <p class="eyebrow">Invite Only</p>
             <h2>注册学员账号</h2>
+            <small class="translation">Create a student account by invitation only.</small>
             <p>请输入管理员发放的邀请码。注册成功后先填写单位和产品信息。</p>
+            <small class="translation">Enter the invite code from your administrator, then complete your company and product profile.</small>
           </div>
           <label class="field">
             <span>邀请码</span>
+            <small class="translation">Invite code</small>
             <input id="inviteCode" type="text" autocomplete="off" required />
           </label>
           <label class="field">
             <span>邮箱</span>
+            <small class="translation">Email address</small>
             <input id="registerEmail" type="email" autocomplete="email" required />
           </label>
           <label class="field">
             <span>密码</span>
+            <small class="translation">Password</small>
             <input id="registerPassword" type="password" autocomplete="new-password" minlength="6" required />
           </label>
-          <button class="text-button primary" type="submit">注册并进入资料填写</button>
-          <button class="link-button" type="button" data-auth-mode="login">已有账号，返回登录</button>
+          <button class="text-button primary" type="submit">注册并进入资料填写<small>Register and continue to profile setup</small></button>
+          <button class="link-button" type="button" data-auth-mode="login">已有账号，返回登录<small>Already have an account? Back to sign-in</small></button>
         </form>
 
         <form class="auth-form" id="forgotForm" hidden>
           <div>
             <p class="eyebrow">Password Recovery</p>
             <h2>重置登录密码</h2>
+            <small class="translation">Reset your account password.</small>
             <p>输入注册邮箱，系统会发送一封重置密码邮件。</p>
+            <small class="translation">Enter your registered email address and we will send a secure reset link.</small>
           </div>
           <label class="field">
             <span>邮箱</span>
+            <small class="translation">Email address</small>
             <input id="forgotEmail" type="email" autocomplete="email" required />
           </label>
-          <button class="text-button primary" type="submit">发送重置邮件</button>
-          <button class="link-button" type="button" data-auth-mode="login">返回登录</button>
+          <button class="text-button primary" type="submit">发送重置邮件<small>Send reset email</small></button>
+          <button class="link-button" type="button" data-auth-mode="login">返回登录<small>Back to sign-in</small></button>
         </form>
 
         <form class="auth-form" id="resetPasswordForm" hidden>
           <div>
             <p class="eyebrow">New Password</p>
             <h2>设置新密码</h2>
+            <small class="translation">Set a new password.</small>
             <p>请输入新的登录密码，保存后需要重新登录。</p>
+            <small class="translation">Enter a new password. You will sign in again after it is saved.</small>
           </div>
           <input type="email" autocomplete="username" tabindex="-1" aria-hidden="true" hidden />
           <label class="field">
             <span>新密码</span>
+            <small class="translation">New password</small>
             <input id="newPassword" type="password" autocomplete="new-password" minlength="6" required />
           </label>
           <label class="field">
             <span>确认新密码</span>
+            <small class="translation">Confirm new password</small>
             <input id="newPasswordConfirm" type="password" autocomplete="new-password" minlength="6" required />
           </label>
-          <button class="text-button primary" type="submit">保存新密码</button>
+          <button class="text-button primary" type="submit">保存新密码<small>Save new password</small></button>
         </form>
 
         <form class="auth-form profile-form" id="profileForm" hidden>
           <div>
             <p class="eyebrow">Onboarding</p>
             <h2>填写你的开发方向</h2>
+            <small class="translation">Complete your sales development profile.</small>
             <p>系统会根据这些信息调整每日推荐客户。</p>
+            <small class="translation">Daily recommendations are tailored to your products and target markets.</small>
           </div>
           <label class="field">
             <span>单位名称</span>
+            <small class="translation">Company name</small>
             <input id="profileCompany" type="text" required />
           </label>
           <label class="field">
             <span>主营产品</span>
+            <small class="translation">Main products</small>
             <input id="profileProducts" type="text" placeholder="例如：标准件、螺栓、螺母" required />
           </label>
           <label class="field">
             <span>英文关键词</span>
+            <small class="translation">English keywords</small>
             <input id="profileKeywords" type="text" placeholder="Fasteners, bolts, nuts, washers" />
           </label>
           <label class="field">
             <span>目标国家/地区</span>
+            <small class="translation">Target countries or regions</small>
             <input id="profileMarkets" type="text" placeholder="Philippines, India, Europe" />
           </label>
           <label class="field">
             <span>HS 编码</span>
+            <small class="translation">HS codes</small>
             <input id="profileHs" type="text" placeholder="731815, 731816" />
           </label>
           <label class="field">
             <span>客户类型偏好</span>
+            <small class="translation">Preferred customer type</small>
             <select id="profileType">
               <option value="">不限</option>
               <option value="经销/贸易商">经销/贸易商</option>
@@ -3591,7 +3646,7 @@ th {
               <option value="教育/展会">教育/展会</option>
             </select>
           </label>
-          <button class="text-button primary" type="submit">保存并进入工作台</button>
+          <button class="text-button primary" type="submit">保存并进入工作台<small>Save and enter workspace</small></button>
         </form>
 
         <p class="auth-message" id="authMessage"></p>
@@ -3600,18 +3655,22 @@ th {
           <div>
             <p class="eyebrow">Shipment Tracking</p>
             <h2>客户查货入口</h2>
+            <small class="translation">Customer shipment portal</small>
             <p>输入订单号和查询码，查看管理员公开给客户的生产、装柜、海运和到港进度。</p>
+            <small class="translation">Enter the order number and access code to view the production, loading, ocean freight, and arrival updates shared by the administrator.</small>
           </div>
           <form class="public-tracking-form" id="publicTrackingForm">
             <label class="field">
               <span>订单号</span>
+              <small class="translation">Order number</small>
               <input id="publicOrderNumber" type="text" autocomplete="off" placeholder="例如：SY-2026-001" required />
             </label>
             <label class="field">
               <span>查询码</span>
+              <small class="translation">Access code</small>
               <input id="publicAccessCode" type="password" autocomplete="off" placeholder="由业务员提供" required />
             </label>
-            <button class="text-button primary" type="submit">查看货物进度</button>
+            <button class="text-button primary" type="submit">查看货物进度<small>View shipment progress</small></button>
           </form>
           <div class="public-tracking-result" id="publicTrackingResult" hidden></div>
         </section>
@@ -4100,6 +4159,8 @@ const tabOptions = [
   { key: "admin", label: "管理员后台", adminOnly: true }
 ];
 const viewKeys = [...tabOptions.map((item) => item.key), "customerDetail"];
+let routePushMuted = false;
+let routeAppliedForSession = false;
 
 const shipmentStatuses = ["生产中", "待发货", "海运中", "到港", "清关中", "已完成", "异常"];
 const shipmentStatusHints = {
@@ -4836,6 +4897,8 @@ function scoreLead(country, product, type, index) {
 }
 
 function bindEvents() {
+  window.addEventListener("popstate", applyRouteFromLocation);
+
   els.publicTrackingForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     await lookupPublicShipment();
@@ -4959,6 +5022,7 @@ function bindEvents() {
       const { reviewAction, reviewKind, reviewId } = reviewButton.dataset;
       if (reviewAction === "approve") approveReviewItem(reviewKind, reviewId);
       if (reviewAction === "reject") rejectReviewItem(reviewKind, reviewId);
+      if (reviewAction === "delete") deleteReviewItem(reviewKind, reviewId);
       return;
     }
     const copyButton = event.target.closest("[data-copy]");
@@ -5003,6 +5067,7 @@ function bindEvents() {
     els.detailPanel.classList.remove("open");
     els.workspace.classList.remove("has-detail");
     renderDetail();
+    syncRouteState();
   });
 
   els.loadMoreBtn.addEventListener("click", () => {
@@ -5082,6 +5147,7 @@ async function initAuth() {
     else {
       authState.profile = null;
       authState.adminUnlocked = false;
+      routeAppliedForSession = false;
       sessionStorage.removeItem(storageKeys.adminUnlocked);
       favorites.clear();
       Object.keys(records).forEach((key) => delete records[key]);
@@ -5157,6 +5223,11 @@ function renderAuthShell() {
     render();
     renderDetail();
     scheduleKeywordAutofillCleanup();
+    if (!routeAppliedForSession) {
+      routeAppliedForSession = true;
+      if (window.location.hash) applyRouteFromLocation();
+      else syncRouteState("replace");
+    }
   }
 }
 
@@ -5336,6 +5407,7 @@ async function loadUserWorkspaceCore() {
     authState.session = null;
     authState.user = null;
     authState.loading = false;
+    routeAppliedForSession = false;
     setAuthMode("login");
     showAuthMessage(`账号当前不可用${reason}。请联系管理员处理。`, true);
     return;
@@ -5346,6 +5418,7 @@ async function loadUserWorkspaceCore() {
     authState.user = null;
     authState.profile = null;
     authState.loading = false;
+    routeAppliedForSession = false;
     setAuthMode("login");
     showAuthMessage("该账号不是管理员，请使用学员登录入口。", true);
     return;
@@ -5363,7 +5436,59 @@ async function loadUserWorkspaceCore() {
 }
 
 function isAdmin() {
-  return authState.profile?.role === "admin" && isActiveProfile();
+  return getAdminLevel() >= 1 && isActiveProfile();
+}
+
+function getAdminLevel(profile = authState.profile) {
+  if (!profile) return 0;
+  const explicitLevel = Number(profile.admin_level || 0);
+  if (explicitLevel > 0) return explicitLevel;
+  const role = profile.role || "student";
+  if (role === "admin_l3") return 3;
+  if (role === "admin_l2") return 2;
+  if (role === "admin_l1") return 1;
+  if (role === "admin") return 3;
+  return 0;
+}
+
+function adminRoleForLevel(level) {
+  const normalized = Number(level || 0);
+  if (normalized >= 3) return "admin_l3";
+  if (normalized === 2) return "admin_l2";
+  if (normalized === 1) return "admin_l1";
+  return "student";
+}
+
+function getAdminLevelLabel(profile = authState.profile) {
+  const level = getAdminLevel(profile);
+  if (level >= 3) return "三级管理员";
+  if (level === 2) return "二级管理员";
+  if (level === 1) return "一级管理员";
+  return "学员";
+}
+
+function canUseAdminLevel(minLevel) {
+  return isAdmin() && authState.adminUnlocked && getAdminLevel() >= minLevel;
+}
+
+function canManageOrders() {
+  return canUseAdminLevel(1);
+}
+
+function canManageReviewContent() {
+  return canUseAdminLevel(2);
+}
+
+function canManageUserAccounts() {
+  return canUseAdminLevel(2);
+}
+
+function canManageInvites() {
+  return canUseAdminLevel(2);
+}
+
+function canManageAdminLevels() {
+  return canUseAdminLevel(3);
 }
 
 function isActiveProfile() {
@@ -5473,18 +5598,33 @@ async function loadTrackingData() {
 }
 
 function rebuildCustomerPool() {
-  const pendingReviewRows = shouldShowAdminReviewPreview()
-    ? customerReviewItems
-      .filter(isPendingReviewItem)
-      .map((item, index) => enrichReviewCustomer(item, index))
-    : [];
-  customers = [
+  customers = dedupeCustomerRows([
     ...baseCustomers,
-    ...approvedCustomerRows.map((item, index) => enrichApprovedCustomer(item, index)),
-    ...pendingReviewRows
-  ];
+    ...approvedCustomerRows.map((item, index) => enrichApprovedCustomer(item, index))
+  ]);
   refreshFilterOptions();
   renderTypeTabs();
+}
+
+function dedupeCustomerRows(rows) {
+  const keyed = new Map();
+  rows.forEach((customer) => {
+    const key = [
+      normalizeCompanyKey(customer.company || customer.name || ""),
+      normalizeSearchText(customer.country || "")
+    ].filter(Boolean).join("|") || customer.id;
+    const existing = keyed.get(key);
+    if (!existing || getCustomerMergePriority(customer) >= getCustomerMergePriority(existing)) {
+      keyed.set(key, customer);
+    }
+  });
+  return [...keyed.values()];
+}
+
+function getCustomerMergePriority(customer) {
+  if (customer?.id?.startsWith("approved-")) return 3;
+  if (customer?.audit) return 2;
+  return 1;
 }
 
 function enrichApprovedCustomer(item, index) {
@@ -5550,7 +5690,7 @@ function enrichReviewCustomer(item, index) {
 }
 
 function shouldShowAdminReviewPreview() {
-  return isAdmin() && authState.adminUnlocked;
+  return false;
 }
 
 function isPendingReviewItem(item) {
@@ -5561,45 +5701,49 @@ async function loadAdminData() {
   if (!isAdmin() || !authState.adminUnlocked) return;
   workspaceLoadState.admin = "loading";
   const mark = perfStart("workspace.adminData");
+  const emptyResult = { data: [], error: null };
+  const canReadPeople = canManageUserAccounts();
+  const canReadInvites = canManageInvites();
+  const canReadReview = canManageReviewContent();
   const [profileResult, customerReviewResult, knowledgeReviewResult, inviteResult, actionResult, batchResult, ruleResult, approvedAdminResult, shipmentLogResult] = await Promise.all([
-    authState.client
+    canReadPeople ? authState.client
       .from("profiles")
-      .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,role,admin_level,status,blocked_reason,onboarding_complete,created_at,updated_at,deleted_at")
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("customer_review_items")
       .select("*")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("knowledge_review_items")
       .select("*")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadInvites ? authState.client
       .from("invite_codes")
       .select("id,code,note,max_uses,used_count,expires_at,active,created_at")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("admin_actions")
       .select("id,actor_id,action,target_user_id,entity_type,entity_id,details,created_at")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("import_batches")
       .select("id,uploaded_by,kind,file_name,total_rows,valid_rows,invalid_rows,duplicate_rows,risk_rows,missing_rows,blocked_rows,status,created_at")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("import_rules")
       .select("id,rule_type,value,label,active,created_at")
-      .order("created_at", { ascending: false }),
-    authState.client
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult),
+    canReadReview ? authState.client
       .from("approved_customers")
       .select("id,approved_from,created_by,company,country,product,contact,contact_info,website,address,source_name,source_url,customer_type,hs_codes,advantage_products,market,industry,position,notes,ticker,raw,status,updated_at,revoked_at,revoked_by,revoke_reason,created_at")
-      .order("created_at", { ascending: false })
+      .order("created_at", { ascending: false }) : Promise.resolve(emptyResult)
     ,
-    authState.client
+    canReadReview ? authState.client
       .from("order_access_logs")
       .select("id,order_id,order_number,success,client_label,created_at")
       .order("created_at", { ascending: false })
-      .limit(80)
+      .limit(80) : Promise.resolve(emptyResult)
   ]);
   adminProfiles = profileResult.error ? [] : profileResult.data || [];
   customerReviewItems = customerReviewResult.error ? [] : customerReviewResult.data || [];
@@ -5625,7 +5769,7 @@ async function ensureProfile() {
   if (!authState.user) return;
   const { data, error } = await authState.client
     .from("profiles")
-    .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,onboarding_complete,role,status,blocked_reason,deleted_at,created_at,updated_at")
+    .select("id,email,company_name,products,keywords,target_markets,hs_codes,preferred_type,onboarding_complete,role,admin_level,status,blocked_reason,deleted_at,created_at,updated_at")
     .eq("id", authState.user.id)
     .maybeSingle();
 
@@ -5731,6 +5875,7 @@ async function signOut() {
   authState.user = null;
   authState.profile = null;
   authState.adminUnlocked = false;
+  routeAppliedForSession = false;
   sessionStorage.removeItem(storageKeys.adminUnlocked);
   favorites.clear();
   Object.keys(records).forEach((key) => delete records[key]);
@@ -6779,19 +6924,11 @@ function renderAdmin() {
     els.adminContent.innerHTML = renderAdminUnlock();
     return;
   }
-  const sections = [
-    ["users", "注册人员"],
-    ["admins", "管理员管理"],
-    ["invites", "邀请码管理"],
-    ["orders", "订单跟单"],
-    ["batches", "导入批次"],
-    ["rules", "入库规则"],
-    ["customers", "待审核客户池"],
-    ["published", "已发布客户"],
-    ["knowledge", "待审核知识库"],
-    ["trackingLogs", "查货日志"],
-    ["audit", "操作日志"]
-  ];
+  const sections = getAllowedAdminSections();
+  if (!sections.some(([key]) => key === state.adminSection)) {
+    state.adminSection = sections[0]?.[0] || "orders";
+    localStorage.setItem(storageKeys.adminSection, state.adminSection);
+  }
   const sectionHtml = sections.map(([key, label]) => `
     <button class="admin-tab ${state.adminSection === key ? "active" : ""}" type="button" data-admin-section="${key}">
       ${escapeHTML(label)}
@@ -6810,14 +6947,14 @@ function renderAdmin() {
     trackingLogs: renderShipmentAccessLogs,
     audit: renderAdminAudit
   };
-  const content = (contentMap[state.adminSection] || renderAdminUsers)();
+  const content = (contentMap[state.adminSection] || contentMap[sections[0]?.[0]] || renderOrderManager)();
 
   els.adminContent.innerHTML = `
     <section class="admin-hero">
       <div>
         <p class="eyebrow">Admin Workspace</p>
         <h2>管理员后台</h2>
-        <p>后台已通过权限码解锁。注册人员、管理员、邀请码、审核池和操作日志分开管理。</p>
+        <p>后台已通过权限码解锁。当前权限：${escapeHTML(getAdminLevelLabel())}。一级只管理订单跟单，二级可管理运营内容，三级可管理权限等级。</p>
       </div>
       <div class="admin-hero-actions">
         <button class="text-button" type="button" data-admin-refresh>
@@ -6830,6 +6967,40 @@ function renderAdmin() {
     <nav class="admin-tabs">${sectionHtml}</nav>
     ${content}
   `;
+}
+
+function getAllowedAdminSections() {
+  const level = getAdminLevel();
+  if (level >= 3) {
+    return [
+      ["users", "注册人员"],
+      ["admins", "管理员管理"],
+      ["invites", "邀请码管理"],
+      ["orders", "订单跟单"],
+      ["batches", "导入批次"],
+      ["rules", "入库规则"],
+      ["customers", "待审核客户池"],
+      ["published", "已发布客户"],
+      ["knowledge", "待审核知识库"],
+      ["trackingLogs", "查货日志"],
+      ["audit", "操作日志"]
+    ];
+  }
+  if (level === 2) {
+    return [
+      ["users", "注册人员"],
+      ["invites", "邀请码管理"],
+      ["orders", "订单跟单"],
+      ["batches", "导入批次"],
+      ["rules", "入库规则"],
+      ["customers", "待审核客户池"],
+      ["published", "已发布客户"],
+      ["knowledge", "待审核知识库"],
+      ["trackingLogs", "查货日志"],
+      ["audit", "操作日志"]
+    ];
+  }
+  return [["orders", "订单跟单"]];
 }
 
 function renderAdminUnlock() {
@@ -6917,6 +7088,7 @@ function renderAdminUserRow(profile) {
   const isSelf = profile.id === authState.user?.id;
   const status = profile.status || "active";
   const role = profile.role || "student";
+  const levelLabel = getAdminLevelLabel(profile);
   const canDisable = status === "active" && !isSelf;
   const canRestore = status === "disabled" && !profile.deleted_at;
   const canDelete = !isSelf && status !== "deleted";
@@ -6929,7 +7101,7 @@ function renderAdminUserRow(profile) {
       <td>${escapeHTML(profile.products || "未填写")}</td>
       <td>${escapeHTML(profile.target_markets || "未填写")}</td>
       <td><span class="status-pill ${escapeAttr(status)}">${escapeHTML(status)}</span></td>
-      <td><span class="status-pill ${escapeAttr(role)}">${escapeHTML(role)}</span></td>
+      <td><span class="status-pill ${escapeAttr(role)}">${escapeHTML(levelLabel)}</span></td>
       <td>${escapeHTML(formatDate(profile.created_at))}</td>
       <td>
         <div class="admin-actions">
@@ -6944,21 +7116,27 @@ function renderAdminUserRow(profile) {
 }
 
 function renderAdminManagers() {
-  const admins = adminProfiles.filter((profile) => profile.role === "admin");
+  const admins = adminProfiles.filter((profile) => getAdminLevel(profile) > 0);
   const rows = admins.map((profile) => {
     const isSelf = profile.id === authState.user?.id;
+    const level = getAdminLevel(profile);
+    const levelButtons = [1, 2, 3].map((targetLevel) => {
+      if (targetLevel === level) return "";
+      return `<button class="mini-button" type="button" data-set-admin-level="${escapeAttr(profile.id)}" data-admin-level="${targetLevel}">设为${targetLevel}级</button>`;
+    }).join("");
     return `
       <tr>
         <td>
           <strong>${escapeHTML(profile.email || "未记录邮箱")}</strong>
           <span>${escapeHTML(profile.company_name || "未填写单位")}</span>
         </td>
+        <td><span class="status-pill admin-l${level}">${escapeHTML(getAdminLevelLabel(profile))}</span></td>
         <td><span class="status-pill ${escapeAttr(profile.status || "active")}">${escapeHTML(profile.status || "active")}</span></td>
         <td>${escapeHTML(formatDate(profile.created_at))}</td>
         <td>
           ${isSelf
             ? `<span class="admin-self">不能降级自己</span>`
-            : `<button class="mini-button danger ghost" type="button" data-demote-admin="${escapeAttr(profile.id)}">移除管理员</button>`}
+            : `${levelButtons}<button class="mini-button danger ghost" type="button" data-demote-admin="${escapeAttr(profile.id)}">移除管理员</button>`}
         </td>
       </tr>
     `;
@@ -6978,6 +7156,14 @@ function renderAdminManagers() {
           <span>管理员邮箱</span>
           <input type="email" data-admin-promote-email placeholder="name@example.com" />
         </label>
+        <label class="field compact">
+          <span>权限等级</span>
+          <select data-admin-promote-level>
+            <option value="1">一级：仅订单跟单</option>
+            <option value="2">二级：运营后台</option>
+            <option value="3">三级：最高权限</option>
+          </select>
+        </label>
         <button class="text-button primary" type="button" data-promote-admin>添加管理员</button>
       </div>
       <div class="admin-code-rotate">
@@ -6993,12 +7179,13 @@ function renderAdminManagers() {
           <thead>
             <tr>
               <th>管理员</th>
+              <th>等级</th>
               <th>状态</th>
               <th>注册时间</th>
               <th>操作</th>
             </tr>
           </thead>
-          <tbody>${rows || `<tr><td colspan="4">暂无管理员</td></tr>`}</tbody>
+          <tbody>${rows || `<tr><td colspan="5">暂无管理员</td></tr>`}</tbody>
         </table>
       </div>
     </section>
@@ -7685,6 +7872,9 @@ function renderReviewPool(kind) {
         <button class="text-button" type="button" data-bulk-approve="${escapeAttr(kind)}" ${cleanPendingCount ? "" : "disabled"}>
           批量发布无风险项（${cleanPendingCount}）
         </button>
+        <button class="text-button danger ghost" type="button" data-clear-review-pool="${escapeAttr(kind)}" ${rows.length ? "" : "disabled"}>
+          清空当前审核池
+        </button>
       </div>
       ${renderImportWorkflow(kind)}
       <div class="review-list">
@@ -7884,6 +8074,7 @@ function renderReviewItem(kind, item) {
           <button class="mini-button" type="button" data-review-action="approve" data-review-kind="${escapeAttr(kind)}" data-review-id="${item.id}">审核完毕并发布</button>
           <button class="mini-button danger ghost" type="button" data-review-action="reject" data-review-kind="${escapeAttr(kind)}" data-review-id="${item.id}">驳回</button>
         ` : ""}
+        <button class="mini-button danger ghost" type="button" data-review-action="delete" data-review-kind="${escapeAttr(kind)}" data-review-id="${item.id}">删除</button>
       </div>
     </article>
   `;
@@ -8758,6 +8949,7 @@ async function handleAdminClick(event) {
     state.adminSection = section.dataset.adminSection;
     localStorage.setItem(storageKeys.adminSection, state.adminSection);
     renderAdmin();
+    syncRouteState();
     if (authState.adminUnlocked && workspaceLoadState.admin !== "loading") await loadAdminData();
     return;
   }
@@ -8801,13 +8993,21 @@ async function handleAdminClick(event) {
   const promoteButton = event.target.closest("[data-promote-admin]");
   if (promoteButton) {
     const email = getAdminPanelValue("[data-admin-promote-email]");
-    await setAdminRoleByEmail(email, "admin");
+    const level = Number(getAdminPanelValue("[data-admin-promote-level]") || 1);
+    await setAdminRoleByEmail(email, adminRoleForLevel(level), level);
+    return;
+  }
+
+  const setAdminLevelButton = event.target.closest("[data-set-admin-level]");
+  if (setAdminLevelButton) {
+    const level = Number(setAdminLevelButton.dataset.adminLevel || 1);
+    await setAdminRoleById(setAdminLevelButton.dataset.setAdminLevel, adminRoleForLevel(level), level);
     return;
   }
 
   const demoteButton = event.target.closest("[data-demote-admin]");
   if (demoteButton) {
-    await setAdminRoleById(demoteButton.dataset.demoteAdmin, "student");
+    await setAdminRoleById(demoteButton.dataset.demoteAdmin, "student", 0);
     return;
   }
 
@@ -8831,6 +9031,12 @@ async function handleAdminClick(event) {
   const bulkApproveButton = event.target.closest("[data-bulk-approve]");
   if (bulkApproveButton) {
     await bulkApproveReviewItems(bulkApproveButton.dataset.bulkApprove);
+    return;
+  }
+
+  const clearReviewButton = event.target.closest("[data-clear-review-pool]");
+  if (clearReviewButton) {
+    await clearReviewPool(clearReviewButton.dataset.clearReviewPool);
     return;
   }
 
@@ -8861,6 +9067,7 @@ async function handleAdminClick(event) {
   if (orderModeButton) {
     state.orderAdminMode = orderModeButton.dataset.orderAdminMode || "detail";
     renderAdmin();
+    syncRouteState();
     return;
   }
 
@@ -8869,12 +9076,14 @@ async function handleAdminClick(event) {
     state.adminSelectedOrderId = orderSelectButton.dataset.orderSelect;
     state.orderAdminMode = "detail";
     renderAdmin();
+    syncRouteState();
     return;
   }
 
   if (event.target.closest("[data-order-sidebar-toggle]")) {
     state.orderSidebarExpanded = !state.orderSidebarExpanded;
     renderAdmin();
+    syncRouteState();
     return;
   }
 
@@ -8948,6 +9157,7 @@ async function handleAdminClick(event) {
     const { reviewAction, reviewKind, reviewId } = reviewButton.dataset;
     if (reviewAction === "approve") await approveReviewItem(reviewKind, reviewId);
     if (reviewAction === "reject") await rejectReviewItem(reviewKind, reviewId);
+    if (reviewAction === "delete") await deleteReviewItem(reviewKind, reviewId);
   }
 }
 
@@ -9006,6 +9216,7 @@ function handleTrackingClick(event) {
   if (statusButton) {
     state.trackingStatus = statusButton.dataset.trackingStatus || "全部";
     renderTracking();
+    syncRouteState();
     return;
   }
 
@@ -9013,6 +9224,7 @@ function handleTrackingClick(event) {
   if (card) {
     state.selectedOrderId = card.dataset.shipmentCard;
     renderTracking();
+    syncRouteState();
     return;
   }
 
@@ -9043,7 +9255,7 @@ async function refreshAdminWorkspace() {
 }
 
 async function updateUserStatus(userId, status) {
-  if (!isAdmin() || !userId) return;
+  if (!canManageUserAccounts() || !userId) return showToast("当前管理员等级不能管理注册人员");
   if (!authState.adminUnlocked) return showToast("请先输入后台权限码");
   if (userId === authState.user?.id) return showToast("不能修改当前管理员自己的状态");
   const blockedReason = status === "disabled" ? window.prompt("请输入禁用原因：", "管理员暂停使用权限") || "" : "";
@@ -9053,7 +9265,7 @@ async function updateUserStatus(userId, status) {
 }
 
 async function softDeleteUser(userId) {
-  if (!isAdmin() || !userId) return;
+  if (!canManageUserAccounts() || !userId) return showToast("当前管理员等级不能删除用户");
   if (!authState.adminUnlocked) return showToast("请先输入后台权限码");
   if (userId === authState.user?.id) return showToast("不能删除当前管理员账号");
   if (!window.confirm("确认软删除该用户？删除后该用户将无法继续登录。")) return;
@@ -9074,25 +9286,25 @@ async function unlockAdminWorkspace() {
   showToast("管理员后台已解锁");
 }
 
-async function setAdminRoleByEmail(email, role) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+async function setAdminRoleByEmail(email, role, adminLevel = 0) {
+  if (!canManageAdminLevels()) return showToast("只有三级管理员可以调整管理员等级");
   if (!email) return showToast("请输入管理员邮箱");
-  const result = await invokeAdminUsers("setRole", { email, role });
+  const result = await invokeAdminUsers("setRole", { email, role, adminLevel });
   if (!result.ok) return showToast(result.message || "管理员角色更新失败");
   await refreshAdminWorkspace();
 }
 
-async function setAdminRoleById(userId, role) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+async function setAdminRoleById(userId, role, adminLevel = 0) {
+  if (!canManageAdminLevels()) return showToast("只有三级管理员可以调整管理员等级");
   if (!userId) return;
   if (userId === authState.user?.id) return showToast("不能降级当前登录管理员");
-  const result = await invokeAdminUsers("setRole", { userId, role });
+  const result = await invokeAdminUsers("setRole", { userId, role, adminLevel });
   if (!result.ok) return showToast(result.message || "管理员角色更新失败");
   await refreshAdminWorkspace();
 }
 
 async function rotateAdminCode(newCode) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageAdminLevels()) return showToast("只有三级管理员可以更换后台权限码");
   if (!newCode || newCode.length < 8) return showToast("新权限码至少 8 位");
   const result = await invokeAdminUsers("rotateAdminCode", { newCode });
   if (!result.ok) return showToast(result.message || "权限码更新失败");
@@ -9101,7 +9313,7 @@ async function rotateAdminCode(newCode) {
 }
 
 async function createInviteCode() {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageInvites()) return showToast("当前管理员等级不能管理邀请码");
   const code = getAdminPanelValue("[data-invite-code]").toUpperCase();
   const note = getAdminPanelValue("[data-invite-note]");
   const maxUses = Number(getAdminPanelValue("[data-invite-max]") || 1);
@@ -9118,14 +9330,14 @@ async function createInviteCode() {
 }
 
 async function disableInviteCode(inviteId) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageInvites()) return showToast("当前管理员等级不能管理邀请码");
   const result = await invokeAdminUsers("disableInviteCode", { inviteId });
   if (!result.ok) return showToast(result.message || "邀请码禁用失败");
   await refreshAdminWorkspace();
 }
 
 async function createImportRule() {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能管理入库规则");
   const ruleType = getAdminPanelValue("[data-new-rule-type]");
   const value = getAdminPanelValue("[data-new-rule-value]");
   const label = getAdminPanelValue("[data-new-rule-label]");
@@ -9146,7 +9358,7 @@ async function createImportRule() {
 }
 
 async function setImportRuleActive(ruleId, active) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能管理入库规则");
   if (!ruleId) return;
   const { error } = await authState.client
     .from("import_rules")
@@ -9194,7 +9406,7 @@ function collectOrderPayload(id) {
 }
 
 async function createShipmentOrder() {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageOrders()) return showToast("请先输入后台权限码");
   const payload = collectNewOrderPayload();
   if (!payload.order_number || !payload.customer_name || !payload.product_name) {
     return showToast("订单号、客户名称和产品不能为空");
@@ -9225,7 +9437,7 @@ async function createShipmentOrder() {
 }
 
 async function saveShipmentOrder(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !id) return showToast("请先输入后台权限码");
   const payload = collectOrderPayload(id);
   if (!payload) return showToast("没有找到订单表单");
   if (!payload.order_number || !payload.customer_name || !payload.product_name) return showToast("订单号、客户名称和产品不能为空");
@@ -9237,7 +9449,7 @@ async function saveShipmentOrder(id) {
 }
 
 async function archiveShipmentOrder(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !id) return showToast("请先输入后台权限码");
   if (!window.confirm("确认归档该订单？归档后客户查询入口会关闭。")) return;
   const payload = {
     status: "已完成",
@@ -9253,7 +9465,7 @@ async function archiveShipmentOrder(id) {
 }
 
 async function deleteShipmentOrder(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !id) return showToast("请先输入后台权限码");
   const order = shipmentOrders.find((item) => item.id === id);
   const reason = window.prompt(`确认删除订单 ${order?.order_number || ""}？请输入删除原因：`, "误操作删除");
   if (reason === null) return;
@@ -9288,7 +9500,7 @@ async function deleteShipmentOrder(id) {
 }
 
 async function resetShipmentAccessCode(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !id) return showToast("请先输入后台权限码");
   const order = shipmentOrders.find((item) => item.id === id);
   const accessCode = window.prompt("请输入新的查询码，留空自动生成：", "") || generateShipmentAccessCode();
   const hash = await hashShipmentAccessCode(accessCode);
@@ -9335,7 +9547,7 @@ async function hashShipmentAccessCode(plainCode) {
 }
 
 async function addShipmentMilestone(orderId) {
-  if (!isAdmin() || !authState.adminUnlocked || !orderId) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !orderId) return showToast("请先输入后台权限码");
   const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
   if (!panel) return;
   const title = panel.querySelector("[data-milestone-template]")?.value || "订单更新";
@@ -9357,7 +9569,7 @@ async function addShipmentMilestone(orderId) {
 }
 
 async function addShipmentComment(orderId) {
-  if (!isAdmin() || !authState.adminUnlocked || !orderId) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !orderId) return showToast("请先输入后台权限码");
   const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
   const body = panel?.querySelector("[data-order-comment]")?.value.trim() || "";
   const customerVisible = panel?.querySelector("[data-order-comment-visible]")?.checked || false;
@@ -9374,7 +9586,7 @@ async function addShipmentComment(orderId) {
 }
 
 async function updateShipmentVisibility(table, id, visible) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !id) return showToast("请先输入后台权限码");
   const { error } = await authState.client.from(table).update({ customer_visible: visible }).eq("id", id);
   if (error) return showToast(`可见性更新失败：${error.message}`);
   await insertAdminAction("update_shipment_visibility", { entity_type: table, entity_id: id, details: { customer_visible: visible } });
@@ -9382,7 +9594,7 @@ async function updateShipmentVisibility(table, id, visible) {
 }
 
 async function uploadShipmentFile(orderId, file) {
-  if (!isAdmin() || !authState.adminUnlocked || !orderId || !file) return showToast("请先输入后台权限码");
+  if (!canManageOrders() || !orderId || !file) return showToast("请先输入后台权限码");
   const panel = els.adminContent?.querySelector(`[data-order-panel="${CSS.escape(orderId)}"]`);
   const fileType = panel?.querySelector("[data-file-type]")?.value || "其他文件";
   const storagePath = `${orderId}/${Date.now()}-${sanitizeFileName(file.name)}`;
@@ -9513,7 +9725,7 @@ function collectApprovedCustomerPayload(id) {
 }
 
 async function saveApprovedCustomer(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent() || !id) return showToast("当前管理员等级不能管理客户池");
   const payload = collectApprovedCustomerPayload(id);
   if (!payload) return showToast("没有找到要保存的客户");
   if (!payload.company) return showToast("公司名称不能为空");
@@ -9525,7 +9737,7 @@ async function saveApprovedCustomer(id) {
 }
 
 async function revokeApprovedCustomer(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent() || !id) return showToast("当前管理员等级不能管理客户池");
   const reason = window.prompt("请输入撤回原因：", "管理员撤回，待重新核验");
   if (reason === null) return;
   const payload = {
@@ -9543,7 +9755,7 @@ async function revokeApprovedCustomer(id) {
 }
 
 async function restoreApprovedCustomer(id) {
-  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent() || !id) return showToast("当前管理员等级不能管理客户池");
   const payload = {
     status: "published",
     revoked_at: null,
@@ -9559,7 +9771,7 @@ async function restoreApprovedCustomer(id) {
 }
 
 async function approveReviewItem(kind, id, refreshAfter = true) {
-  if (!isAdmin() || !authState.adminUnlocked) return;
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能审核发布内容");
   const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
   const item = sourceRows.find((row) => row.id === id);
   if (!item) return;
@@ -9643,7 +9855,7 @@ async function approveReviewItem(kind, id, refreshAfter = true) {
 }
 
 async function bulkApproveReviewItems(kind) {
-  if (!isAdmin() || !authState.adminUnlocked) return showToast("请先输入后台权限码");
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能审核发布内容");
   const sourceRows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
   const rows = sourceRows.filter((item) => item.review_status === "pending" && isReviewItemClean(item));
   if (!rows.length) return showToast("没有可批量发布的无风险项");
@@ -9656,7 +9868,7 @@ async function bulkApproveReviewItems(kind) {
 }
 
 async function rejectReviewItem(kind, id) {
-  if (!isAdmin() || !authState.adminUnlocked) return;
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能审核发布内容");
   const reason = window.prompt("请输入驳回原因：", "信息来源或字段不完整");
   if (reason === null) return;
   const table = kind === "customers" ? "customer_review_items" : "knowledge_review_items";
@@ -9673,6 +9885,38 @@ async function rejectReviewItem(kind, id) {
     details: { reason }
   });
   await refreshAdminWorkspace();
+}
+
+async function deleteReviewItem(kind, id) {
+  if (!canManageReviewContent() || !id) return showToast("当前管理员等级不能删除审核内容");
+  const table = kind === "customers" ? "customer_review_items" : "knowledge_review_items";
+  if (!window.confirm("确认删除这条待审核内容？已发布客户不会被删除，但审核池记录会移除。")) return;
+  const { error } = await authState.client.from(table).delete().eq("id", id);
+  if (error) return showToast(`删除失败：${error.message}`);
+  await insertAdminAction(kind === "customers" ? "delete_customer_review" : "delete_knowledge_review", {
+    entity_type: table,
+    entity_id: id,
+    details: { deleted_from_review_pool: true }
+  });
+  await refreshAdminWorkspace();
+  showToast("已从审核池删除");
+}
+
+async function clearReviewPool(kind) {
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能清空审核池");
+  const rows = kind === "customers" ? customerReviewItems : knowledgeReviewItems;
+  if (!rows.length) return showToast("当前审核池已经为空");
+  const table = kind === "customers" ? "customer_review_items" : "knowledge_review_items";
+  if (!window.confirm(`确认清空当前 ${rows.length} 条审核池记录？已发布内容不会从正式库删除。`)) return;
+  const ids = rows.map((item) => item.id).filter(Boolean);
+  const { error } = await authState.client.from(table).delete().in("id", ids);
+  if (error) return showToast(`清空失败：${error.message}`);
+  await insertAdminAction(kind === "customers" ? "clear_customer_review_pool" : "clear_knowledge_review_pool", {
+    entity_type: table,
+    details: { deleted_count: ids.length }
+  });
+  await refreshAdminWorkspace();
+  showToast("审核池已清空");
 }
 
 async function insertAdminAction(action, payload = {}) {
@@ -9704,7 +9948,7 @@ function setImportDraftFile(kind, file) {
 }
 
 async function parseImportDraft(kind) {
-  if (!isAdmin() || !authState.adminUnlocked) return;
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能导入审核内容");
   const draft = importDrafts[kind];
   if (!draft?.file) return showToast("请先选择文件");
   draft.status = "parsing";
@@ -9737,7 +9981,7 @@ async function parseImportDraft(kind) {
 }
 
 async function submitImportDraft(kind) {
-  if (!isAdmin() || !authState.adminUnlocked) return;
+  if (!canManageReviewContent()) return showToast("当前管理员等级不能提交审核池");
   const draft = importDrafts[kind];
   if (!draft?.validRows?.length) return showToast("请先解析文件并确认存在有效行");
   try {
@@ -9777,14 +10021,66 @@ async function importReviewFile(kind, file) {
   if (importDrafts[kind]?.validRows?.length) await submitImportDraft(kind);
 }
 
-function setActiveTab(tab) {
+function buildRouteHash() {
+  const params = new URLSearchParams();
+  params.set("tab", state.activeTab);
+  if (state.activeTab === "customerDetail" && state.selectedId) params.set("customer", state.selectedId);
+  if (state.selectedId && state.detailMode === "summary") params.set("panel", state.selectedId);
+  if (state.activeTab === "admin") params.set("admin", state.adminSection || "orders");
+  if (state.activeTab === "tracking" && state.selectedOrderId) params.set("order", state.selectedOrderId);
+  if (state.activeTab === "admin" && state.adminSelectedOrderId) params.set("adminOrder", state.adminSelectedOrderId);
+  return params.toString();
+}
+
+function syncRouteState(mode = "push") {
+  if (routePushMuted || !authState.user || authState.mode !== "app") return;
+  const nextHash = buildRouteHash();
+  const currentHash = window.location.hash.replace(/^#/, "");
+  if (nextHash === currentHash) return;
+  const url = new URL(window.location.href);
+  url.hash = nextHash;
+  const method = mode === "replace" ? "replaceState" : "pushState";
+  window.history[method]({ shuoyi: true }, "", url.toString());
+}
+
+function applyRouteFromLocation() {
+  if (!authState.user || authState.mode !== "app") return;
+  const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+  const tab = params.get("tab") || "dashboard";
+  routePushMuted = true;
+  if (viewKeys.includes(tab)) {
+    if (tab !== "customerDetail") closeInlineDetail();
+    state.activeTab = tab;
+  }
+  state.adminSection = params.get("admin") || state.adminSection;
+  state.selectedOrderId = params.get("order") || null;
+  state.adminSelectedOrderId = params.get("adminOrder") || state.adminSelectedOrderId;
+  const customerId = params.get("customer") || params.get("panel");
+  if (customerId) {
+    state.selectedId = customerId;
+    state.detailMode = params.get("customer") ? "page" : "summary";
+    if (state.detailMode === "summary") {
+      els.detailPanel.classList.add("open");
+      els.workspace.classList.add("has-detail");
+    }
+  }
+  render();
+  if (state.activeTab === "admin" && isAdmin() && authState.adminUnlocked && workspaceLoadState.admin !== "loading") {
+    refreshAdminWorkspace();
+  }
+  routePushMuted = false;
+}
+
+function setActiveTab(tab, options = {}) {
   if (!viewKeys.includes(tab)) return;
+  const previousTab = state.activeTab;
   if (tab !== "customerDetail") closeInlineDetail();
   state.activeTab = tab;
   render();
   if (tab === "admin" && isAdmin() && authState.adminUnlocked && workspaceLoadState.admin !== "loading") {
     refreshAdminWorkspace();
   }
+  if (options.push !== false && previousTab !== tab) syncRouteState(options.replace ? "replace" : "push");
 }
 
 function closeInlineDetail() {
@@ -9815,6 +10111,7 @@ function selectCustomer(id) {
   els.detailPanel.classList.add("open");
   els.workspace.classList.add("has-detail");
   renderDetail();
+  syncRouteState();
 }
 
 function openFullCustomerDetail(id) {
@@ -9824,6 +10121,7 @@ function openFullCustomerDetail(id) {
   els.workspace.classList.remove("has-detail");
   state.activeTab = "customerDetail";
   render();
+  syncRouteState();
 }
 
 async function toggleFavorite(id) {
