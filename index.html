@@ -3219,6 +3219,138 @@ th {
   gap: 12px;
 }
 
+.order-manager-hero {
+  margin-bottom: 18px;
+}
+
+.order-manager-metrics,
+.order-side-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.order-manager-metrics span,
+.order-side-stats div {
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.order-manager-metrics strong,
+.order-side-stats strong {
+  display: block;
+  color: var(--ink);
+  font-size: 20px;
+}
+
+.order-workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 18px;
+  align-items: start;
+}
+
+.order-workspace-main {
+  min-width: 0;
+}
+
+.order-side-panel {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(0, 113, 227, 0.08), transparent 34%),
+    rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.06);
+}
+
+.order-side-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.order-side-head h3 {
+  margin: 2px 0 0;
+}
+
+.order-side-head > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-weight: 800;
+}
+
+.order-side-list {
+  display: grid;
+  gap: 10px;
+}
+
+.order-side-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.order-side-item:hover,
+.order-side-item.active {
+  border-color: rgba(0, 113, 227, 0.28);
+  background: rgba(0, 113, 227, 0.07);
+}
+
+.order-side-item strong,
+.order-side-item small,
+.order-side-meta {
+  display: block;
+}
+
+.order-side-item strong,
+.order-side-item small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-side-item small,
+.order-side-meta small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.order-side-meta {
+  text-align: right;
+}
+
+.order-side-meta .status-pill {
+  margin-bottom: 5px;
+}
+
+.full-width {
+  width: 100%;
+  justify-content: center;
+}
+
 .order-mini-form {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -3282,10 +3414,17 @@ th {
   .tracking-layout,
   .tracking-facts,
   .tracking-facts.compact,
+  .order-workspace-grid,
+  .order-manager-metrics,
+  .order-side-stats,
   .order-create-grid,
   .order-edit-grid,
   .order-admin-subgrid {
     grid-template-columns: 1fr;
+  }
+
+  .order-side-panel {
+    position: static;
   }
 }
 
@@ -4239,6 +4378,9 @@ const state = {
   trackingStatus: "全部",
   trackingSearch: "",
   selectedOrderId: null,
+  orderAdminMode: "detail",
+  adminSelectedOrderId: null,
+  orderSidebarExpanded: false,
   publicTrackingBusy: false,
   publicTrackingResult: null
 };
@@ -4246,7 +4388,7 @@ const state = {
 const favorites = new Set();
 const records = {};
 const recordSaveTimers = {};
-const shipmentAccessCodes = readJSON(storageKeys.shipmentAccessCodes, {});
+const shipmentAccessCodes = readSessionJSON(storageKeys.shipmentAccessCodes, {});
 const workspaceLoadState = {
   shared: "idle",
   private: "idle",
@@ -5285,10 +5427,10 @@ async function loadSharedData() {
 async function loadTrackingData() {
   if (!authState.user) return false;
   workspaceLoadState.tracking = "loading";
-  const [orderResult, milestoneResult, fileResult, commentResult] = await Promise.all([
+  let [orderResult, milestoneResult, fileResult, commentResult] = await Promise.all([
     authState.client
       .from("orders")
-      .select("id,order_number,customer_name,customer_email,customer_company,product_name,quantity,trade_term,destination_port,origin_port,status,customer_visible,tracking_url,container_no,bill_of_lading,booking_no,vessel_voyage,eta,etd,next_action,created_by,assigned_user_id,archived_at,created_at,updated_at")
+      .select("id,order_number,customer_name,customer_email,customer_company,product_name,quantity,trade_term,destination_port,origin_port,status,customer_visible,tracking_url,container_no,bill_of_lading,booking_no,vessel_voyage,eta,etd,next_action,created_by,assigned_user_id,archived_at,deleted_at,deleted_by,delete_reason,created_at,updated_at")
       .order("updated_at", { ascending: false }),
     authState.client
       .from("order_milestones")
@@ -5303,6 +5445,14 @@ async function loadTrackingData() {
       .select("id,order_id,body,customer_visible,created_by,created_at")
       .order("created_at", { ascending: false })
   ]);
+
+  if (orderResult.error && /deleted_at|deleted_by|delete_reason/i.test(orderResult.error.message || "")) {
+    console.warn("[Shuoyi] orders soft-delete columns missing; falling back until SQL is applied", orderResult.error);
+    orderResult = await authState.client
+      .from("orders")
+      .select("id,order_number,customer_name,customer_email,customer_company,product_name,quantity,trade_term,destination_port,origin_port,status,customer_visible,tracking_url,container_no,bill_of_lading,booking_no,vessel_voyage,eta,etd,next_action,created_by,assigned_user_id,archived_at,created_at,updated_at")
+      .order("updated_at", { ascending: false });
+  }
 
   if (orderResult.error) {
     console.warn("[Shuoyi] tracking data unavailable", orderResult.error);
@@ -7148,17 +7298,53 @@ function renderImportRules() {
 }
 
 function renderOrderManager() {
-  const rows = shipmentOrders.map(renderOrderAdminPanel).join("");
+  const orders = getAdminShipmentOrders();
+  const selectedOrder = getAdminSelectedOrder(orders);
+  const visibleCount = orders.filter((order) => order.customer_visible).length;
+  const issueCount = orders.filter((order) => order.status === "异常").length;
+  const mainPanel = state.orderAdminMode === "create"
+    ? renderOrderCreatePanel()
+    : selectedOrder
+      ? renderOrderAdminPanel(selectedOrder)
+      : renderOrderEmptyAdminPanel();
+
   return `
-    <section class="admin-panel">
+    <section class="admin-panel order-manager-hero">
       <div class="admin-panel-head">
         <div>
           <h3>订单跟单</h3>
-          <p>创建订单、更新海运节点、上传图片和单据。客户只有拿到订单号和查询码后，才能查看你公开的内容。</p>
+          <p>新建跟单、更新海运节点、上传图片和单据都在这里完成。客户只有拿到订单号和查询码后，才能查看你公开的内容。</p>
         </div>
-        <strong>${shipmentOrders.length} 单</strong>
+        <div class="order-manager-metrics">
+          <span><strong>${orders.length}</strong> 总跟单</span>
+          <span><strong>${visibleCount}</strong> 客户可查</span>
+          <span><strong>${issueCount}</strong> 异常</span>
+        </div>
       </div>
+      <div class="card-actions">
+        <button class="text-button primary" type="button" data-order-admin-mode="create">新建跟单</button>
+        <button class="text-button ghost" type="button" data-order-admin-mode="detail">查看已创建跟单</button>
+      </div>
+    </section>
 
+    <section class="order-workspace-grid">
+      <div class="order-workspace-main">
+        ${mainPanel}
+      </div>
+      ${renderOrderSidebar(orders, selectedOrder)}
+    </section>
+  `;
+}
+
+function renderOrderCreatePanel() {
+  return `
+    <section class="admin-panel order-create-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h3>新建跟单</h3>
+          <p>创建后会自动进入该订单详情页，并生成本次会话可复制的客户查询码。</p>
+        </div>
+      </div>
       <div class="order-create-grid">
         ${renderAdminInput("订单号", "order_number", "SY-2026-001")}
         ${renderAdminInput("客户名称", "customer_name", "Buyer name")}
@@ -7171,13 +7357,90 @@ function renderOrderManager() {
         ${renderAdminInput("起运港", "origin_port", "Tianjin")}
         ${renderAdminInput("查询码", "access_code", "留空自动生成")}
       </div>
-      <button class="text-button primary" type="button" data-order-create>创建订单并生成查询码</button>
-    </section>
-
-    <section class="order-admin-list">
-      ${rows || `<div class="admin-panel"><p>暂无订单。先创建一条测试订单，再上传装柜图片或提单资料。</p></div>`}
+      <div class="card-actions">
+        <button class="text-button primary" type="button" data-order-create>创建订单并生成查询码</button>
+        <button class="text-button ghost" type="button" data-order-admin-mode="detail">取消，返回已创建跟单</button>
+      </div>
     </section>
   `;
+}
+
+function renderOrderEmptyAdminPanel() {
+  return `
+    <section class="admin-panel shipment-empty">
+      <h3>暂无已创建跟单</h3>
+      <p>先点击右侧或上方的“新建跟单”，创建订单后再上传装柜图片、提单资料和海运节点。</p>
+      <button class="text-button primary" type="button" data-order-admin-mode="create">新建第一条跟单</button>
+    </section>
+  `;
+}
+
+function renderOrderSidebar(orders, selectedOrder) {
+  const sorted = orders.slice(0, state.orderSidebarExpanded ? 30 : 10);
+  const hiddenCount = Math.max(orders.length - sorted.length, 0);
+  const recentUpdated = orders[0] ? formatDate(orders[0].updated_at || orders[0].created_at) : "暂无";
+  const fileCount = orders.reduce((sum, order) => sum + getOrderFiles(order.id).length, 0);
+  return `
+    <aside class="order-side-panel">
+      <div class="order-side-head">
+        <div>
+          <p class="eyebrow">Order Navigator</p>
+          <h3>跟单导航</h3>
+        </div>
+        <span>${orders.length}</span>
+      </div>
+      <div class="order-side-stats">
+        <div><strong>${orders.filter((order) => order.customer_visible).length}</strong><span>客户可查</span></div>
+        <div><strong>${fileCount}</strong><span>文件</span></div>
+        <div><strong>${recentUpdated}</strong><span>最近更新</span></div>
+      </div>
+      <button class="text-button primary full-width" type="button" data-order-admin-mode="create">新建跟单</button>
+      <div class="order-side-list">
+        ${sorted.map((order) => renderOrderSidebarItem(order, selectedOrder)).join("") || `<p class="muted-text">暂无跟单记录</p>`}
+      </div>
+      ${hiddenCount ? `
+        <button class="mini-button full-width" type="button" data-order-sidebar-toggle>
+          ${state.orderSidebarExpanded ? "收起更多跟单" : `还有 ${hiddenCount} 单，展开查看`}
+        </button>
+      ` : ""}
+    </aside>
+  `;
+}
+
+function renderOrderSidebarItem(order, selectedOrder) {
+  const files = getOrderFiles(order.id);
+  const milestones = getOrderMilestones(order.id);
+  const isActive = selectedOrder?.id === order.id && state.orderAdminMode !== "create";
+  return `
+    <button class="order-side-item ${isActive ? "active" : ""}" type="button" data-order-select="${escapeAttr(order.id)}">
+      <span>
+        <strong>${escapeHTML(order.order_number || "未编号订单")}</strong>
+        <small>${escapeHTML(order.customer_company || order.customer_name || "未填写客户")}</small>
+      </span>
+      <span class="order-side-meta">
+        <em class="status-pill ${escapeAttr(statusClass(order.status))}">${escapeHTML(order.status || "生产中")}</em>
+        <small>${milestones.length} 节点 · ${files.length} 文件</small>
+      </span>
+    </button>
+  `;
+}
+
+function getAdminShipmentOrders() {
+  return shipmentOrders
+    .filter((order) => !isDeletedShipmentOrder(order))
+    .sort((a, b) => new Date(b.updated_at || b.created_at || 0) - new Date(a.updated_at || a.created_at || 0));
+}
+
+function isDeletedShipmentOrder(order) {
+  return Boolean(order?.deleted_at) || order?.status === "已删除";
+}
+
+function getAdminSelectedOrder(orders = getAdminShipmentOrders()) {
+  if (state.adminSelectedOrderId) {
+    const selected = orders.find((order) => order.id === state.adminSelectedOrderId);
+    if (selected) return selected;
+  }
+  return orders[0] || null;
 }
 
 function renderAdminInput(label, field, placeholder = "") {
@@ -7250,6 +7513,7 @@ function renderOrderAdminPanel(order) {
         <button class="text-button" type="button" data-order-reset-code="${escapeAttr(order.id)}">重置查询码</button>
         <button class="text-button ghost" type="button" data-order-copy-query="${escapeAttr(order.id)}">复制客户查询信息</button>
         <button class="text-button danger" type="button" data-order-archive="${escapeAttr(order.id)}">归档</button>
+        <button class="text-button danger ghost" type="button" data-order-delete="${escapeAttr(order.id)}">删除订单</button>
       </div>
 
       <div class="order-admin-subgrid">
@@ -7651,10 +7915,11 @@ function renderStatusColumn(status, rows) {
 
 function renderTracking() {
   if (!els.trackingContent) return;
+  const activeOrders = shipmentOrders.filter((order) => !isDeletedShipmentOrder(order));
   const visibleOrders = getVisibleShipmentOrders();
   const selected = getSelectedShipmentOrder(visibleOrders);
   const statusCards = ["全部", ...shipmentStatuses].map((status) => {
-    const count = status === "全部" ? shipmentOrders.length : shipmentOrders.filter((order) => order.status === status).length;
+    const count = status === "全部" ? activeOrders.length : activeOrders.filter((order) => order.status === status).length;
     return `
       <button class="status-chip ${state.trackingStatus === status ? "active" : ""}" type="button" data-tracking-status="${escapeAttr(status)}">
         <span>${escapeHTML(status)}</span>
@@ -7671,7 +7936,7 @@ function renderTracking() {
         <p>把生产、装柜、报关、开船、到港、清关和派送节点集中管理。客户只用订单号和查询码查看公开进度。</p>
       </div>
       <div class="tracking-hero-card">
-        <span>${shipmentOrders.length}</span>
+        <span>${activeOrders.length}</span>
         <strong>跟踪订单</strong>
         <small>${workspaceLoadState.tracking === "error" ? "请先执行跟单系统 SQL" : "人工更新，客户可查"}</small>
       </div>
@@ -7710,6 +7975,7 @@ function renderTrackingSetupNotice() {
 function getVisibleShipmentOrders() {
   const query = normalizeSearchText(state.trackingSearch);
   return shipmentOrders
+    .filter((order) => !isDeletedShipmentOrder(order))
     .filter((order) => state.trackingStatus === "全部" || order.status === state.trackingStatus)
     .filter((order) => {
       if (!query) return true;
@@ -7731,7 +7997,7 @@ function getVisibleShipmentOrders() {
 
 function getSelectedShipmentOrder(orders = getVisibleShipmentOrders()) {
   if (state.selectedOrderId) {
-    const selected = shipmentOrders.find((order) => order.id === state.selectedOrderId);
+    const selected = shipmentOrders.find((order) => order.id === state.selectedOrderId && !isDeletedShipmentOrder(order));
     if (selected) return selected;
   }
   return orders[0] || null;
@@ -8591,6 +8857,27 @@ async function handleAdminClick(event) {
     return;
   }
 
+  const orderModeButton = event.target.closest("[data-order-admin-mode]");
+  if (orderModeButton) {
+    state.orderAdminMode = orderModeButton.dataset.orderAdminMode || "detail";
+    renderAdmin();
+    return;
+  }
+
+  const orderSelectButton = event.target.closest("[data-order-select]");
+  if (orderSelectButton) {
+    state.adminSelectedOrderId = orderSelectButton.dataset.orderSelect;
+    state.orderAdminMode = "detail";
+    renderAdmin();
+    return;
+  }
+
+  if (event.target.closest("[data-order-sidebar-toggle]")) {
+    state.orderSidebarExpanded = !state.orderSidebarExpanded;
+    renderAdmin();
+    return;
+  }
+
   if (event.target.closest("[data-order-create]")) {
     await createShipmentOrder();
     return;
@@ -8605,6 +8892,12 @@ async function handleAdminClick(event) {
   const orderArchiveButton = event.target.closest("[data-order-archive]");
   if (orderArchiveButton) {
     await archiveShipmentOrder(orderArchiveButton.dataset.orderArchive);
+    return;
+  }
+
+  const orderDeleteButton = event.target.closest("[data-order-delete]");
+  if (orderDeleteButton) {
+    await deleteShipmentOrder(orderDeleteButton.dataset.orderDelete);
     return;
   }
 
@@ -8920,7 +9213,11 @@ async function createShipmentOrder() {
     updated_at: new Date().toISOString()
   }).select("id").single();
   if (error) return showToast(`订单创建失败：${error.message}`);
-  if (inserted?.id) rememberShipmentAccessCode(inserted.id, accessCode);
+  if (inserted?.id) {
+    rememberShipmentAccessCode(inserted.id, accessCode);
+    state.adminSelectedOrderId = inserted.id;
+    state.orderAdminMode = "detail";
+  }
   await insertAdminAction("create_shipment_order", { entity_type: "orders", details: { order_number: payload.order_number } });
   await copyText(`订单号：${payload.order_number}\n查询码：${accessCode}\n查货网址：${getAuthRedirectUrl()}`);
   await refreshAdminWorkspace();
@@ -8955,6 +9252,41 @@ async function archiveShipmentOrder(id) {
   showToast("订单已归档，客户不可继续查询");
 }
 
+async function deleteShipmentOrder(id) {
+  if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
+  const order = shipmentOrders.find((item) => item.id === id);
+  const reason = window.prompt(`确认删除订单 ${order?.order_number || ""}？请输入删除原因：`, "误操作删除");
+  if (reason === null) return;
+  const payload = {
+    customer_visible: false,
+    deleted_at: new Date().toISOString(),
+    deleted_by: authState.user.id,
+    delete_reason: reason.trim() || "未填写原因",
+    updated_at: new Date().toISOString()
+  };
+  let { error } = await authState.client.from("orders").update(payload).eq("id", id);
+  if (error) {
+    const needsSql = /deleted_at|deleted_by|delete_reason/i.test(error.message || "");
+    if (needsSql) {
+      const fallbackPayload = {
+        status: "已删除",
+        customer_visible: false,
+        archived_at: new Date().toISOString(),
+        next_action: `已删除：${payload.delete_reason}`,
+        updated_at: new Date().toISOString()
+      };
+      const fallbackResult = await authState.client.from("orders").update(fallbackPayload).eq("id", id);
+      error = fallbackResult.error;
+    }
+    if (error) return showToast(`删除失败：${error.message}`);
+  }
+  forgetShipmentAccessCode(id);
+  if (state.adminSelectedOrderId === id) state.adminSelectedOrderId = null;
+  await insertAdminAction("delete_shipment_order", { entity_type: "orders", entity_id: id, details: { order_number: order?.order_number || "", reason: payload.delete_reason } });
+  await refreshAdminWorkspace();
+  showToast("订单已删除，客户不可继续查询，管理员日志已记录");
+}
+
 async function resetShipmentAccessCode(id) {
   if (!isAdmin() || !authState.adminUnlocked || !id) return showToast("请先输入后台权限码");
   const order = shipmentOrders.find((item) => item.id === id);
@@ -8984,6 +9316,12 @@ function copyShipmentQueryInfo(id) {
 function rememberShipmentAccessCode(orderId, accessCode) {
   if (!orderId || !accessCode) return;
   shipmentAccessCodes[orderId] = accessCode;
+  sessionStorage.setItem(storageKeys.shipmentAccessCodes, JSON.stringify(shipmentAccessCodes));
+}
+
+function forgetShipmentAccessCode(orderId) {
+  if (!orderId) return;
+  delete shipmentAccessCodes[orderId];
   sessionStorage.setItem(storageKeys.shipmentAccessCodes, JSON.stringify(shipmentAccessCodes));
 }
 
@@ -10044,6 +10382,14 @@ function saveLocalPrivateData() {
 function readJSON(key, fallback) {
   try {
     return JSON.parse(localStorage.getItem(key)) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function readSessionJSON(key, fallback) {
+  try {
+    return JSON.parse(sessionStorage.getItem(key)) || fallback;
   } catch {
     return fallback;
   }
