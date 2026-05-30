@@ -3890,6 +3890,23 @@ th {
   line-height: 1.75;
 }
 
+.auth-intro-panel .translation {
+  max-width: 430px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.auth-intro-panel h2 + .translation {
+  margin: -6px 0 16px;
+  font-size: 13px;
+  font-weight: 680;
+}
+
+.auth-intro-panel p + .translation {
+  margin-top: 8px;
+}
+
 .auth-intro-points {
   display: flex;
   flex-wrap: wrap;
@@ -3898,6 +3915,8 @@ th {
 }
 
 .auth-intro-points span {
+  display: grid;
+  gap: 2px;
   padding: 8px 11px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
@@ -3905,6 +3924,13 @@ th {
   background: rgba(255, 255, 255, 0.1);
   font-size: 12px;
   font-weight: 760;
+}
+
+.auth-intro-points span small {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.1;
 }
 
 .auth-intro-meta {
@@ -4653,14 +4679,16 @@ th {
       </div>
       <div class="auth-card">
         <section class="auth-intro-panel" aria-label="平台简介">
-          <p class="eyebrow">Export Growth Platform</p>
-          <h2>让外贸业务员每天知道该找谁、怎么跟、如何报价。</h2>
+          <p class="eyebrow">Export Sales Development</p>
+          <h2>外贸业务开发平台</h2>
+          <small class="translation">Export sales development platform</small>
           <p>烁翌国际把客户开发、标准件知识、外贸报价和订单跟单放进一个私有工作台，帮助团队把零散信息变成可执行的业务动作。</p>
+          <small class="translation">A private workspace for lead discovery, fastener knowledge, export quotations, and shipment tracking, helping teams turn scattered information into clear sales actions.</small>
           <div class="auth-intro-points" aria-label="平台能力">
-            <span>客户开发雷达</span>
-            <span>私有跟进记录</span>
-            <span>报价计算器</span>
-            <span>订单跟单查询</span>
+            <span>客户开发雷达<small>Lead discovery</small></span>
+            <span>私有跟进记录<small>Private follow-up</small></span>
+            <span>报价计算器<small>Quotation calculator</small></span>
+            <span>订单跟单查询<small>Shipment tracking</small></span>
           </div>
           <div class="auth-intro-meta">
             <strong>Private Workspace</strong>
@@ -4676,10 +4704,10 @@ th {
         <form class="auth-form" id="loginForm">
           <div>
             <p class="eyebrow">Login</p>
-            <h2>登录客户工作台</h2>
-            <small class="translation">Sign in to your private client workspace.</small>
+            <h2>登录工作台</h2>
+            <small class="translation">Sign in to your secure export workspace.</small>
             <p>每个账号的收藏、跟进状态和备注彼此隔离。</p>
-            <small class="translation">Favorites, follow-up status, and notes are kept private for each account.</small>
+            <small class="translation">Favorites, follow-up status, and notes remain private to each account.</small>
           </div>
           <div class="login-kind-switch" aria-label="登录类型">
             <button class="login-kind active" type="button" data-login-kind="student">学员登录<small>Student Sign-In</small></button>
