@@ -2926,7 +2926,7 @@ th {
     rgba(255, 255, 255, 0.74);
 }
 
-.auth-card > .public-tracking-card {
+.auth-gate > .public-tracking-card {
   position: relative;
   z-index: 1;
   grid-column: 1;
@@ -3158,7 +3158,7 @@ th {
 
   .auth-card > .auth-form,
   .auth-card > .config-notice,
-  .auth-card > .public-tracking-card {
+  .auth-gate > .public-tracking-card {
     grid-column: 1;
     grid-row: auto;
     max-height: none;
@@ -3414,7 +3414,7 @@ th {
 @media (max-width: 560px) {
   .auth-card > .auth-form,
   .auth-card > .config-notice,
-  .auth-card > .public-tracking-card {
+  .auth-gate > .public-tracking-card {
     border-radius: 24px;
     padding: 18px;
   }
@@ -3547,7 +3547,7 @@ th {
 
 .auth-card > .auth-form,
 .auth-card > .config-notice,
-.auth-card > .public-tracking-card {
+.auth-gate > .public-tracking-card {
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 34px;
   background:
@@ -3784,6 +3784,360 @@ th {
   .auth-gate .text-button,
   .auth-card .login-kind-switch::before {
     transition: none;
+  }
+}
+
+/* Login page v5: centered intro + login port, compact shipment launcher */
+.auth-gate {
+  place-items: center;
+  padding: clamp(88px, 9vw, 118px) clamp(20px, 4vw, 64px) clamp(34px, 4vw, 56px);
+  background: #dfe8f1;
+}
+
+.auth-page-backdrop img {
+  filter: blur(3px) saturate(118%) contrast(102%);
+  opacity: 0.96;
+  transform: scale(1.025);
+}
+
+.auth-page-backdrop::after {
+  background:
+    linear-gradient(90deg, rgba(5, 18, 36, 0.48) 0%, rgba(12, 26, 45, 0.24) 42%, rgba(255, 255, 255, 0.46) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.38));
+}
+
+.auth-gate > .auth-brand {
+  top: clamp(18px, 2.8vw, 32px);
+  left: clamp(18px, 3.6vw, 48px);
+  padding: 8px 13px 8px 9px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.auth-gate > .auth-brand .brand-logo {
+  width: 44px;
+  height: 44px;
+}
+
+.auth-gate > .auth-brand h1 {
+  font-size: 21px;
+}
+
+.auth-card {
+  grid-template-columns: minmax(390px, 1fr) minmax(390px, 0.92fr);
+  gap: 0;
+  width: min(990px, calc(100vw - 48px));
+  min-height: 560px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 36px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 44px 130px rgba(6, 19, 35, 0.28);
+  backdrop-filter: blur(22px) saturate(160%);
+  animation: authCardRise 760ms ease-out both;
+}
+
+.auth-intro-panel {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 560px;
+  padding: clamp(34px, 4.6vw, 58px);
+  overflow: hidden;
+  color: #fff;
+  background:
+    linear-gradient(145deg, rgba(6, 22, 48, 0.94), rgba(11, 50, 90, 0.72)),
+    rgba(7, 24, 46, 0.86);
+}
+
+.auth-intro-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 54px 54px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 54px 54px;
+  mask-image: linear-gradient(135deg, black, transparent 74%);
+  pointer-events: none;
+}
+
+.auth-intro-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-intro-panel .eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.auth-intro-panel h2 {
+  max-width: 440px;
+  margin: 12px 0 16px;
+  color: #fff;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.04;
+}
+
+.auth-intro-panel p {
+  max-width: 430px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.auth-intro-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.auth-intro-points span {
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.auth-intro-meta {
+  display: grid;
+  gap: 6px;
+  margin-top: 42px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.auth-intro-meta strong {
+  font-size: 14px;
+}
+
+.auth-intro-meta small {
+  max-width: 360px;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.55;
+}
+
+.auth-card > .auth-form,
+.auth-card > .config-notice {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  display: grid;
+  align-content: center;
+  min-height: 560px;
+  max-height: none;
+  padding: clamp(34px, 4.2vw, 56px);
+  border: 0;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: none;
+  backdrop-filter: blur(18px) saturate(155%);
+  animation: none;
+}
+
+.auth-card > .auth-form[hidden],
+.auth-card > .config-notice[hidden] {
+  display: none;
+}
+
+.auth-card > .auth-message {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  margin-top: -54px;
+  padding: 0 clamp(34px, 4.2vw, 56px) 24px;
+}
+
+.auth-card .auth-form h2,
+.auth-card .config-notice h2 {
+  font-size: clamp(34px, 4.1vw, 52px);
+}
+
+.auth-card .login-kind-switch {
+  background: rgba(238, 240, 244, 0.86);
+}
+
+.auth-gate > .public-tracking-card {
+  position: fixed;
+  left: clamp(16px, 3vw, 36px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 7;
+  grid-column: auto;
+  grid-row: auto;
+  width: min(382px, calc(100vw - 32px));
+  max-width: none;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 24px 80px rgba(6, 19, 35, 0.2);
+  backdrop-filter: blur(24px) saturate(160%);
+  transition: width 240ms ease, padding 240ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.tracking-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+  text-align: left;
+}
+
+.tracking-toggle strong,
+.tracking-toggle small {
+  display: block;
+}
+
+.tracking-toggle strong {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.tracking-toggle small {
+  margin-top: 2px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+
+.tracking-toggle-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--blue);
+  box-shadow: 0 10px 26px rgba(0, 113, 227, 0.24);
+  transition: transform 220ms ease;
+}
+
+.public-tracking-card.is-expanded .tracking-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.public-tracking-card.is-expanded .tracking-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  justify-content: center;
+}
+
+.public-tracking-card.is-expanded .tracking-toggle span:first-child {
+  display: none;
+}
+
+.public-tracking-card.is-expanded .tracking-toggle-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.public-tracking-card.is-collapsed {
+  width: min(260px, calc(100vw - 32px));
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+.public-tracking-card.is-collapsed .tracking-expanded-head,
+.public-tracking-card.is-collapsed .public-tracking-form,
+.public-tracking-card.is-collapsed .public-tracking-result {
+  display: none;
+}
+
+.public-tracking-card.is-expanded .tracking-expanded-head {
+  display: block;
+  margin-top: 0;
+  padding-right: 50px;
+}
+
+.public-tracking-card.is-expanded .public-tracking-form {
+  margin-top: 14px;
+}
+
+.public-tracking-card.is-expanded:hover,
+.public-tracking-card.is-collapsed:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 980px) {
+  .auth-gate {
+    place-items: start center;
+    padding: 18px 16px 104px;
+  }
+
+  .auth-gate > .auth-brand {
+    position: relative;
+    top: auto;
+    left: auto;
+    justify-self: start;
+    margin-bottom: 16px;
+  }
+
+  .auth-card {
+    grid-template-columns: minmax(0, 640px);
+    width: min(640px, 100%);
+    min-height: auto;
+  }
+
+  .auth-intro-panel,
+  .auth-card > .auth-form,
+  .auth-card > .config-notice,
+  .auth-card > .auth-message {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: auto;
+  }
+
+  .auth-intro-panel {
+    padding: 28px;
+  }
+
+  .auth-card > .auth-message {
+    margin-top: 0;
+    padding: 0 24px 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-gate > .auth-brand {
+    width: 100%;
+  }
+
+  .auth-card {
+    border-radius: 28px;
+  }
+
+  .auth-intro-panel,
+  .auth-card > .auth-form,
+  .auth-card > .config-notice {
+    padding: 22px;
+  }
+
+  .auth-intro-panel h2 {
+    font-size: 30px;
+  }
+
+  .auth-gate > .public-tracking-card {
+    left: 12px;
+    bottom: 12px;
   }
 }
 
@@ -4298,6 +4652,21 @@ th {
         </div>
       </div>
       <div class="auth-card">
+        <section class="auth-intro-panel" aria-label="平台简介">
+          <p class="eyebrow">Export Growth Platform</p>
+          <h2>让外贸业务员每天知道该找谁、怎么跟、如何报价。</h2>
+          <p>烁翌国际把客户开发、标准件知识、外贸报价和订单跟单放进一个私有工作台，帮助团队把零散信息变成可执行的业务动作。</p>
+          <div class="auth-intro-points" aria-label="平台能力">
+            <span>客户开发雷达</span>
+            <span>私有跟进记录</span>
+            <span>报价计算器</span>
+            <span>订单跟单查询</span>
+          </div>
+          <div class="auth-intro-meta">
+            <strong>Private Workspace</strong>
+            <small>Built for export sales teams, trading companies, and source factories.</small>
+          </div>
+        </section>
         <div id="configNotice" class="config-notice" hidden>
           <h2>需要先连接 Supabase</h2>
           <p>当前版本已经接好登录、邀请码和个人数据结构。上线前请填写 Supabase URL 与 anon key，并在 Supabase 执行数据库 SQL。</p>
@@ -4446,31 +4815,38 @@ th {
         </form>
 
         <p class="auth-message" id="authMessage"></p>
-
-        <section class="public-tracking-card" aria-label="客户查货入口">
-          <div>
-            <p class="eyebrow">Shipment Tracking</p>
-            <h2>客户查货入口</h2>
-            <small class="translation">Customer shipment portal</small>
-            <p>输入订单号和查询码，查看管理员公开给客户的生产、装柜、海运和到港进度。</p>
-            <small class="translation">Enter the order number and access code to view the production, loading, ocean freight, and arrival updates shared by the administrator.</small>
-          </div>
-          <form class="public-tracking-form" id="publicTrackingForm">
-            <label class="field">
-              <span>订单号</span>
-              <small class="translation">Order number</small>
-              <input id="publicOrderNumber" type="text" autocomplete="off" placeholder="例如：SY-2026-001" required />
-            </label>
-            <label class="field">
-              <span>查询码</span>
-              <small class="translation">Access code</small>
-              <input id="publicAccessCode" type="password" autocomplete="off" placeholder="由业务员提供" required />
-            </label>
-            <button class="text-button primary" type="submit">查看货物进度<small>View shipment progress</small></button>
-          </form>
-          <div class="public-tracking-result" id="publicTrackingResult" hidden></div>
-        </section>
       </div>
+
+      <section class="public-tracking-card is-collapsed" aria-label="客户查货入口">
+        <button class="tracking-toggle" type="button" data-tracking-toggle aria-expanded="false">
+          <span>
+            <strong>客户查货入口</strong>
+            <small>Shipment Tracking</small>
+          </span>
+          <span class="tracking-toggle-icon">⌄</span>
+        </button>
+        <div class="tracking-expanded-head">
+          <p class="eyebrow">Shipment Tracking</p>
+          <h2>客户查货入口</h2>
+          <small class="translation">Customer shipment portal</small>
+          <p>输入订单号和查询码，查看管理员公开给客户的生产、装柜、海运和到港进度。</p>
+          <small class="translation">Enter the order number and access code to view the production, loading, ocean freight, and arrival updates shared by the administrator.</small>
+        </div>
+        <form class="public-tracking-form" id="publicTrackingForm">
+          <label class="field">
+            <span>订单号</span>
+            <small class="translation">Order number</small>
+            <input id="publicOrderNumber" type="text" autocomplete="off" placeholder="例如：SY-2026-001" required />
+          </label>
+          <label class="field">
+            <span>查询码</span>
+            <small class="translation">Access code</small>
+            <input id="publicAccessCode" type="password" autocomplete="off" placeholder="由业务员提供" required />
+          </label>
+          <button class="text-button primary" type="submit">查看货物进度<small>View shipment progress</small></button>
+        </form>
+        <div class="public-tracking-result" id="publicTrackingResult" hidden></div>
+      </section>
     </section>
 
     <div class="app-shell" id="appShell" hidden>
@@ -5285,6 +5661,8 @@ const els = {
   resetPasswordForm: document.getElementById("resetPasswordForm"),
   profileForm: document.getElementById("profileForm"),
   publicTrackingForm: document.getElementById("publicTrackingForm"),
+  publicTrackingCard: document.querySelector(".public-tracking-card"),
+  trackingToggle: document.querySelector("[data-tracking-toggle]"),
   publicOrderNumber: document.getElementById("publicOrderNumber"),
   publicAccessCode: document.getElementById("publicAccessCode"),
   publicTrackingResult: document.getElementById("publicTrackingResult"),
@@ -5697,7 +6075,12 @@ function bindEvents() {
 
   els.publicTrackingForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    setPublicTrackingExpanded(true);
     await lookupPublicShipment();
+  });
+
+  els.trackingToggle?.addEventListener("click", () => {
+    setPublicTrackingExpanded(els.publicTrackingCard?.classList.contains("is-collapsed"));
   });
 
   els.appTabs.addEventListener("click", (event) => {
@@ -5917,6 +6300,13 @@ function bindAuthEvents() {
   });
 
   els.logoutBtn.addEventListener("click", signOut);
+}
+
+function setPublicTrackingExpanded(expanded) {
+  if (!els.publicTrackingCard) return;
+  els.publicTrackingCard.classList.toggle("is-collapsed", !expanded);
+  els.publicTrackingCard.classList.toggle("is-expanded", expanded);
+  els.trackingToggle?.setAttribute("aria-expanded", String(Boolean(expanded)));
 }
 
 async function initAuth() {
@@ -10507,11 +10897,13 @@ async function invokeShipmentPortal(payload) {
 
 function renderPublicTrackingMessage(message, isError = false) {
   if (!els.publicTrackingResult) return;
+  setPublicTrackingExpanded(true);
   els.publicTrackingResult.hidden = false;
   els.publicTrackingResult.innerHTML = `<p class="${isError ? "error-text" : "muted-text"}">${escapeHTML(message)}</p>`;
 }
 
 function renderPublicShipmentResult(data) {
+  setPublicTrackingExpanded(true);
   const order = data.order || {};
   const milestones = data.milestones || [];
   const files = data.files || [];
